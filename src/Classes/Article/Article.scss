@@ -1,0 +1,254 @@
+#content article.entry {
+
+  aside.meta.entry__meta {
+    line-height: 3.5em;
+    img {
+      margin-right: .25em;
+      margin-left: .25em;
+    }
+  }
+  .magazine-inline {
+    white-space: nowrap;
+  }
+
+  &.no-image {
+    grid-template-areas:
+      "vote title"
+      "vote shortDesc"
+      "vote meta"
+      "vote footer"
+      "body body"
+      "preview preview";
+  }
+
+  &:not(.no-image) {
+    grid-template-areas:
+      "vote image title"
+      "vote image shortDesc"
+      "vote image meta"
+      "vote image footer"
+      "body body body"
+      "preview preview preview" !important;
+    grid-template-columns: min-content min-content auto;
+  }
+
+  &.selected {
+    border: var(--kbin-meta-border);
+  }
+
+  & > figure {
+    margin: 0 1em 0 0;
+    place-self: center;
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+  }
+
+  aside.vote {
+    place-content: center;
+  }
+
+  button {
+    &.show-preview, &.preview-button {
+      border: 1px solid var(--kbin-section-text-color);
+      padding: 0.5em;
+      background: var(--kbin-bg);
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  #content article.entry {
+    &:not(.no-image) {
+      grid-template-areas:
+      "vote image title"
+      "vote image shortDesc"
+      "vote image meta"
+      "footer footer footer"
+      "body body body"
+      "preview preview preview" !important;
+    }
+  }
+}
+
+@media (max-width: 689.98px) {
+  #content article.entry {
+    &:not(.no-image) {
+      grid-template-areas:
+        "image image"
+        "vote title"
+        "vote shortDesc"
+        "vote meta"
+        "vote footer"
+        "body body"
+        "preview preview" !important;
+        grid-template-columns: min-content auto;
+    }
+
+    &.no-image {
+      grid-template-areas:
+        "vote title"
+        "vote shortDesc"
+        "vote meta"
+        "vote footer"
+        "body body"
+        "preview preview" !important;
+      grid-template-columns: min-content auto;
+    }
+    & > figure {
+      place-self: center;
+      width: 100%;
+      margin: 0;
+      img {
+        max-width: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    aside.vote {
+      place-self: center;
+    }
+  }
+
+}
+
+.preview-outer {
+  grid-area: preview;
+
+  .preview-inner {
+    position: relative;
+    display: none;
+    border-top: var(--kbin-meta-border);
+    padding: 1em;
+
+    &.show {
+      display: block;
+    }
+
+    .loading {
+      position: relative;
+      height: 3em;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: showPreviewLoading 0.25s ease-in-out;
+    }
+
+    .article-preview-content {
+      position: relative;
+
+      &.loaded {
+        animation: articlePreviewFadeIn 0.5s ease-in-out;
+      }
+    }
+
+    .media-preview-content {
+      position: relative;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        min-width: 100px;
+        object-fit: contain;
+
+        &.animateMinResize {
+          animation: animateMinResize 0.25s ease-out;
+          transform-origin: left top;
+        }
+
+        @keyframes animateMinResize {
+          0% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          33% {
+            opacity: 0.8;
+            transform: scale(0.95);
+          }
+
+          66% {
+            opacity: 1;
+            transform: scale(1.01);
+          }
+
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+
+        }
+      }
+
+      &.oembed-embed {
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+        height: 100vh;
+        margin: 0 auto;
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      }
+
+      &.youtube-embed {
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+        max-height: 100vh;
+        margin: 0 auto;
+        aspect-ratio: 16/9;
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      }
+
+      &.loaded {
+        animation: articlePreviewFadeIn 0.5s ease-in-out;
+      }
+    }
+  }
+}
+
+@keyframes showPreviewLoading {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes articlePreviewFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.5em);
+  }
+  100% {
+    opacity: 1;
+  }
+}
