@@ -1,5 +1,5 @@
 import Article from "../Article/Article";
-
+import "./ArticlePage.scss";
 class ArticlePage {
     currentPage = 1;
     numberOfPages = 1;
@@ -53,6 +53,16 @@ class ArticlePage {
         document.addEventListener("keydown", (e) => {
             this.handleKeydown(e);
         });
+
+        /** Add URL subheader */
+        if (this.article.linkUrl) {
+            const subheader = document.createElement("h3");
+            subheader.classList.add("url-subheader");
+            let url = new URL(this.article.linkUrl);
+            let subheaderText = '<i class="fa fa-link"></i> <span class="url-subheader__host">' + url.hostname + '</span><span class="url-subheader__path">' + url.pathname + '</span>';
+            subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
+            this.articleElement.querySelector("header").appendChild(subheader);
+        }
     }
     handleInfiniteScroll() {
         if (this.numberOfPages > this.currentPage) {
@@ -85,6 +95,11 @@ class ArticlePage {
         } else if (event.key === "b") {
             event.preventDefault();
             this.article.boost();
+        } else if (event.key === "o") {
+            if (this.article.linkUrl) {
+                event.preventDefault();
+                window.open(this.article.linkUrl, '_blank');
+            }
         }
     }
 

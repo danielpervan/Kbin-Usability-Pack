@@ -119,11 +119,11 @@ class Article {
 
     static fromArticlePage(articleElement) {
         let article = new Article();
-        article.subject = articleElement.querySelector("header h1 a").innerText;
+        article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.textContent?.trim();
         article.author = new User(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
         article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
-        article.articleUrl = articleElement.querySelector("article header h1 a")?.href;
-        article.thumbUrl = articleElement.querySelector("article figure a img")?.src;
+        article.linkUrl = articleElement.querySelector("header h1>a")?.href;
+        article.thumbUrl = articleElement.querySelector("figure a img")?.src;
         article.mediaUrl = articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
         article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
         article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
@@ -131,6 +131,7 @@ class Article {
         const downvoteElement = articleElement.querySelector("aside.vote .vote__down");
         article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
         article.downvotes = parseInt(downvoteElement?.querySelector("span")?.innerText) || 0;
+
         article.enableArticlePreview = false;
 
         article.#articleLoaded = true;

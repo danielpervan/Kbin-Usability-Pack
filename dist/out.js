@@ -132,11 +132,11 @@
     }
     static fromArticlePage(articleElement) {
       let article = new _Article();
-      article.subject = articleElement.querySelector("header h1 a").innerText;
+      article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.textContent?.trim();
       article.author = new User_default(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
       article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
-      article.articleUrl = articleElement.querySelector("article header h1 a")?.href;
-      article.thumbUrl = articleElement.querySelector("article figure a img")?.src;
+      article.linkUrl = articleElement.querySelector("header h1>a")?.href;
+      article.thumbUrl = articleElement.querySelector("figure a img")?.src;
       article.mediaUrl = articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
       article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
       article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
@@ -571,6 +571,9 @@
   };
   var Navigator_default = Navigator;
 
+  // src/Classes/ArticlePage/ArticlePage.scss
+  inject_style("article.entry header .url-subheader{font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
+
   // src/Classes/ArticlePage/ArticlePage.js
   var ArticlePage = class {
     currentPage = 1;
@@ -613,6 +616,14 @@
       document.addEventListener("keydown", (e) => {
         this.handleKeydown(e);
       });
+      if (this.article.linkUrl) {
+        const subheader = document.createElement("h3");
+        subheader.classList.add("url-subheader");
+        let url = new URL(this.article.linkUrl);
+        let subheaderText = '<i class="fa fa-link"></i> <span class="url-subheader__host">' + url.hostname + '</span><span class="url-subheader__path">' + url.pathname + "</span>";
+        subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
+        this.articleElement.querySelector("header").appendChild(subheader);
+      }
     }
     handleInfiniteScroll() {
       if (this.numberOfPages > this.currentPage) {
@@ -643,6 +654,11 @@
       } else if (event.key === "b") {
         event.preventDefault();
         this.article.boost();
+      } else if (event.key === "o") {
+        if (this.article.linkUrl) {
+          event.preventDefault();
+          window.open(this.article.linkUrl, "_blank");
+        }
       }
     }
     loadPage(page) {
