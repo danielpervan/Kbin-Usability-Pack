@@ -191,7 +191,7 @@ class Article {
                 previewElement = document.createElement("div");
                 previewElement.classList.add("article-preview", "preview-inner");
                 previewContentElement = document.createElement("div");
-                previewContentElement.classList.add("article-preview-content");
+                previewContentElement.classList.add("article-preview-content", "content");
                 previewElement.append(previewContentElement);
                 previewOuter.append(previewElement);
             }
