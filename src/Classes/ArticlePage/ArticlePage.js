@@ -1,3 +1,5 @@
+import Article from "../Article/Article";
+
 class ArticlePage {
     currentPage = 1;
     numberOfPages = 1;
@@ -15,6 +17,10 @@ class ArticlePage {
 
         this.url = currentURL;
 
+        this.articleElement = document.querySelector("article.entry");
+        this.article = Article.fromArticlePage(this.articleElement);
+        this.article.enrichArticlePage();
+
         /** Add infinite scroll */
         const paginationElement = document.querySelector("nav.pagination.section");
 
@@ -25,16 +31,14 @@ class ArticlePage {
             this.currentPage = 1;
         }
 
-        let numberOfPages = paginationElement.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
-        if (numberOfPages) {
+        let numberOfPages = paginationElement?.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
+        if (numberOfPages && numberOfPages[numberOfPages.length - 1]) {
             this.numberOfPages = parseInt(numberOfPages[numberOfPages.length - 1].textContent);
         } else {
             this.numberOfPages = this.currentPage;
         }
-
-        paginationElement.innerHTML = '';
-
         if (paginationElement) {
+            paginationElement.innerHTML = '';
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
@@ -44,10 +48,13 @@ class ArticlePage {
             });
             observer.observe(paginationElement);
         }
-    }
 
+        /** Add keydown listener */
+        document.addEventListener("keydown", (e) => {
+            this.handleKeydown(e);
+        });
+    }
     handleInfiniteScroll() {
-        console.log("Infinite scroll", this.currentPage, this.numberOfPages);
         if (this.numberOfPages > this.currentPage) {
             this.currentPage++;
             this.loadPage(this.currentPage).then((html) => {
@@ -58,6 +65,26 @@ class ArticlePage {
                     document.querySelector("#comments section.comments").insertBefore(comment, paginationElement);
                 });
             });
+        }
+    }
+
+    handleKeydown(event) {
+        /** If user is typing in a text field, don't handle keydown */
+        if (event.target.tagName !== "BODY") {
+            return;
+        }
+        if (event.key === "Enter") {
+            event.preventDefault();
+            this.article.togglePreviews();
+        } else if (event.key === "a") {
+            event.preventDefault();
+            this.article.upvote();
+        } else if (event.key === "z") {
+            event.preventDefault();
+            this.article.downvote();
+        } else if (event.key === "b") {
+            event.preventDefault();
+            this.article.boost();
         }
     }
 

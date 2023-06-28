@@ -78,7 +78,6 @@ class ArticlesHandler {
         if (event.target.tagName !== "BODY") {
             return;
         }
-        console.log("Keydown", event.key);
         if (event.key === "Escape") {
             this.unselectCurrentArticle();
         } else if (event.key === "ArrowUp") {

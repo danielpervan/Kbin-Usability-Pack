@@ -1,12 +1,13 @@
 #content article.entry {
-
   aside.meta.entry__meta {
     line-height: 3.5em;
+
     img {
       margin-right: .25em;
       margin-left: .25em;
     }
   }
+
   .magazine-inline {
     white-space: nowrap;
   }
@@ -84,7 +85,7 @@
         "vote footer"
         "body body"
         "preview preview" !important;
-        grid-template-columns: min-content auto;
+      grid-template-columns: min-content auto;
     }
 
     &.no-image {
@@ -97,10 +98,12 @@
         "preview preview" !important;
       grid-template-columns: min-content auto;
     }
+
     & > figure {
       place-self: center;
       width: 100%;
       margin: 0;
+
       img {
         max-width: 100%;
         width: 100%;

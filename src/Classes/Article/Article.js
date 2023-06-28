@@ -21,6 +21,8 @@ class Article {
     }
     #content;
     #articleLoaded;
+    articlePageElement;
+    enableArticlePreview = true;
 
     constructor() {
 
@@ -53,7 +55,11 @@ class Article {
     }
 
     upvote() {
-        const voteElement = this.feedElement.querySelector("aside.vote .vote__up button");
+        const element = this.feedElement ?? this.articlePageElement;
+        if (!element) {
+            return;
+        }
+        const voteElement = element.querySelector("aside.vote .vote__up button");
         if (voteElement) {
             voteElement.click();
             this.upvotes++;
@@ -61,7 +67,11 @@ class Article {
     }
 
     downvote() {
-        const voteElement = this.feedElement.querySelector("aside.vote .vote__down button");
+        const element = this.feedElement ?? this.articlePageElement;
+        if (!element) {
+            return;
+        }
+        const voteElement = element.querySelector("aside.vote .vote__down button");
         if (voteElement) {
             voteElement.click();
             this.upvotes--;
@@ -69,7 +79,11 @@ class Article {
     }
 
     boost() {
-        const boostElement = this.feedElement.querySelector("footer menu li form button");
+        const element = this.feedElement ?? this.articlePageElement;
+        if (!element) {
+            return;
+        }
+        const boostElement = element.querySelector("footer menu li form button");
         if (boostElement && boostElement.dataset.action === "subject#favourite") {
             boostElement.click();
         }
@@ -103,6 +117,35 @@ class Article {
         });
     }
 
+    static fromArticlePage(articleElement) {
+        let article = new Article();
+        article.subject = articleElement.querySelector("header h1 a").innerText;
+        article.author = new User(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
+        article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
+        article.articleUrl = articleElement.querySelector("article header h1 a")?.href;
+        article.thumbUrl = articleElement.querySelector("article figure a img")?.src;
+        article.mediaUrl = articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
+        article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
+        article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
+        const upvoteElement = articleElement.querySelector("aside.vote .vote__up");
+        const downvoteElement = articleElement.querySelector("aside.vote .vote__down");
+        article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
+        article.downvotes = parseInt(downvoteElement?.querySelector("span")?.innerText) || 0;
+        article.enableArticlePreview = false;
+
+        article.#articleLoaded = true;
+        article.articlePageElement = articleElement;
+
+        if (articleElement.querySelector("li.meta-link")) {
+            article.type = article.TYPES.ARTICLE;
+        } else if (articleElement.querySelector("li>button.show-preview")) {
+            article.type = article.TYPES.IMAGE;
+        } else {
+            article.type = article.TYPES.LINK;
+        }
+        return article;
+    }
+
     getContent() {
         if (!this.shortDescription) {
             this.#content = null;
@@ -128,7 +171,6 @@ class Article {
             className: "preview-outer"
         });
         this.feedElement.append(previewOuter);
-
         /** Fix thumbnail */
         const thumbnail = this.feedElement.querySelector("figure a img");
         if (thumbnail) {
@@ -136,33 +178,7 @@ class Article {
         }
 
         /** Replace media preview */
-        const mediaPreviewButton = footer.querySelector("button.show-preview");
-        if (mediaPreviewButton && mediaPreviewButton.dataset.action === "preview#show") {
-            this.hasMedia = true
-            mediaPreviewButton.remove()
-            const newMediaPreviewButton = document.createElement("button");
-            newMediaPreviewButton.classList.add("show-media-preview", "preview-button");
-            newMediaPreviewButton.innerHTML = '<i class="fas fa-photo-film"></i>';
-            newMediaPreviewButton.addEventListener("click", (event) => {
-                event.preventDefault();
-                this.toggleMediaPreview();
-            });
-            const li = document.createElement("li");
-            li.append(newMediaPreviewButton);
-            footer.querySelector("menu").insertBefore(li, footerMenu.firstChild);
-
-            /** Add preview elements */
-            let previewElement = this.feedElement.querySelector(".media-preview");
-            if (!previewElement) {
-                previewElement = document.createElement("div");
-                previewElement.classList.add("media-preview", "preview-inner");
-                const previewContentElement = document.createElement("div");
-                previewContentElement.classList.add("media-preview-content");
-                previewElement.append(previewContentElement);
-                previewOuter.append(previewElement);
-            }
-        }
-
+        this.replaceMediaPreview(this.feedElement);
         /** Add article preview button */
         if (this.hasContent()) {
             if (this.type === this.TYPES.ARTICLE) {
@@ -206,7 +222,51 @@ class Article {
                 commentsLinkElement.href = url.pathname;
             }
         });
+    }
 
+    replaceMediaPreview(parent) {
+        const footer = parent.querySelector("footer");
+        const mediaPreviewButton = footer.querySelector("button.show-preview");
+        const previewOuter = parent.querySelector(".preview-outer");
+        const footerMenu = footer.querySelector("menu");
+        if (mediaPreviewButton && mediaPreviewButton.dataset.action === "preview#show") {
+            this.hasMedia = true
+            mediaPreviewButton.remove()
+            const newMediaPreviewButton = document.createElement("button");
+            newMediaPreviewButton.classList.add("show-media-preview", "preview-button");
+            newMediaPreviewButton.innerHTML = '<i class="fas fa-photo-film"></i>';
+            newMediaPreviewButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                this.toggleMediaPreview();
+            });
+            const li = document.createElement("li");
+            li.append(newMediaPreviewButton);
+            footer.querySelector("menu").insertBefore(li, footerMenu.firstChild);
+
+            /** Add preview elements */
+            let previewElement = parent.querySelector(".media-preview");
+            if (!previewElement) {
+                previewElement = document.createElement("div");
+                previewElement.classList.add("media-preview", "preview-inner");
+                const previewContentElement = document.createElement("div");
+                previewContentElement.classList.add("media-preview-content");
+                previewElement.append(previewContentElement);
+                previewOuter.append(previewElement);
+
+            }
+        }
+    }
+
+    enrichArticlePage() {
+        if (!this.articlePageElement) {
+            return;
+        }
+
+        const previewOuter = Object.assign(document.createElement("div"), {
+            className: "preview-outer"
+        });
+        this.articlePageElement.append(previewOuter);
+        this.replaceMediaPreview(this.articlePageElement);
     }
 
 
@@ -253,11 +313,12 @@ class Article {
     }
 
     showMediaPreview() {
-        if (!this.feedElement || !this.mediaUrl) {
+        let element = this.feedElement ?? this.articlePageElement;
+        if (!element || !this.mediaUrl) {
             return;
         }
         this.mediaPreviewOpen = true;
-        let previewElement = this.feedElement.querySelector(".media-preview");
+        let previewElement = element.querySelector(".media-preview");
         let previewContentElement = previewElement.querySelector(".media-preview-content");
         previewElement.classList.add("show");
         previewContentElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i></div>';
@@ -265,7 +326,6 @@ class Article {
         const mediaURLObject = new URL(this.mediaUrl);
         /** if media is an image */
         if (this.mediaUrl.match(/\.(jpeg|jpg|gif|png|svg)$/) !== null) {
-            console.log("Loading image", this.mediaUrl);
             const imageElement = document.createElement("img");
             imageElement.addEventListener("load", () => {
                 previewContentElement.innerHTML = "";
@@ -288,12 +348,11 @@ class Article {
                 this.handleMediaPreviewResizeDrag(event, imageElement, "end");
             });
 
-            this.feedElement.addEventListener("mousemove", (event) => {
+            element.addEventListener("mousemove", (event) => {
                 this.handleMediaPreviewResizeDrag(event, imageElement, "move");
             });
         } else if (mediaURLObject.hostname === "www.youtube.com" || mediaURLObject.hostname === "youtube.com" || mediaURLObject.hostname === "youtu.be") {
             /** if media is YouTube */
-            console.log("Loading YouTube video", this.mediaUrl);
             const videoElement = document.createElement("iframe");
             let videoSrc = "https://www.youtube.com/embed/";
             if (mediaURLObject.hostname === "youtu.be") {
@@ -312,12 +371,10 @@ class Article {
             /** load with default embed loader */
             let url = "/ajax/fetch_embed?url=" + encodeURIComponent(this.mediaUrl);
             fetch(url).then(response => response.json().then(data => {
-                console.log(data);
                 previewContentElement.innerHTML = "";
                 previewContentElement.insertAdjacentHTML("beforeend", data.html)
                 previewContentElement.classList.add("loaded");
             })).catch(error => {
-                console.log(error);
                 previewContentElement.innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error loading media</div>';
                 previewContentElement.classList.add("loaded");
             });
@@ -325,11 +382,12 @@ class Article {
     }
 
     hideMediaPreview() {
-        if (!this.feedElement) {
+        const element = this.feedElement ?? this.articlePageElement;
+        if (!element) {
             return;
         }
         this.mediaPreviewOpen = false;
-        let previewElement = this.feedElement.querySelector(".media-preview");
+        let previewElement = element.querySelector(".media-preview");
         if (previewElement) {
             previewElement.classList.remove("show");
             previewElement.querySelector(".media-preview-content").innerHTML = "";
@@ -337,7 +395,6 @@ class Article {
     }
 
     toggleMediaPreview() {
-        console.log("Toggle media preview", this.mediaPreviewOpen);
         if (this.mediaPreviewOpen) {
             this.hideMediaPreview();
         } else {
@@ -375,7 +432,7 @@ class Article {
     }
 
     togglePreviews() {
-        if (!this.articlePreviewOpen && this.hasContent()) {
+        if (!this.articlePreviewOpen && this.enableArticlePreview && this.hasContent()) {
             this.showArticlePreview();
         } else if (!this.mediaPreviewOpen && this.hasMedia) {
             this.showMediaPreview();
