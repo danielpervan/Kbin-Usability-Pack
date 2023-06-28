@@ -374,7 +374,7 @@ class Article {
                 previewContentElement.innerHTML = "";
                 previewContentElement.insertAdjacentHTML("beforeend", data.html)
                 previewContentElement.classList.add("loaded");
-            })).catch(error => {
+            })).catch(() => {
                 previewContentElement.innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error loading media</div>';
                 previewContentElement.classList.add("loaded");
             });
