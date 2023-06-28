@@ -196,6 +196,17 @@ class Article {
                 previewOuter.append(previewElement);
             }
         }
+
+        /** Remove comment anchor */
+        const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
+        /** Check if link is a comment link */
+        commentsLinkElements.forEach(commentsLinkElement => {
+            if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
+                const url = new URL(commentsLinkElement.href);
+                commentsLinkElement.href = url.pathname;
+            }
+        });
+
     }
 
 
