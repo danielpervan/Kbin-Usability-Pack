@@ -130,6 +130,12 @@ class ArticlesHandler {
             }
             event.preventDefault();
             this.currentArticle.boost();
+        } else if (event.key === "o") {
+            if (!this.currentArticle) {
+                return;
+            }
+            event.preventDefault();
+            window.location.href = this.currentArticle.articleUrl;
         }
     }
 }
