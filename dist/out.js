@@ -620,7 +620,7 @@
         const subheader = document.createElement("h3");
         subheader.classList.add("url-subheader");
         let url = new URL(this.article.linkUrl);
-        let subheaderText = '<i class="fa fa-link"></i> <span class="url-subheader__host">' + url.hostname + '</span><span class="url-subheader__path">' + url.pathname + "</span>";
+        let subheaderText = '<i class="fa fa-link"></i> <span class="url-subheader__host">' + url.hostname + '</span><span class="url-subheader__path">' + url.pathname + url.search + "</span>";
         subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
         this.articleElement.querySelector("header").appendChild(subheader);
       }
