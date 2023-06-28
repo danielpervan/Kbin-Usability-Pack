@@ -38,7 +38,7 @@ class Article {
         article.thumbUrl = element.querySelector("figure a img")?.src;
         article.mediaUrl = element.querySelector("button.show-preview")?.dataset?.previewUrlParam;
         article.magazine = element.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
-        article.shortDescription = element.querySelector(".content.short-desc")?.innerText;
+        article.shortDescription = element.querySelector(".content.short-desc")?.innerText?.trim();
         const upvoteElement = element.querySelector("aside.vote .vote__up");
         const downvoteElement = element.querySelector("aside.vote .vote__down");
         article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;

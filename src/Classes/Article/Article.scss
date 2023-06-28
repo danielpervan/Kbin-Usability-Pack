@@ -28,7 +28,7 @@
       "vote image shortDesc"
       "vote image meta"
       "vote image footer"
-      "body body body"
+      "vote body body"
       "preview preview preview" !important;
     grid-template-columns: min-content min-content auto;
   }
@@ -38,12 +38,12 @@
   }
 
   & > figure {
-    margin: 0 1em 0 0;
-    place-self: center;
-
+    margin: 0;
+    align-self: center;
     img {
-      max-width: 100px;
-      max-height: 100px;
+      max-width: 220px;
+      max-height: 145px;
+      object-fit: contain;
     }
   }
 
@@ -60,14 +60,73 @@
   }
 }
 
+main#main.view-compact {
+  article.entry {
+    grid-template-areas:
+      "vote image title"
+      "vote image meta"
+      "vote image footer"
+      "body body body"
+      "preview preview preview" !important;
+
+    &.no-image {
+      grid-template-areas:
+      "vote title"
+      "vote meta"
+      "vote footer"
+      "body body"
+      "preview preview" !important;
+    }
+
+    figure {
+      margin-right: 1rem;
+      img {
+        max-height: 100px;
+        max-width: 120px;
+      }
+    }
+  }
+
+  @media (max-width: 689.98px) {
+    article.entry {
+      grid-template-areas:
+        "image vote"
+        "title vote"
+        "meta vote"
+        "footer vote"
+        "body body"
+        "preview preview" !important;
+      grid-template-columns: auto min-content;
+
+      figure {
+        img {
+          object-fit: contain;
+        }
+      }
+
+      &.no-image {
+        grid-template-areas:
+          "title vote"
+          "meta vote"
+          "footer vote"
+          "body body"
+          "preview preview" !important;
+        grid-template-columns: auto min-content;
+      }
+
+    }
+  }
+}
+
 @media (max-width: 991.98px) {
   #content article.entry {
     &:not(.no-image) {
       grid-template-areas:
-      "vote image title"
-      "vote image shortDesc"
-      "vote image meta"
-      "footer footer footer"
+      "vote image image"
+      "vote title title"
+      "vote shortDesc shortDesc"
+      "vote meta meta"
+      "vote footer footer"
       "body body body"
       "preview preview preview" !important;
     }
@@ -78,11 +137,11 @@
   #content article.entry {
     &:not(.no-image) {
       grid-template-areas:
-        "image image"
-        "vote title"
-        "vote shortDesc"
-        "vote meta"
-        "vote footer"
+        "vote image"
+        "title title"
+        "shortDesc shortDesc"
+        "meta meta"
+        "footer footer"
         "body body"
         "preview preview" !important;
       grid-template-columns: min-content auto;
@@ -100,15 +159,7 @@
     }
 
     & > figure {
-      place-self: center;
-      width: 100%;
       margin: 0;
-
-      img {
-        max-width: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
     }
 
     aside.vote {
