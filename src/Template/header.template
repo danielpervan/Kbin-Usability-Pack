@@ -2,11 +2,12 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.1.2
+// @version      0.2.0
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=kbin.social
+// @run-at document-end
 // ==/UserScript==
 
 (function () {

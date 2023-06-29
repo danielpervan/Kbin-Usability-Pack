@@ -21,7 +21,50 @@
   }
 
   // src/Classes/Article/Article.scss
-  inject_style('#content article.entry aside.meta.entry__meta{line-height:3.5em}#content article.entry aside.meta.entry__meta img{margin-right:.25em;margin-left:.25em}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}');
+  inject_style('body:not(.kup-show-article-preview) .show-article-preview{display:none!important}#content article.entry aside.meta.entry__meta{line-height:3.5em}#content article.entry aside.meta.entry__meta img{margin-right:.25em;margin-left:.25em}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}');
+
+  // src/Classes/Settings.js
+  var Settings = class {
+    constructor() {
+    }
+    get(key) {
+      const settings = this.getAll();
+      if (settings[key] === void 0) {
+        return null;
+      }
+      return settings[key];
+    }
+    getAll() {
+      const data = localStorage.getItem("kup-settings");
+      let settings = {};
+      if (data) {
+        settings = JSON.parse(data);
+      }
+      if (settings.showUrlSubheader === void 0) {
+        settings.showUrlSubheader = true;
+      }
+      if (settings.removeCommentAnchor === void 0) {
+        settings.removeCommentAnchor = true;
+      }
+      if (settings.showArticlePreview === void 0) {
+        settings.showArticlePreview = true;
+      }
+      return settings;
+    }
+    replace(settings) {
+      localStorage.setItem("kup-settings", JSON.stringify(settings));
+      window.dispatchEvent(new CustomEvent("kup-settings-changed"));
+    }
+    save(key, value) {
+      const settings = this.getAll();
+      settings[key] = value;
+      this.replace(settings);
+    }
+    reset() {
+      localStorage.removeItem("kup-settings");
+    }
+  };
+  var Settings_default = Settings;
 
   // src/Classes/Article/Article.js
   var Article = class _Article {
@@ -132,7 +175,7 @@
     }
     static fromArticlePage(articleElement) {
       let article = new _Article();
-      article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.textContent?.trim();
+      article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.innerText?.trim();
       article.author = new User_default(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
       article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
       article.linkUrl = articleElement.querySelector("header h1>a")?.href;
@@ -172,6 +215,7 @@
       if (!this.feedElement) {
         return;
       }
+      const settings = new Settings_default();
       const footer = this.feedElement.querySelector("footer");
       const footerMenu = footer.querySelector("menu");
       const previewOuter = Object.assign(document.createElement("div"), {
@@ -212,13 +256,15 @@
           previewOuter.append(previewElement);
         }
       }
-      const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
-      commentsLinkElements.forEach((commentsLinkElement) => {
-        if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
-          const url = new URL(commentsLinkElement.href);
-          commentsLinkElement.href = url.pathname;
-        }
-      });
+      if (settings.get("removeCommentAnchor")) {
+        const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
+        commentsLinkElements.forEach((commentsLinkElement) => {
+          if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
+            const url = new URL(commentsLinkElement.href);
+            commentsLinkElement.href = url.pathname;
+          }
+        });
+      }
     }
     replaceMediaPreview(parent) {
       const footer = parent.querySelector("footer");
@@ -429,6 +475,10 @@
       if (!document.querySelector("#content>div article.entry")) {
         return;
       }
+      this.applySettings();
+      window.addEventListener("kup-settings-changed", () => {
+        this.applySettings();
+      });
       this.parseArticles();
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -548,6 +598,17 @@
         window.location.href = this.currentArticle.articleUrl;
       }
     }
+    applySettings() {
+      const settings = new Settings_default();
+      if (settings.get("showArticlePreview")) {
+        document.body.classList.add("kup-show-article-preview");
+      } else {
+        document.body.classList.remove("kup-show-article-preview");
+        this.#articles.forEach((article) => {
+          article.hideArticlePreview();
+        });
+      }
+    }
   };
   var ArticlesHandler_default = ArticlesHandler;
 
@@ -572,7 +633,7 @@
   var Navigator_default = Navigator;
 
   // src/Classes/ArticlePage/ArticlePage.scss
-  inject_style("article.entry header .url-subheader{font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
+  inject_style("body.kup-show-url-subheader article.entry header .url-subheader{display:block}article.entry header .url-subheader{display:none;font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
 
   // src/Classes/ArticlePage/ArticlePage.js
   var ArticlePage = class {
@@ -624,6 +685,10 @@
         subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
         this.articleElement.querySelector("header").appendChild(subheader);
       }
+      this.applySettings();
+      window.addEventListener("kup-settings-changed", () => {
+        this.applySettings();
+      });
     }
     handleInfiniteScroll() {
       if (this.numberOfPages > this.currentPage) {
@@ -636,6 +701,14 @@
             document.querySelector("#comments section.comments").insertBefore(comment, paginationElement);
           });
         });
+      }
+    }
+    applySettings() {
+      const settings = new Settings_default();
+      if (settings.get("showUrlSubheader") === true) {
+        document.body.classList.add("kup-show-url-subheader");
+      } else {
+        document.body.classList.remove("kup-show-url-subheader");
       }
     }
     handleKeydown(event) {
@@ -670,11 +743,550 @@
   };
   var ArticlePage_default = ArticlePage;
 
+  // src/Classes/SettingsPanel/SettingsRow.js
+  var SettingsRow = class _SettingsRow {
+    element;
+    name;
+    description;
+    value;
+    type;
+    options;
+    static TYPES = {
+      BOOLEAN: "boolean",
+      STRING: "string",
+      NUMBER: "number",
+      ENUM: "enum",
+      CUSTOM: "custom"
+    };
+    constructor(name, type, value, options = {}) {
+      this.name = name;
+      this.type = type;
+      this.value = value;
+      const { description } = options || {};
+      this.description = description;
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-row"
+      });
+      this.element = element;
+      const name = Object.assign(document.createElement("span"), {
+        className: "name",
+        innerText: this.name
+      });
+      element.appendChild(name);
+      if (this.description) {
+        element.classList.add("has-description");
+        const description = Object.assign(document.createElement("span"), {
+          className: "description",
+          innerText: this.description
+        });
+        element.appendChild(description);
+      }
+      return element;
+    }
+    static fromElement(element) {
+      return new _SettingsRow(element.innerText, _SettingsRow.detectType(element), "", {});
+    }
+    static detectType(element) {
+      const valueElement = element.querySelector(":scope > div");
+      const booleanRegex = /Yes\s*\|\s*No/;
+      const enumRegex = /(\w+)\s*\|\s*(\w+)/;
+      if (valueElement.innerText.trim().match(booleanRegex)) {
+        return _SettingsRow.TYPES.BOOLEAN;
+      } else if (valueElement.innerText.trim().match(enumRegex)) {
+        return _SettingsRow.TYPES.ENUM;
+      } else {
+        return _SettingsRow.TYPES.CUSTOM;
+      }
+    }
+  };
+  var SettingsRow_default = SettingsRow;
+
+  // src/Classes/SettingsPanel/SettingsRowCustom.js
+  var SettingsRowCustom = class _SettingsRowCustom extends SettingsRow_default {
+    name;
+    description;
+    value;
+    valueElement;
+    constructor(name, value) {
+      super(name, SettingsRow_default.TYPES.CUSTOM, value);
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-row"
+      });
+      this.element = element;
+      const name = Object.assign(document.createElement("span"), {
+        className: "name",
+        innerText: this.name
+      });
+      element.appendChild(name);
+      if (this.description) {
+        element.classList.add("has-description");
+        const description = Object.assign(document.createElement("span"), {
+          className: "description",
+          innerText: this.description
+        });
+        element.appendChild(description);
+      }
+      const valueContainer = Object.assign(document.createElement("div"), {
+        className: "value-container"
+      });
+      valueContainer.appendChild(this.valueElement);
+      element.appendChild(valueContainer);
+      return element;
+    }
+    static fromElement(element) {
+      const settingsRow = new _SettingsRowCustom();
+      settingsRow.name = element.querySelector(":scope > span")?.innerText.trim();
+      settingsRow.name = settingsRow.name.endsWith(":") ? settingsRow.name.slice(0, -1) : settingsRow.name;
+      settingsRow.description = element.querySelector(".description")?.innerText;
+      settingsRow.value = element.querySelector("input")?.value;
+      settingsRow.valueElement = element.querySelector(":scope > div");
+      return settingsRow;
+    }
+  };
+  var SettingsRowCustom_default = SettingsRowCustom;
+
+  // src/Classes/SettingsPanel/SettingsSection.js
+  var SettingsSection = class _SettingsSection {
+    settingsRows = [];
+    name;
+    expanded = false;
+    constructor(name) {
+      this.name = name;
+      this.settingsRows = [];
+    }
+    addSettingsRow(settingRow) {
+      this.settingsRows.push(settingRow);
+    }
+    addSettingsRows(settingRows) {
+      settingRows.forEach((row) => {
+        this.addSettingsRow(row);
+      });
+    }
+    static fromHeaderElement(headerElement) {
+      return new _SettingsSection(headerElement.innerText);
+    }
+    expand() {
+      this.expanded = true;
+      this.element.classList.add("expanded");
+    }
+    collapse() {
+      this.expanded = false;
+      this.element.classList.remove("expanded");
+    }
+    toggle() {
+      this.expanded ? this.collapse() : this.expand();
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-section"
+      });
+      this.element = element;
+      const header = Object.assign(document.createElement("h3"), {
+        className: "settings-section-header",
+        innerHTML: `<span>${this.name}</span><i class="fas fa-chevron-down icon-chevron"></i>`
+      });
+      header.addEventListener("click", (e) => {
+        if (e.shiftKey) {
+          window.dispatchEvent(new CustomEvent("kup-settings-expand-all-sections", {
+            detail: {
+              expand: !this.expanded
+            }
+          }));
+        } else {
+          this.toggle();
+        }
+      });
+      element.appendChild(header);
+      const settingsRows = Object.assign(document.createElement("div"), {
+        className: "settings-rows"
+      });
+      element.appendChild(settingsRows);
+      this.settingsRows.forEach((row) => {
+        settingsRows.appendChild(row.getElement());
+      });
+      return element;
+    }
+  };
+  var SettingsSection_default = SettingsSection;
+
+  // src/Classes/SettingsPanel/SettingsPanel.scss
+  inject_style('#settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}');
+
+  // src/Classes/SettingsPanel/SettingsRowBoolean.js
+  var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
+    element;
+    postAction;
+    trueAction;
+    falseAction;
+    id;
+    requireReload;
+    constructor(name, defaultValue, options = {}) {
+      super(name, SettingsRow_default.TYPES.BOOLEAN, defaultValue, options);
+      const { id, requireReload, postAction } = options || {};
+      if (id) {
+        this.id = id;
+        const settings = new Settings_default();
+        const value = settings.get(id);
+        if (value !== void 0) {
+          this.value = value;
+        }
+      }
+      if (requireReload) {
+        this.requireReload = requireReload;
+      }
+      if (postAction) {
+        this.postAction = postAction;
+      }
+      const action = (newValue) => {
+        if (this.id) {
+          const settings = new Settings_default();
+          settings.save(this.id, newValue);
+        }
+        if (this.postAction) {
+          this.postAction(newValue);
+        }
+        if (this.requireReload) {
+          console.log("reload required");
+          window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+        }
+      };
+      this.bindTrueAction(() => {
+        action(true);
+      });
+      this.bindFalseAction(() => {
+        action(false);
+      });
+    }
+    bindPostAction(action) {
+      this.postAction = action;
+    }
+    setValue(value) {
+      this.value = !!value;
+      console.log(this.value);
+      if (this.value) {
+        this.trueAction();
+      } else {
+        this.falseAction();
+      }
+    }
+    bindTrueAction(action) {
+      this.trueAction = action;
+    }
+    bindFalseAction(action) {
+      this.falseAction = action;
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-row"
+      });
+      this.element = element;
+      const name = Object.assign(document.createElement("span"), {
+        className: "name",
+        innerText: this.name
+      });
+      element.appendChild(name);
+      if (this.description) {
+        element.classList.add("has-description");
+        const description = Object.assign(document.createElement("span"), {
+          className: "description",
+          innerText: this.description
+        });
+        element.appendChild(description);
+      }
+      const valueContainer = Object.assign(document.createElement("div"), {
+        className: "value-container"
+      });
+      const label = Object.assign(document.createElement("label"), {
+        className: "switch"
+      });
+      const input = Object.assign(document.createElement("input"), {
+        type: "checkbox",
+        checked: this.value
+      });
+      const slider = Object.assign(document.createElement("span"), {
+        className: "slider"
+      });
+      input.addEventListener("change", () => {
+        this.setValue(!this.value);
+      });
+      label.appendChild(input);
+      label.appendChild(slider);
+      valueContainer.appendChild(label);
+      element.appendChild(valueContainer);
+      return element;
+    }
+    static fromElement(element) {
+      let name = element.querySelector(":scope > span")?.innerText.trim();
+      name = name.endsWith(":") ? name.slice(0, -1) : name;
+      const settingsRow = new _SettingsRowBoolean(name, element.querySelector(":scope > div a.active").innerText.trim() === "Yes");
+      const valueElements = element.querySelectorAll(":scope > div a");
+      valueElements.forEach((valueElement) => {
+        if (valueElement.innerText.trim() === "Yes") {
+          settingsRow.bindTrueAction(() => {
+            return fetch(valueElement.href).then(() => {
+              window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+            });
+          });
+        } else {
+          settingsRow.bindFalseAction(() => {
+            return fetch(valueElement.href).then(() => {
+              window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+            });
+          });
+        }
+      });
+      return settingsRow;
+    }
+  };
+  var SettingsRowBoolean_default = SettingsRowBoolean;
+
+  // src/Classes/SettingsPanel/SettingsRowEnum.js
+  var SettingsRowEnum = class _SettingsRowEnum extends SettingsRow_default {
+    selectedId;
+    constructor(name, defaultValue, options = {}) {
+      super(name, SettingsRow_default.TYPES.ENUM, "", options);
+      const { id, values } = options || {};
+      if (id) {
+        this.id = id;
+        const settings = new Settings_default();
+        const value = settings.get(id);
+        if (value !== void 0) {
+          this.value = value;
+        }
+      } else {
+        this.selectedId = defaultValue;
+      }
+      if (values) {
+        this.values = values;
+      } else {
+        throw new Error("SettingsRowEnum requires values");
+      }
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-row"
+      });
+      this.element = element;
+      const name = Object.assign(document.createElement("span"), {
+        className: "name",
+        innerText: this.name
+      });
+      element.appendChild(name);
+      if (this.description) {
+        element.classList.add("has-description");
+        const description = Object.assign(document.createElement("span"), {
+          className: "description",
+          innerText: this.description
+        });
+        element.appendChild(description);
+      }
+      const valueContainer = Object.assign(document.createElement("div"), {
+        className: "value-container enum"
+      });
+      this.values.forEach((value) => {
+        const valueElement = Object.assign(document.createElement("a"), {
+          className: "value",
+          innerText: value.value,
+          href: value.id
+        });
+        console.log(this.selectedId, value.id);
+        if (this.selectedId === value.id) {
+          valueElement.classList.add("selected");
+        }
+        valueElement.addEventListener("click", (e) => {
+          e.preventDefault();
+          value.action();
+          element.querySelectorAll(".value").forEach((valueElement2) => {
+            valueElement2.classList.remove("selected");
+          });
+          valueElement.classList.add("selected");
+        });
+        valueContainer.appendChild(valueElement);
+      });
+      element.appendChild(valueContainer);
+      return element;
+    }
+    static fromElement(element) {
+      let name = element.querySelector(":scope > span")?.innerText.trim();
+      name = name.endsWith(":") ? name.slice(0, -1) : name;
+      const valueElements = element.querySelectorAll(":scope > div a");
+      let values = [];
+      let selectedId = null;
+      valueElements.forEach((valueElement) => {
+        let value = {};
+        value.value = valueElement.innerText.trim();
+        value.id = valueElement.href;
+        value.action = () => {
+          return fetch(valueElement.href).then(() => {
+            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+          });
+        };
+        if (valueElement.classList.contains("active")) {
+          selectedId = value.id;
+        }
+        values.push(value);
+      });
+      return new _SettingsRowEnum(name, selectedId, {
+        values
+      });
+    }
+  };
+  var SettingsRowEnum_default = SettingsRowEnum;
+
+  // src/Classes/SettingsPanel/SettingsPanel.js
+  function settingsRowFromElement(element) {
+    let settingsRow;
+    switch (SettingsRow_default.detectType(element)) {
+      case SettingsRow_default.TYPES.BOOLEAN:
+        settingsRow = SettingsRowBoolean_default.fromElement(element);
+        break;
+      case SettingsRow_default.TYPES.ENUM:
+        settingsRow = SettingsRowEnum_default.fromElement(element);
+        break;
+      default:
+        settingsRow = SettingsRowCustom_default.fromElement(element);
+        break;
+    }
+    return settingsRow;
+  }
+  var SettingsPanel = class {
+    sections = [];
+    constructor() {
+    }
+    init() {
+      this.settingsPanelContainerElement = document.getElementById("settings");
+      this.addSettingsNotificationElement();
+      this.enrichSettingsPanel().then(() => {
+        this.populateKUPSettings();
+      });
+      window.addEventListener("kup-settings-needs-reload", (e) => {
+        this.showNotification("Settings updated. Some changes require a reload to take effect.");
+      });
+      window.addEventListener("kup-settings-expand-all-sections", (e) => {
+        this.sections.forEach((section) => {
+          e.detail.expand ? section.expand() : section.collapse();
+        });
+      });
+    }
+    addSection(section) {
+      this.sections.push(section);
+      this.settingsPanelElement.appendChild(section.getElement());
+    }
+    enrichSettingsPanel() {
+      const settingsListElement = this.settingsPanelContainerElement.querySelector(".settings-list");
+      const settingsList = settingsListElement.querySelectorAll(":scope > *");
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          let currentSection = null;
+          let sections = [];
+          settingsList.forEach((el) => {
+            if (el.tagName === "STRONG") {
+              if (currentSection) {
+                sections.push(currentSection);
+                currentSection = null;
+              }
+              currentSection = SettingsSection_default.fromHeaderElement(el);
+            } else {
+              if (!currentSection) {
+                console.error("Found setting without section: ", el);
+                currentSection = new SettingsSection_default("Other");
+              }
+              const settingsRow = settingsRowFromElement(el);
+              currentSection.addSettingsRow(settingsRow);
+            }
+          });
+          if (currentSection) {
+            sections.push(currentSection);
+          }
+          const settingsPanel2 = document.createElement("div");
+          settingsPanel2.classList.add("settings-panel");
+          sections.forEach((section) => {
+            settingsPanel2.appendChild(section.getElement());
+          });
+          this.settingsPanelElement = settingsPanel2;
+          this.settingsPanelContainerElement.appendChild(settingsPanel2);
+          settingsListElement.remove();
+          this.sections = sections;
+          this.settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
+            className: "settings-panel-footer",
+            innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
+          }));
+          resolve();
+        }, 500);
+      });
+    }
+    addSettingsNotificationElement() {
+      const settingsNotificationContainer = Object.assign(document.createElement("div"), {
+        id: "settings-notification-container"
+      });
+      const settingsNotificationElement = document.createElement("div");
+      settingsNotificationElement.classList.add("notification");
+      settingsNotificationElement.innerHTML = `
+            <span class="message-icon"><i class="fas fa-circle-info"></i></span>
+            <span class="message"></span>
+            <button class="btn btn-primary">Reload</button>
+        `;
+      settingsNotificationElement.querySelector("button").addEventListener("click", () => {
+        window.location.reload();
+      });
+      settingsNotificationContainer.appendChild(settingsNotificationElement);
+      document.body.appendChild(settingsNotificationContainer);
+      this.notificationElement = settingsNotificationContainer;
+    }
+    showNotification(message) {
+      this.notificationElement.classList.add("visible");
+      this.notificationElement.querySelector(".message").innerText = message;
+    }
+    hideNotification() {
+      this.notificationElement.classList.remove("visible");
+    }
+    populateKUPSettings() {
+      const section = new SettingsSection_default("Kbin Usability Pack");
+      section.addSettingsRows([
+        new SettingsRowBoolean_default("Show URL subheader", true, {
+          id: "showUrlSubheader",
+          description: "Show the link URL beneath the title"
+        }),
+        new SettingsRowBoolean_default("Remove comment anchor", true, {
+          id: "removeCommentAnchor",
+          description: "Make the comment links go to the top of the article instead of the comments section.",
+          requireReload: true
+        }),
+        new SettingsRowBoolean_default("Show article preview button", true, {
+          id: "showArticlePreview"
+        })
+      ]);
+      this.addSection(section);
+    }
+  };
+  var SettingsPanel_default = SettingsPanel;
+
   // src/index.js
   var articlesHandler = new ArticlesHandler_default();
   var navigator = new Navigator_default();
   var articlePage = new ArticlePage_default();
+  var settingsPanel = new SettingsPanel_default();
   articlesHandler.init();
   navigator.init();
   articlePage.init();
+  settingsPanel.init();
 })();
