@@ -1,8 +1,13 @@
+body.kup-show-url-subheader article.entry header .url-subheader {
+  display: block;
+}
+
 article.entry {
   header {
     h1 {
     }
     .url-subheader {
+      display: none;
       font-size: 0.6rem;
       font-weight: 600;
       flex-basis: 100%;

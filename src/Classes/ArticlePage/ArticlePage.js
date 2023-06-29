@@ -1,5 +1,6 @@
 import Article from "../Article/Article";
 import "./ArticlePage.scss";
+import Settings from "../Settings";
 class ArticlePage {
     currentPage = 1;
     numberOfPages = 1;
@@ -63,6 +64,13 @@ class ArticlePage {
             subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
             this.articleElement.querySelector("header").appendChild(subheader);
         }
+
+        this.applySettings();
+
+        /** Add settings listener */
+        window.addEventListener("kup-settings-changed", () => {
+            this.applySettings();
+        });
     }
     handleInfiniteScroll() {
         if (this.numberOfPages > this.currentPage) {
@@ -75,6 +83,15 @@ class ArticlePage {
                     document.querySelector("#comments section.comments").insertBefore(comment, paginationElement);
                 });
             });
+        }
+    }
+
+    applySettings() {
+        const settings = new Settings();
+        if (settings.get("showUrlSubheader") === true) {
+            document.body.classList.add("kup-show-url-subheader");
+        } else {
+            document.body.classList.remove("kup-show-url-subheader");
         }
     }
 
