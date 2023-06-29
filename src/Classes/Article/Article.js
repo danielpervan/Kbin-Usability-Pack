@@ -119,7 +119,7 @@ class Article {
 
     static fromArticlePage(articleElement) {
         let article = new Article();
-        article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.textContent?.trim();
+        article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.innerText?.trim();
         article.author = new User(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
         article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
         article.linkUrl = articleElement.querySelector("header h1>a")?.href;
