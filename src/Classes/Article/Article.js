@@ -1,6 +1,7 @@
 import User from "../User/User";
 import "./Article.scss";
 import Settings from "../Settings";
+
 class Article {
     feedElement = null;
     subject = null;
@@ -247,7 +248,6 @@ class Article {
             const li = document.createElement("li");
             li.append(newMediaPreviewButton);
             footer.querySelector("menu").insertBefore(li, footerMenu.firstChild);
-
             /** Add preview elements */
             let previewElement = parent.querySelector(".media-preview");
             if (!previewElement) {
@@ -257,7 +257,6 @@ class Article {
                 previewContentElement.classList.add("media-preview-content");
                 previewElement.append(previewContentElement);
                 previewOuter.append(previewElement);
-
             }
         }
     }
@@ -266,7 +265,6 @@ class Article {
         if (!this.articlePageElement) {
             return;
         }
-
         const previewOuter = Object.assign(document.createElement("div"), {
             className: "preview-outer"
         });
@@ -319,17 +317,19 @@ class Article {
 
     showMediaPreview() {
         let element = this.feedElement ?? this.articlePageElement;
-        if (!element || !this.mediaUrl) {
+        if (!element || !this.hasMedia) {
             return;
         }
         this.mediaPreviewOpen = true;
         let previewElement = element.querySelector(".media-preview");
         let previewContentElement = previewElement.querySelector(".media-preview-content");
+
         previewElement.classList.add("show");
         previewContentElement.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i></div>';
         previewContentElement.classList.remove("loaded");
         const mediaURLObject = new URL(this.mediaUrl);
         /** if media is an image */
+
         if (this.mediaUrl.match(/\.(jpeg|jpg|gif|png|svg)$/) !== null) {
             const imageElement = document.createElement("img");
             imageElement.addEventListener("load", () => {
@@ -419,6 +419,7 @@ class Article {
 
     /** Resize media preview on drag */
     #isDraggingMediaPreview = false;
+
     handleMediaPreviewResizeDrag(event, imageElement) {
         if (event.type === "mousedown") {
             this.#isDraggingMediaPreview = true;
@@ -433,7 +434,6 @@ class Article {
                 imageElement.classList.remove("animateMinResize");
             }
         }
-
     }
 
     togglePreviews() {

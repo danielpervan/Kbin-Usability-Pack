@@ -69,7 +69,6 @@ class ArticlesHandler {
     }
 
     selectClosestArticle() {
-        console.log("Selecting closest article");
         if (!this.currentArticle) {
             this.#articles.some((article) => {
                 if (article.feedElement?.getBoundingClientRect().top > 0 && article.feedElement?.getBoundingClientRect().top < window.innerHeight) {

@@ -66,8 +66,6 @@ class ArticlePage {
             subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
             this.articleElement.querySelector("header").appendChild(subheader);
         }
-
-
         this.applySettings();
 
         /** Add settings listener */

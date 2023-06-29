@@ -46,6 +46,7 @@ body:not(.kup-show-article-preview){
   & > figure {
     margin: 0 1rem 0 0;
     align-self: center;
+
     img {
       max-width: 180px;
       max-height: 100%;
@@ -88,6 +89,7 @@ main#main.view-compact {
 
     figure {
       margin-right: 1rem;
+
       img {
         max-height: 100px;
         max-width: 120px;

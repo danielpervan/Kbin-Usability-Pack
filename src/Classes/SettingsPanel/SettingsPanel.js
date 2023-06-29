@@ -63,7 +63,6 @@ class SettingsPanel {
     }
 
     addSection(section) {
-        console.log("Adding section: ", this.#settingsPanelElement);
         this.#sections.push(section);
         this.#settingsPanelElement.appendChild(section.getElement());
     }
