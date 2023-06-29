@@ -361,7 +361,7 @@
     }
     showMediaPreview() {
       let element = this.feedElement ?? this.articlePageElement;
-      if (!element || !this.mediaUrl) {
+      if (!element || !this.hasMedia) {
         return;
       }
       this.mediaPreviewOpen = true;
@@ -540,7 +540,6 @@
       }
     }
     selectClosestArticle() {
-      console.log("Selecting closest article");
       if (!this.currentArticle) {
         this.#articles.some((article) => {
           if (article.feedElement?.getBoundingClientRect().top > 0 && article.feedElement?.getBoundingClientRect().top < window.innerHeight) {
@@ -1093,7 +1092,7 @@
     values = [];
     constructor(name, options = {}) {
       super(name, SettingsRow_default.TYPES.ENUM, options);
-      const { id, values, selectedId } = options || {};
+      const { values, selectedId } = options || {};
       if (selectedId) {
         this.selectedId = selectedId;
       }
@@ -1230,7 +1229,6 @@
       });
     }
     addSection(section) {
-      console.log("Adding section: ", this.#settingsPanelElement);
       this.#sections.push(section);
       this.#settingsPanelElement.appendChild(section.getElement());
     }
