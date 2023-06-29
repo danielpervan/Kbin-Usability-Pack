@@ -1,3 +1,9 @@
+body:not(.kup-show-article-preview){
+  .show-article-preview {
+    display: none !important;
+  }
+}
+
 #content article.entry {
   aside.meta.entry__meta {
     line-height: 3.5em;

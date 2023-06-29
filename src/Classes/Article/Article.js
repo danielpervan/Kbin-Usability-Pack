@@ -1,5 +1,6 @@
 import User from "../User/User";
 import "./Article.scss";
+import Settings from "../Settings";
 class Article {
     feedElement = null;
     subject = null;
@@ -165,6 +166,7 @@ class Article {
         if (!this.feedElement) {
             return;
         }
+        const settings = new Settings();
         const footer = this.feedElement.querySelector("footer");
         const footerMenu = footer.querySelector("menu");
 
@@ -215,14 +217,16 @@ class Article {
         }
 
         /** Remove comment anchor */
-        const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
-        /** Check if link is a comment link */
-        commentsLinkElements.forEach(commentsLinkElement => {
-            if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
-                const url = new URL(commentsLinkElement.href);
-                commentsLinkElement.href = url.pathname;
-            }
-        });
+        if (settings.get("removeCommentAnchor")) {
+            const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
+            /** Check if link is a comment link */
+            commentsLinkElements.forEach(commentsLinkElement => {
+                if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
+                    const url = new URL(commentsLinkElement.href);
+                    commentsLinkElement.href = url.pathname;
+                }
+            });
+        }
     }
 
     replaceMediaPreview(parent) {
