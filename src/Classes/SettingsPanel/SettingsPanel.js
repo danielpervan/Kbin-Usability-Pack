@@ -36,7 +36,7 @@ class SettingsPanel {
             this.populateKUPSettings();
         });
 
-        window.addEventListener("kup-settings-needs-reload", (e) => {
+        window.addEventListener("kup-settings-needs-reload", () => {
             this.showNotification("Settings updated. Some changes require a reload to take effect.");
         });
 
@@ -58,7 +58,7 @@ class SettingsPanel {
 
         /** Make sure this runs last */
         /** 500ms ought to be enough for anyone */
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 let currentSection = null;
                 let sections = [];
