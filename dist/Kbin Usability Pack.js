@@ -35,7 +35,7 @@
   }
 
   // src/Classes/Article/Article.scss
-  inject_style('body:not(.kup-show-article-preview) .show-article-preview{display:none!important}#content article.entry aside.meta.entry__meta{line-height:3.5em}#content article.entry aside.meta.entry__meta img{margin-right:.25em;margin-left:.25em}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}');
+  inject_style('body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}#content article.entry aside.meta.entry__meta{line-height:3.5em}#content article.entry aside.meta.entry__meta img{margin-right:.25em;margin-left:.25em}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}body.KUP-setting-alternativeMobileUI .boost-link-removed{overflow:hidden;height:0;width:0;visibility:hidden;position:absolute}body.KUP-setting-alternativeMobileUI .footer-button{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI .footer-button.more-link{width:1.5em;height:100%}@media (max-width: 689.98px){body.KUP-setting-alternativeMobileUI.rounded-edges article.entry:not(.no-image) .media-preview{border-top-left-radius:.5rem;border-top-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image){grid-template-areas:"preview preview" "title vote" "meta meta" "body body" "footer footer"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image):not(.no-media-preview) figure img{display:none}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "meta meta" "body body" "footer footer"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content .media-preview-li{display:none}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry:not(.no-image){grid-template-areas:"image image" "title vote" "shortDesc shortDesc" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc shortDesc" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry.no-image{grid-template-areas:"title vote" "shortDesc shortDesc" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI #content article.entry footer menu{grid-auto-columns:auto}body.KUP-setting-alternativeMobileUI #content article.entry footer menu .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image){padding-bottom:0;grid-template-columns:auto min-content;padding-top:0}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:none}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:block;margin-left:-.5rem;margin-right:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure img{width:100%;max-width:100%;max-height:90vh;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) .entry__meta{text-align:center}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) footer{text-align:center;border-top:var(--kbin-section-border);padding-top:.8em;padding-bottom:.8em}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) footer menu{place-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) .media-preview{overflow:hidden;max-height:90vh;padding:0;margin:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) .media-preview img{max-width:100%}}');
 
   // src/Classes/Settings.js
   var Settings = class {
@@ -118,6 +118,10 @@
     articlePageElement;
     enableArticlePreview = true;
     constructor() {
+      window.addEventListener("kup-settings-changed", () => {
+        console.log("kup-settings-changed");
+        this.applySettings();
+      });
     }
     static fromFeedElement(element) {
       let article = new _Article();
@@ -302,7 +306,7 @@
       const footerMenu = footer.querySelector("menu");
       if (mediaPreviewButton && mediaPreviewButton.dataset.action === "preview#show") {
         this.hasMedia = true;
-        mediaPreviewButton.remove();
+        mediaPreviewButton.parentElement.remove();
         const newMediaPreviewButton = document.createElement("button");
         newMediaPreviewButton.classList.add("show-media-preview", "preview-button");
         newMediaPreviewButton.innerHTML = '<i class="fas fa-photo-film"></i>';
@@ -311,6 +315,7 @@
           this.toggleMediaPreview();
         });
         const li = document.createElement("li");
+        li.className = "media-preview-li";
         li.append(newMediaPreviewButton);
         footer.querySelector("menu").insertBefore(li, footerMenu.firstChild);
         let previewElement = parent.querySelector(".media-preview");
@@ -323,6 +328,7 @@
           previewOuter.append(previewElement);
         }
       }
+      this.enrichElement();
     }
     enrichArticlePage() {
       if (!this.articlePageElement) {
@@ -333,6 +339,10 @@
       });
       this.articlePageElement.append(previewOuter);
       this.replaceMediaPreview(this.articlePageElement);
+      const settings2 = new Settings_default();
+      if (settings2.get("alternativeMobileUI")) {
+        this.showMediaPreview();
+      }
     }
     showArticlePreview() {
       if (!this.feedElement || !this.type === this.TYPES.ARTICLE || !this.hasContent()) {
@@ -375,7 +385,7 @@
     }
     showMediaPreview() {
       let element = this.feedElement ?? this.articlePageElement;
-      if (!element || !this.mediaUrl) {
+      if (!element || !this.hasMedia) {
         return;
       }
       this.mediaPreviewOpen = true;
@@ -436,6 +446,52 @@
         });
       }
     }
+    enrichElement() {
+      const settings2 = new Settings_default();
+      if (settings2.get("alternativeMobileUI")) {
+        let articleElement = this.articlePageElement ?? this.feedElement;
+        const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
+        const commentsLi = commentsLinkElement?.parentElement;
+        const commentsURL = commentsLinkElement?.href;
+        const commentsCount = parseInt(commentsLinkElement.querySelector("[data-subject-target='commentsCounter']").innerText);
+        commentsLinkElement.remove();
+        const newCommentsLinkElement = document.createElement("a");
+        newCommentsLinkElement.className = "comments-link footer-button";
+        newCommentsLinkElement.href = commentsURL;
+        newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
+        commentsLi.append(newCommentsLinkElement);
+        const boostLinkElement = articleElement.querySelector("footer menu li button[data-action='subject#favourite']");
+        const boostLi = boostLinkElement?.parentElement.parentElement;
+        const newBoostLinkElement = document.createElement("a");
+        const boostCounter = parseInt(boostLinkElement.querySelector("[data-subject-target='upvoteCounter']")?.innerText.match(/\d+/)[0]);
+        const boostForm = boostLinkElement.parentElement;
+        newBoostLinkElement.className = "boost-link footer-button";
+        newBoostLinkElement.href = "#";
+        newBoostLinkElement.addEventListener("click", (event) => {
+          event.preventDefault();
+          boostForm.querySelector("button[type='submit']").click();
+        });
+        const boostCounterObserver = new MutationObserver((mutations) => {
+          console.log("Boost counter observer");
+          mutations.forEach(() => {
+            const boostCounterElement = newBoostLinkElement.querySelector(".boost-counter");
+            if (boostCounterElement) {
+              boostCounterElement.innerText = boostForm.querySelector("[data-subject-target='upvoteCounter']")?.innerHTML?.trim().match(/\d+/)[0] || "";
+            }
+          });
+        });
+        boostCounterObserver.observe(boostForm, {
+          childList: true
+        });
+        newBoostLinkElement.innerHTML = `<i class="fas fa-rocket"></i> <span class="boost-counter">${boostCounter}</span>`;
+        boostForm.classList.add("boost-link-removed");
+        boostLi.append(newBoostLinkElement);
+        const moreLinkElement = articleElement.querySelector("footer menu li button[data-subject-target='more']");
+        moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
+        moreLinkElement.classList.add("more-link", "footer-button");
+      }
+      this.applySettings();
+    }
     hideMediaPreview() {
       const element = this.feedElement ?? this.articlePageElement;
       if (!element) {
@@ -488,6 +544,15 @@
       } else {
         this.hideArticlePreview();
         this.hideMediaPreview();
+      }
+    }
+    applySettings() {
+      const settings2 = new Settings_default();
+      if (settings2.get("alternativeMobileUI") === true && this.articlePageElement) {
+        this.showMediaPreview();
+        if (!this.hasMedia) {
+          this.articlePageElement.classList.add("no-media-preview");
+        }
       }
     }
   };
@@ -554,7 +619,6 @@
       }
     }
     selectClosestArticle() {
-      console.log("Selecting closest article");
       if (!this.currentArticle) {
         this.#articles.some((article) => {
           if (article.feedElement?.getBoundingClientRect().top > 0 && article.feedElement?.getBoundingClientRect().top < window.innerHeight) {
@@ -662,7 +726,7 @@
   var Navigator_default = Navigator;
 
   // src/Classes/ArticlePage/ArticlePage.scss
-  inject_style("body.KUP-setting-showUrlSubheader article.entry header .url-subheader{display:block}article.entry header .url-subheader{display:none;font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
+  inject_style("body.KUP-setting-showUrlSubheader article.entry header .url-subheader{display:block}article.entry header .url-subheader{display:none;font-size:.6rem;font-weight:600;flex-basis:100%;word-break:break-all;padding-right:1em}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
 
   // src/Classes/ArticlePage/ArticlePage.js
   var ArticlePage = class {
@@ -1107,7 +1171,7 @@
     values = [];
     constructor(name, options = {}) {
       super(name, SettingsRow_default.TYPES.ENUM, options);
-      const { id, values, selectedId } = options || {};
+      const { values, selectedId } = options || {};
       if (selectedId) {
         this.selectedId = selectedId;
       }
@@ -1244,7 +1308,6 @@
       });
     }
     addSection(section) {
-      console.log("Adding section: ", this.#settingsPanelElement);
       this.#sections.push(section);
       this.#settingsPanelElement.appendChild(section.getElement());
     }
@@ -1354,6 +1417,11 @@
         new SettingsRowBoolean_default("Always expand settings sections", {
           id: "alwaysExpandSettingsSections",
           description: "Expand the settings sections by default."
+        }),
+        new SettingsRowBoolean_default("Experimental mobile UI", {
+          id: "alternativeMobileUI",
+          description: "Use the alternative experimental mobile UI.",
+          requireReload: true
         })
       ]);
       this.addSection(section);

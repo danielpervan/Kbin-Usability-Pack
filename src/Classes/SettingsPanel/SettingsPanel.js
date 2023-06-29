@@ -187,6 +187,11 @@ class SettingsPanel {
             new SettingsRowBoolean("Always expand settings sections", {
                 id: "alwaysExpandSettingsSections",
                 description: "Expand the settings sections by default.",
+            }),
+            new SettingsRowBoolean("Experimental mobile UI", {
+                id: "alternativeMobileUI",
+                description: "Use the alternative experimental mobile UI.",
+                requireReload: true,
             })
         ]);
         this.addSection(section);

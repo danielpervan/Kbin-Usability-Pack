@@ -12,6 +12,8 @@ article.entry {
       font-size: 0.6rem;
       font-weight: 600;
       flex-basis: 100%;
+      word-break: break-all;
+      padding-right: 1em;
 
       .url-subheader__host {
       }

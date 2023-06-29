@@ -27,7 +27,10 @@ class Article {
     enableArticlePreview = true;
 
     constructor() {
-
+        window.addEventListener("kup-settings-changed", () => {
+            console.log("kup-settings-changed");
+            this.applySettings();
+        });
     }
 
     static fromFeedElement(element) {
@@ -237,7 +240,7 @@ class Article {
         const footerMenu = footer.querySelector("menu");
         if (mediaPreviewButton && mediaPreviewButton.dataset.action === "preview#show") {
             this.hasMedia = true
-            mediaPreviewButton.remove()
+            mediaPreviewButton.parentElement.remove();
             const newMediaPreviewButton = document.createElement("button");
             newMediaPreviewButton.classList.add("show-media-preview", "preview-button");
             newMediaPreviewButton.innerHTML = '<i class="fas fa-photo-film"></i>';
@@ -246,6 +249,7 @@ class Article {
                 this.toggleMediaPreview();
             });
             const li = document.createElement("li");
+            li.className = "media-preview-li";
             li.append(newMediaPreviewButton);
             footer.querySelector("menu").insertBefore(li, footerMenu.firstChild);
             /** Add preview elements */
@@ -259,6 +263,7 @@ class Article {
                 previewOuter.append(previewElement);
             }
         }
+        this.enrichElement();
     }
 
     enrichArticlePage() {
@@ -270,6 +275,11 @@ class Article {
         });
         this.articlePageElement.append(previewOuter);
         this.replaceMediaPreview(this.articlePageElement);
+
+        const settings = new Settings();
+        if (settings.get("alternativeMobileUI")) {
+            this.showMediaPreview();
+        }
     }
 
 
@@ -386,6 +396,60 @@ class Article {
         }
     }
 
+    enrichElement() {
+        const settings = new Settings();
+        if (settings.get("alternativeMobileUI")) {
+            let articleElement = this.articlePageElement ?? this.feedElement;
+            /** Replace comments link */
+            const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
+            const commentsLi = commentsLinkElement?.parentElement;
+            const commentsURL = commentsLinkElement?.href;
+            const commentsCount = parseInt(commentsLinkElement.querySelector("[data-subject-target='commentsCounter']").innerText);
+            commentsLinkElement.remove();
+            const newCommentsLinkElement = document.createElement("a");
+            newCommentsLinkElement.className = "comments-link footer-button";
+            newCommentsLinkElement.href = commentsURL;
+            newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
+            commentsLi.append(newCommentsLinkElement);
+
+            /** Replace boost link */
+            const boostLinkElement = articleElement.querySelector("footer menu li button[data-action='subject#favourite']");
+            const boostLi = boostLinkElement?.parentElement.parentElement;
+            const newBoostLinkElement = document.createElement("a");
+            const boostCounter = parseInt(boostLinkElement.querySelector("[data-subject-target='upvoteCounter']")?.innerText.match(/\d+/)[0]);
+            const boostForm = boostLinkElement.parentElement;
+            newBoostLinkElement.className = "boost-link footer-button";
+            newBoostLinkElement.href = "#"
+            newBoostLinkElement.addEventListener("click", (event) => {
+                event.preventDefault();
+                boostForm.querySelector("button[type='submit']").click();
+            });
+
+            /** Observe boost counter */
+            const boostCounterObserver = new MutationObserver((mutations) => {
+                console.log("Boost counter observer");
+                mutations.forEach(() => {
+                    const boostCounterElement = newBoostLinkElement.querySelector(".boost-counter");
+                    if (boostCounterElement) {
+                        boostCounterElement.innerText = boostForm.querySelector("[data-subject-target='upvoteCounter']")?.innerHTML?.trim().match(/\d+/)[0] || '';
+                    }
+                });
+            });
+            boostCounterObserver.observe(boostForm, {
+                childList: true
+            });
+            newBoostLinkElement.innerHTML = `<i class="fas fa-rocket"></i> <span class="boost-counter">${boostCounter}</span>`;
+            boostForm.classList.add("boost-link-removed");
+            boostLi.append(newBoostLinkElement);
+
+            /** Replace more link */
+            const moreLinkElement = articleElement.querySelector("footer menu li button[data-subject-target='more']");
+            moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
+            moreLinkElement.classList.add("more-link", "footer-button");
+        }
+        this.applySettings();
+    }
+
     hideMediaPreview() {
         const element = this.feedElement ?? this.articlePageElement;
         if (!element) {
@@ -444,6 +508,16 @@ class Article {
         } else {
             this.hideArticlePreview();
             this.hideMediaPreview();
+        }
+    }
+
+    applySettings() {
+        const settings = new Settings();
+        if (settings.get("alternativeMobileUI") === true && this.articlePageElement) {
+            this.showMediaPreview();
+            if (!this.hasMedia) {
+                this.articlePageElement.classList.add("no-media-preview");
+            }
         }
     }
 }
