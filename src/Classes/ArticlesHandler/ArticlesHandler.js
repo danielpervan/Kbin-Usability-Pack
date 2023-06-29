@@ -1,4 +1,5 @@
 import Article from "../Article/Article";
+import Settings from "../Settings";
 
 class ArticlesHandler {
     #articles;
@@ -12,6 +13,11 @@ class ArticlesHandler {
         if (!document.querySelector("#content>div article.entry")) {
             return;
         }
+
+        this.applySettings();
+        window.addEventListener("kup-settings-changed", () => {
+            this.applySettings();
+        });
         this.parseArticles();
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -136,6 +142,18 @@ class ArticlesHandler {
             }
             event.preventDefault();
             window.location.href = this.currentArticle.articleUrl;
+        }
+    }
+
+    applySettings() {
+        const settings = new Settings();
+        if (settings.get("showArticlePreview")) {
+            document.body.classList.add("kup-show-article-preview");
+        } else {
+            document.body.classList.remove("kup-show-article-preview");
+            this.#articles.forEach((article) => {
+                article.hideArticlePreview();
+            });
         }
     }
 }
