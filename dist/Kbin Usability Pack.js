@@ -1192,7 +1192,7 @@
       this.enrichSettingsPanel().then(() => {
         this.populateKUPSettings();
       });
-      window.addEventListener("kup-settings-needs-reload", (e) => {
+      window.addEventListener("kup-settings-needs-reload", () => {
         this.showNotification("Settings updated. Some changes require a reload to take effect.");
       });
       window.addEventListener("kup-settings-expand-all-sections", (e) => {
@@ -1208,7 +1208,7 @@
     enrichSettingsPanel() {
       const settingsListElement = this.settingsPanelContainerElement.querySelector(".settings-list");
       const settingsList = settingsListElement.querySelectorAll(":scope > *");
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         setTimeout(() => {
           let currentSection = null;
           let sections = [];
