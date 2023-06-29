@@ -2,32 +2,22 @@ import SettingsRow from "./SettingsRow";
 import Settings from "../Settings";
 
 class SettingsRowBoolean extends SettingsRow {
-    element;
-    postAction;
     trueAction;
     falseAction;
-    id
     requireReload;
+    onChangeAction;
 
-    constructor(name, defaultValue, options = {}) {
-        super(name, SettingsRow.TYPES.BOOLEAN, defaultValue, options);
+    constructor(name, options = {}) {
+        super(name, SettingsRow.TYPES.BOOLEAN, options);
 
-        const {id , requireReload , postAction } = options || {};
-        if (id) {
-            this.id = id;
-            const settings = new Settings();
-            const value = settings.get(id);
-            if (value !== undefined) {
-                this.value = value;
-            }
-        }
+        const {requireReload, onChange} = options || {};
 
         if (requireReload) {
             this.requireReload = requireReload;
         }
 
-        if (postAction) {
-            this.postAction = postAction;
+        if (onChange) {
+            this.onChangeAction = onChange;
         }
 
         const action = (newValue) => {
@@ -35,11 +25,10 @@ class SettingsRowBoolean extends SettingsRow {
                 const settings = new Settings();
                 settings.save(this.id, newValue);
             }
-            if (this.postAction) {
-                this.postAction(newValue);
+            if (this.onChangeAction) {
+                this.onChangeAction(newValue);
             }
             if (this.requireReload) {
-                console.log("reload required");
                 window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
             }
         }
@@ -53,13 +42,8 @@ class SettingsRowBoolean extends SettingsRow {
         });
     }
 
-    bindPostAction(action) {
-        this.postAction = action;
-    }
-
     setValue(value) {
         this.value = !!value;
-        console.log(this.value);
         if (this.value) {
             this.trueAction();
         } else {
@@ -126,30 +110,18 @@ class SettingsRowBoolean extends SettingsRow {
     static fromElement(element) {
         let name = element.querySelector(":scope > span")?.innerText.trim();
         name = name.endsWith(":") ? name.slice(0, -1) : name;
-        const settingsRow = new SettingsRowBoolean(name, element.querySelector(":scope > div a.active").innerText.trim() === "Yes");
+        const settingsRow = new SettingsRowBoolean(name, {
+            value: element.querySelector(":scope > div a.active").innerText.trim() === "Yes"
+        });
         const valueElements = element.querySelectorAll(":scope > div a");
         valueElements.forEach((valueElement) => {
             if (valueElement.innerText.trim() === "Yes") {
                 settingsRow.bindTrueAction(() => {
-                    if (valueElement.href?.trim().toLowerCase().startsWith("javascript:") || valueElement.href?.trim().startsWith("#")) {
-                        valueElement.click();
-                        return Promise.resolve();
-                    } else {
-                        return fetch(valueElement.href).then(() => {
-                            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-                        });
-                    }
+                    return settingsRow.legacyAction(valueElement);
                 });
             } else {
                 settingsRow.bindFalseAction(() => {
-                    if (valueElement.href.startsWith("javascript:") || valueElement.href.startsWith("#")) {
-                        valueElement.click();
-                        return Promise.resolve();
-                    } else {
-                        return fetch(valueElement.href).then(() => {
-                            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-                        });
-                    }
+                    return settingsRow.legacyAction(valueElement);
                 });
             }
         });

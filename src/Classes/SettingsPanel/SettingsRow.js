@@ -1,10 +1,12 @@
+import Settings from "../Settings";
+
 class SettingsRow {
     element;
     name;
     description;
     value;
     type;
-    options;
+    id;
     static TYPES = {
         BOOLEAN: "boolean",
         STRING: "string",
@@ -12,13 +14,17 @@ class SettingsRow {
         ENUM: "enum",
         CUSTOM: "custom",
     }
-    constructor(name, type, value, options={}) {
+    constructor(name, type, options={}) {
         this.name = name;
         this.type = type;
-        this.value = value;
 
-        const { description } = options || {};
+        const { description, value, id } = options || {};
+        this.value = value;
         this.description = description;
+
+        if (id) {
+            this.setId(id);
+        }
     }
 
     getElement() {
@@ -47,6 +53,26 @@ class SettingsRow {
 
     static fromElement(element) {
         return new SettingsRow(element.innerText, SettingsRow.detectType(element), "", {});
+    }
+
+    setId(id) {
+        this.id = id;
+        const settings = new Settings();
+        const value = settings.get(id);
+        if (value !== undefined) {
+            this.value = value;
+        }
+    }
+
+    legacyAction(valueElement) {
+        if (valueElement.href?.trim().toLowerCase().startsWith("javascript:") || valueElement.href?.trim().startsWith("#")) {
+            valueElement.click();
+            return Promise.resolve();
+        } else {
+            return fetch(valueElement.href).then(() => {
+                window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+            });
+        }
     }
 
     static detectType(element) {

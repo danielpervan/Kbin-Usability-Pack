@@ -1,13 +1,14 @@
 import SettingsRow from "./SettingsRow";
 
 class SettingsRowCustom extends SettingsRow {
-    name;
-    description;
-    value;
     valueElement;
 
-    constructor(name, value) {
-        super(name, SettingsRow.TYPES.CUSTOM, value);
+    constructor(name, options) {
+        super(name, SettingsRow.TYPES.CUSTOM, options);
+        const { valueElement } = options || {};
+        if (valueElement) {
+            this.valueElement = valueElement;
+        }
     }
 
     getElement() {
@@ -41,11 +42,11 @@ class SettingsRowCustom extends SettingsRow {
     }
 
     static fromElement(element) {
-        const settingsRow = new SettingsRowCustom();
-        settingsRow.name = element.querySelector(":scope > span")?.innerText.trim();
-        settingsRow.name = settingsRow.name.endsWith(":") ? settingsRow.name.slice(0, -1) : settingsRow.name;
+        let name = element.querySelector(":scope > span")?.innerText.trim();
+        name = name.endsWith(":") ? name.slice(0, -1) : name;
+
+        const settingsRow = new SettingsRowCustom(name);
         settingsRow.description = element.querySelector(".description")?.innerText;
-        settingsRow.value = element.querySelector("input")?.value;
         settingsRow.valueElement = element.querySelector(":scope > div");
         return settingsRow;
     }

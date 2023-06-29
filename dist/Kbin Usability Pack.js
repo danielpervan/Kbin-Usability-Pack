@@ -2,12 +2,12 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.2.0
+// @version      0.2.1
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=kbin.social
-// @run-at document-end
+// @run-at       document-end
 // ==/UserScript==
 
 (function () {
@@ -42,37 +42,52 @@
     constructor() {
     }
     get(key) {
-      const settings = this.getAll();
-      if (settings[key] === void 0) {
+      const settings2 = this.getAll();
+      if (settings2[key] === void 0) {
         return null;
       }
-      return settings[key];
+      return settings2[key];
     }
     getAll() {
       const data = localStorage.getItem("kup-settings");
-      let settings = {};
+      let settings2 = {};
       if (data) {
-        settings = JSON.parse(data);
+        settings2 = JSON.parse(data);
       }
-      if (settings.showUrlSubheader === void 0) {
-        settings.showUrlSubheader = true;
+      if (settings2.showUrlSubheader === void 0) {
+        settings2.showUrlSubheader = true;
       }
-      if (settings.removeCommentAnchor === void 0) {
-        settings.removeCommentAnchor = true;
+      if (settings2.removeCommentAnchor === void 0) {
+        settings2.removeCommentAnchor = true;
       }
-      if (settings.showArticlePreview === void 0) {
-        settings.showArticlePreview = true;
+      if (settings2.showArticlePreview === void 0) {
+        settings2.showArticlePreview = true;
       }
-      return settings;
+      if (settings2.infiniteCommentScroll === void 0) {
+        settings2.infiniteCommentScroll = true;
+      }
+      if (settings2.addOptionsAnchor === void 0) {
+        settings2.addOptionsAnchor = true;
+      }
+      return settings2;
     }
-    replace(settings) {
-      localStorage.setItem("kup-settings", JSON.stringify(settings));
+    replace(settings2) {
+      localStorage.setItem("kup-settings", JSON.stringify(settings2));
       window.dispatchEvent(new CustomEvent("kup-settings-changed"));
+      this.apply();
     }
     save(key, value) {
-      const settings = this.getAll();
-      settings[key] = value;
-      this.replace(settings);
+      const settings2 = this.getAll();
+      settings2[key] = value;
+      this.replace(settings2);
+    }
+    apply() {
+      const settings2 = this.getAll();
+      for (const [key, value] of Object.entries(settings2)) {
+        if (value === true || value === false) {
+          document.body.classList.toggle("KUP-setting-" + key, value);
+        }
+      }
     }
     reset() {
       localStorage.removeItem("kup-settings");
@@ -229,7 +244,7 @@
       if (!this.feedElement) {
         return;
       }
-      const settings = new Settings_default();
+      const settings2 = new Settings_default();
       const footer = this.feedElement.querySelector("footer");
       const footerMenu = footer.querySelector("menu");
       const previewOuter = Object.assign(document.createElement("div"), {
@@ -270,7 +285,7 @@
           previewOuter.append(previewElement);
         }
       }
-      if (settings.get("removeCommentAnchor")) {
+      if (settings2.get("removeCommentAnchor")) {
         const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
         commentsLinkElements.forEach((commentsLinkElement) => {
           if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
@@ -613,8 +628,8 @@
       }
     }
     applySettings() {
-      const settings = new Settings_default();
-      if (settings.get("showArticlePreview")) {
+      const settings2 = new Settings_default();
+      if (settings2.get("showArticlePreview")) {
         document.body.classList.add("kup-show-article-preview");
       } else {
         document.body.classList.remove("kup-show-article-preview");
@@ -647,7 +662,7 @@
   var Navigator_default = Navigator;
 
   // src/Classes/ArticlePage/ArticlePage.scss
-  inject_style("body.kup-show-url-subheader article.entry header .url-subheader{display:block}article.entry header .url-subheader{display:none;font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
+  inject_style("body.KUP-setting-showUrlSubheader article.entry header .url-subheader{display:block}article.entry header .url-subheader{display:none;font-size:.6rem;font-weight:600;flex-basis:100%}article.entry header .url-subheader .url-subheader__path{font-weight:200}");
 
   // src/Classes/ArticlePage/ArticlePage.js
   var ArticlePage = class {
@@ -664,29 +679,32 @@
       this.articleElement = document.querySelector("article.entry");
       this.article = Article_default.fromArticlePage(this.articleElement);
       this.article.enrichArticlePage();
-      const paginationElement = document.querySelector("nav.pagination.section");
-      let currentPage = this.url.searchParams.get("p");
-      if (currentPage) {
-        this.currentPage = parseInt(currentPage);
-      } else {
-        this.currentPage = 1;
-      }
-      let numberOfPages = paginationElement?.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
-      if (numberOfPages && numberOfPages[numberOfPages.length - 1]) {
-        this.numberOfPages = parseInt(numberOfPages[numberOfPages.length - 1].textContent);
-      } else {
-        this.numberOfPages = this.currentPage;
-      }
-      if (paginationElement) {
-        paginationElement.innerHTML = "";
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              this.handleInfiniteScroll();
-            }
+      const settings2 = new Settings_default();
+      if (settings2.get("infiniteCommentScroll")) {
+        const paginationElement = document.querySelector("nav.pagination.section");
+        let currentPage = this.url.searchParams.get("p");
+        if (currentPage) {
+          this.currentPage = parseInt(currentPage);
+        } else {
+          this.currentPage = 1;
+        }
+        let numberOfPages = paginationElement?.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
+        if (numberOfPages && numberOfPages[numberOfPages.length - 1]) {
+          this.numberOfPages = parseInt(numberOfPages[numberOfPages.length - 1].textContent);
+        } else {
+          this.numberOfPages = this.currentPage;
+        }
+        if (paginationElement) {
+          paginationElement.innerHTML = "";
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                this.handleInfiniteScroll();
+              }
+            });
           });
-        });
-        observer.observe(paginationElement);
+          observer.observe(paginationElement);
+        }
       }
       document.addEventListener("keydown", (e) => {
         this.handleKeydown(e);
@@ -718,11 +736,16 @@
       }
     }
     applySettings() {
-      const settings = new Settings_default();
-      if (settings.get("showUrlSubheader") === true) {
-        document.body.classList.add("kup-show-url-subheader");
+      const settings2 = new Settings_default();
+      const options = document.getElementById("options");
+      if (settings2.get("addOptionsAnchor") === true) {
+        options.querySelectorAll(".options__main li a").forEach((a) => {
+          a.href = a.href + "#options";
+        });
       } else {
-        document.body.classList.remove("kup-show-url-subheader");
+        options.querySelectorAll(".options__main li a").forEach((a) => {
+          a.href = a.href.replace("#options", "");
+        });
       }
     }
     handleKeydown(event) {
@@ -764,7 +787,7 @@
     description;
     value;
     type;
-    options;
+    id;
     static TYPES = {
       BOOLEAN: "boolean",
       STRING: "string",
@@ -772,12 +795,15 @@
       ENUM: "enum",
       CUSTOM: "custom"
     };
-    constructor(name, type, value, options = {}) {
+    constructor(name, type, options = {}) {
       this.name = name;
       this.type = type;
+      const { description, value, id } = options || {};
       this.value = value;
-      const { description } = options || {};
       this.description = description;
+      if (id) {
+        this.setId(id);
+      }
     }
     getElement() {
       if (this.element) {
@@ -805,6 +831,24 @@
     static fromElement(element) {
       return new _SettingsRow(element.innerText, _SettingsRow.detectType(element), "", {});
     }
+    setId(id) {
+      this.id = id;
+      const settings2 = new Settings_default();
+      const value = settings2.get(id);
+      if (value !== void 0) {
+        this.value = value;
+      }
+    }
+    legacyAction(valueElement) {
+      if (valueElement.href?.trim().toLowerCase().startsWith("javascript:") || valueElement.href?.trim().startsWith("#")) {
+        valueElement.click();
+        return Promise.resolve();
+      } else {
+        return fetch(valueElement.href).then(() => {
+          window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+        });
+      }
+    }
     static detectType(element) {
       const valueElement = element.querySelector(":scope > div");
       const booleanRegex = /Yes\s*\|\s*No/;
@@ -822,12 +866,13 @@
 
   // src/Classes/SettingsPanel/SettingsRowCustom.js
   var SettingsRowCustom = class _SettingsRowCustom extends SettingsRow_default {
-    name;
-    description;
-    value;
     valueElement;
-    constructor(name, value) {
-      super(name, SettingsRow_default.TYPES.CUSTOM, value);
+    constructor(name, options) {
+      super(name, SettingsRow_default.TYPES.CUSTOM, options);
+      const { valueElement } = options || {};
+      if (valueElement) {
+        this.valueElement = valueElement;
+      }
     }
     getElement() {
       if (this.element) {
@@ -858,11 +903,10 @@
       return element;
     }
     static fromElement(element) {
-      const settingsRow = new _SettingsRowCustom();
-      settingsRow.name = element.querySelector(":scope > span")?.innerText.trim();
-      settingsRow.name = settingsRow.name.endsWith(":") ? settingsRow.name.slice(0, -1) : settingsRow.name;
+      let name = element.querySelector(":scope > span")?.innerText.trim();
+      name = name.endsWith(":") ? name.slice(0, -1) : name;
+      const settingsRow = new _SettingsRowCustom(name);
       settingsRow.description = element.querySelector(".description")?.innerText;
-      settingsRow.value = element.querySelector("input")?.value;
       settingsRow.valueElement = element.querySelector(":scope > div");
       return settingsRow;
     }
@@ -931,49 +975,42 @@
       this.settingsRows.forEach((row) => {
         settingsRows.appendChild(row.getElement());
       });
+      const settings2 = new Settings_default();
+      if (settings2.get("alwaysExpandSettingsSections")) {
+        this.expand();
+      }
       return element;
     }
   };
   var SettingsSection_default = SettingsSection;
 
   // src/Classes/SettingsPanel/SettingsPanel.scss
-  inject_style('#settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}');
+  inject_style('#settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
 
   // src/Classes/SettingsPanel/SettingsRowBoolean.js
   var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
-    element;
-    postAction;
     trueAction;
     falseAction;
-    id;
     requireReload;
-    constructor(name, defaultValue, options = {}) {
-      super(name, SettingsRow_default.TYPES.BOOLEAN, defaultValue, options);
-      const { id, requireReload, postAction } = options || {};
-      if (id) {
-        this.id = id;
-        const settings = new Settings_default();
-        const value = settings.get(id);
-        if (value !== void 0) {
-          this.value = value;
-        }
-      }
+    onChangeAction;
+    constructor(name, options = {}) {
+      super(name, SettingsRow_default.TYPES.BOOLEAN, options);
+      const { requireReload, onChange } = options || {};
       if (requireReload) {
         this.requireReload = requireReload;
       }
-      if (postAction) {
-        this.postAction = postAction;
+      if (onChange) {
+        this.onChangeAction = onChange;
       }
       const action = (newValue) => {
         if (this.id) {
-          const settings = new Settings_default();
-          settings.save(this.id, newValue);
+          const settings2 = new Settings_default();
+          settings2.save(this.id, newValue);
         }
-        if (this.postAction) {
-          this.postAction(newValue);
+        if (this.onChangeAction) {
+          this.onChangeAction(newValue);
         }
         if (this.requireReload) {
-          console.log("reload required");
           window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
         }
       };
@@ -984,12 +1021,8 @@
         action(false);
       });
     }
-    bindPostAction(action) {
-      this.postAction = action;
-    }
     setValue(value) {
       this.value = !!value;
-      console.log(this.value);
       if (this.value) {
         this.trueAction();
       } else {
@@ -1048,20 +1081,18 @@
     static fromElement(element) {
       let name = element.querySelector(":scope > span")?.innerText.trim();
       name = name.endsWith(":") ? name.slice(0, -1) : name;
-      const settingsRow = new _SettingsRowBoolean(name, element.querySelector(":scope > div a.active").innerText.trim() === "Yes");
+      const settingsRow = new _SettingsRowBoolean(name, {
+        value: element.querySelector(":scope > div a.active").innerText.trim() === "Yes"
+      });
       const valueElements = element.querySelectorAll(":scope > div a");
       valueElements.forEach((valueElement) => {
         if (valueElement.innerText.trim() === "Yes") {
           settingsRow.bindTrueAction(() => {
-            return fetch(valueElement.href).then(() => {
-              window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-            });
+            return settingsRow.legacyAction(valueElement);
           });
         } else {
           settingsRow.bindFalseAction(() => {
-            return fetch(valueElement.href).then(() => {
-              window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-            });
+            return settingsRow.legacyAction(valueElement);
           });
         }
       });
@@ -1073,24 +1104,22 @@
   // src/Classes/SettingsPanel/SettingsRowEnum.js
   var SettingsRowEnum = class _SettingsRowEnum extends SettingsRow_default {
     selectedId;
-    constructor(name, defaultValue, options = {}) {
-      super(name, SettingsRow_default.TYPES.ENUM, "", options);
-      const { id, values } = options || {};
-      if (id) {
-        this.id = id;
-        const settings = new Settings_default();
-        const value = settings.get(id);
-        if (value !== void 0) {
-          this.value = value;
-        }
-      } else {
-        this.selectedId = defaultValue;
+    values = [];
+    constructor(name, options = {}) {
+      super(name, SettingsRow_default.TYPES.ENUM, options);
+      const { id, values, selectedId } = options || {};
+      if (selectedId) {
+        this.selectedId = selectedId;
       }
       if (values) {
         this.values = values;
-      } else {
-        throw new Error("SettingsRowEnum requires values");
       }
+    }
+    setSelected(id) {
+      this.selectedId = id;
+      this.element.querySelectorAll(".value").forEach((valueElement) => {
+        valueElement.classList.remove("selected");
+      });
     }
     getElement() {
       if (this.element) {
@@ -1122,7 +1151,6 @@
           innerText: value.value,
           href: value.id
         });
-        console.log(this.selectedId, value.id);
         if (this.selectedId === value.id) {
           valueElement.classList.add("selected");
         }
@@ -1142,6 +1170,7 @@
     static fromElement(element) {
       let name = element.querySelector(":scope > span")?.innerText.trim();
       name = name.endsWith(":") ? name.slice(0, -1) : name;
+      const settingsRow = new _SettingsRowEnum(name);
       const valueElements = element.querySelectorAll(":scope > div a");
       let values = [];
       let selectedId = null;
@@ -1150,18 +1179,16 @@
         value.value = valueElement.innerText.trim();
         value.id = valueElement.href;
         value.action = () => {
-          return fetch(valueElement.href).then(() => {
-            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-          });
+          settingsRow.legacyAction(valueElement);
         };
         if (valueElement.classList.contains("active")) {
           selectedId = value.id;
         }
         values.push(value);
       });
-      return new _SettingsRowEnum(name, selectedId, {
-        values
-      });
+      settingsRow.values = values;
+      settingsRow.selectedId = selectedId;
+      return settingsRow;
     }
   };
   var SettingsRowEnum_default = SettingsRowEnum;
@@ -1183,72 +1210,96 @@
     return settingsRow;
   }
   var SettingsPanel = class {
-    sections = [];
+    #initiated = false;
+    #notificationElement;
+    #sections = [];
+    #settingsPanelElement;
+    #settingsPanelContainerElement;
     constructor() {
     }
     init() {
-      this.settingsPanelContainerElement = document.getElementById("settings");
-      this.addSettingsNotificationElement();
-      this.enrichSettingsPanel().then(() => {
-        this.populateKUPSettings();
-      });
+      if (this.#initiated) {
+        console.error("SettingsPanel already initiated");
+        return;
+      }
+      this.#initiated = true;
+      this.#settingsPanelContainerElement = document.getElementById("settings");
+      this.#addSettingsNotificationElement();
+      document.KUP.settingsPanel = this;
+      if (!document.KUP.components) {
+        document.KUP.components = {};
+      }
+      document.KUP.components.SettingsPanelBooleanRow = SettingsRowBoolean_default;
+      document.KUP.components.SettingsPanelEnumRow = SettingsRowEnum_default;
+      document.KUP.components.SettingsPanelSection = SettingsSection_default;
+      this.#enrichSettingsPanel();
+      this.#populateKUPSettings();
       window.addEventListener("kup-settings-needs-reload", () => {
-        this.showNotification("Settings updated. Some changes require a reload to take effect.");
+        this.showNotification("Settings updated. Some changes require reload to take effect.");
       });
       window.addEventListener("kup-settings-expand-all-sections", (e) => {
-        this.sections.forEach((section) => {
+        this.#sections.forEach((section) => {
           e.detail.expand ? section.expand() : section.collapse();
         });
       });
     }
     addSection(section) {
-      this.sections.push(section);
-      this.settingsPanelElement.appendChild(section.getElement());
+      console.log("Adding section: ", this.#settingsPanelElement);
+      this.#sections.push(section);
+      this.#settingsPanelElement.appendChild(section.getElement());
     }
-    enrichSettingsPanel() {
-      const settingsListElement = this.settingsPanelContainerElement.querySelector(".settings-list");
+    getSection(name) {
+      return this.#sections.find((section) => section.name === name);
+    }
+    getSections() {
+      return this.#sections;
+    }
+    removeSection(name) {
+      const section = this.getSection(name);
+      if (section) {
+        section.getElement().remove();
+        this.#sections = this.#sections.filter((section2) => section2.name !== name);
+      }
+    }
+    #enrichSettingsPanel() {
+      const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
       const settingsList = settingsListElement.querySelectorAll(":scope > *");
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          let currentSection = null;
-          let sections = [];
-          settingsList.forEach((el) => {
-            if (el.tagName === "STRONG") {
-              if (currentSection) {
-                sections.push(currentSection);
-                currentSection = null;
-              }
-              currentSection = SettingsSection_default.fromHeaderElement(el);
-            } else {
-              if (!currentSection) {
-                console.error("Found setting without section: ", el);
-                currentSection = new SettingsSection_default("Other");
-              }
-              const settingsRow = settingsRowFromElement(el);
-              currentSection.addSettingsRow(settingsRow);
-            }
-          });
+      const settingsPanel2 = document.createElement("div");
+      this.#settingsPanelElement = settingsPanel2;
+      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
+      let currentSection = null;
+      let sections = [];
+      settingsList.forEach((el) => {
+        if (el.tagName === "STRONG") {
           if (currentSection) {
             sections.push(currentSection);
+            currentSection = null;
           }
-          const settingsPanel2 = document.createElement("div");
-          settingsPanel2.classList.add("settings-panel");
-          sections.forEach((section) => {
-            settingsPanel2.appendChild(section.getElement());
-          });
-          this.settingsPanelElement = settingsPanel2;
-          this.settingsPanelContainerElement.appendChild(settingsPanel2);
-          settingsListElement.remove();
-          this.sections = sections;
-          this.settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
-            className: "settings-panel-footer",
-            innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
-          }));
-          resolve();
-        }, 500);
+          currentSection = SettingsSection_default.fromHeaderElement(el);
+        } else {
+          if (!currentSection) {
+            console.error("Found setting without section: ", el);
+            currentSection = new SettingsSection_default("Other");
+          }
+          const settingsRow = settingsRowFromElement(el);
+          currentSection.addSettingsRow(settingsRow);
+        }
       });
+      if (currentSection) {
+        sections.push(currentSection);
+      }
+      settingsPanel2.classList.add("settings-panel");
+      sections.forEach((section) => {
+        settingsPanel2.appendChild(section.getElement());
+      });
+      settingsListElement.remove();
+      this.#sections = sections;
+      this.#settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
+        className: "settings-panel-footer",
+        innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
+      }));
     }
-    addSettingsNotificationElement() {
+    #addSettingsNotificationElement() {
       const settingsNotificationContainer = Object.assign(document.createElement("div"), {
         id: "settings-notification-container"
       });
@@ -1264,29 +1315,45 @@
       });
       settingsNotificationContainer.appendChild(settingsNotificationElement);
       document.body.appendChild(settingsNotificationContainer);
-      this.notificationElement = settingsNotificationContainer;
+      this.#notificationElement = settingsNotificationContainer;
     }
     showNotification(message) {
-      this.notificationElement.classList.add("visible");
-      this.notificationElement.querySelector(".message").innerText = message;
+      this.#notificationElement.classList.add("visible");
+      this.#notificationElement.querySelector(".message").innerText = message;
     }
     hideNotification() {
-      this.notificationElement.classList.remove("visible");
+      this.#notificationElement.classList.remove("visible");
     }
-    populateKUPSettings() {
+    #populateKUPSettings() {
       const section = new SettingsSection_default("Kbin Usability Pack");
       section.addSettingsRows([
-        new SettingsRowBoolean_default("Show URL subheader", true, {
+        new SettingsRowBoolean_default("Show URL subheader", {
           id: "showUrlSubheader",
-          description: "Show the link URL beneath the title"
+          description: "Show the link URL beneath the title",
+          value: true
         }),
-        new SettingsRowBoolean_default("Remove comment anchor", true, {
+        new SettingsRowBoolean_default("Remove comment anchor", {
           id: "removeCommentAnchor",
           description: "Make the comment links go to the top of the article instead of the comments section.",
+          requireReload: true,
+          value: true
+        }),
+        new SettingsRowBoolean_default("Show article preview button", {
+          id: "showArticlePreview",
+          value: true
+        }),
+        new SettingsRowBoolean_default("Infinite comment scroll", {
+          id: "infiniteCommentScroll",
+          description: "Automatically load more comments when scrolling to the bottom of the page.",
           requireReload: true
         }),
-        new SettingsRowBoolean_default("Show article preview button", true, {
-          id: "showArticlePreview"
+        new SettingsRowBoolean_default("Add anchor to comment options", {
+          id: "addOptionsAnchor",
+          description: "Scroll to the comment section when clicking the option buttons."
+        }),
+        new SettingsRowBoolean_default("Always expand settings sections", {
+          id: "alwaysExpandSettingsSections",
+          description: "Expand the settings sections by default."
         })
       ]);
       this.addSection(section);
@@ -1295,13 +1362,17 @@
   var SettingsPanel_default = SettingsPanel;
 
   // src/index.js
+  document.body.classList.add("KUP-injected");
+  document.KUP = {};
   var articlesHandler = new ArticlesHandler_default();
   var navigator = new Navigator_default();
   var articlePage = new ArticlePage_default();
   var settingsPanel = new SettingsPanel_default();
+  var settings = new Settings_default();
   articlesHandler.init();
   navigator.init();
   articlePage.init();
   settingsPanel.init();
+  settings.apply();
 })();
 })();

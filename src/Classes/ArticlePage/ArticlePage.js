@@ -23,33 +23,35 @@ class ArticlePage {
         this.article.enrichArticlePage();
 
         /** Add infinite scroll */
-        const paginationElement = document.querySelector("nav.pagination.section");
+        const settings = new Settings();
+        if (settings.get("infiniteCommentScroll")) {
+            const paginationElement = document.querySelector("nav.pagination.section");
 
-        let currentPage = this.url.searchParams.get("p");
-        if (currentPage) {
-            this.currentPage = parseInt(currentPage);
-        } else {
-            this.currentPage = 1;
-        }
+            let currentPage = this.url.searchParams.get("p");
+            if (currentPage) {
+                this.currentPage = parseInt(currentPage);
+            } else {
+                this.currentPage = 1;
+            }
 
-        let numberOfPages = paginationElement?.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
-        if (numberOfPages && numberOfPages[numberOfPages.length - 1]) {
-            this.numberOfPages = parseInt(numberOfPages[numberOfPages.length - 1].textContent);
-        } else {
-            this.numberOfPages = this.currentPage;
-        }
-        if (paginationElement) {
-            paginationElement.innerHTML = '';
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        this.handleInfiniteScroll();
-                    }
+            let numberOfPages = paginationElement?.querySelectorAll(".pagination__item:not(.pagination__item--next-page):not(.pagination__item--previous-page)");
+            if (numberOfPages && numberOfPages[numberOfPages.length - 1]) {
+                this.numberOfPages = parseInt(numberOfPages[numberOfPages.length - 1].textContent);
+            } else {
+                this.numberOfPages = this.currentPage;
+            }
+            if (paginationElement) {
+                paginationElement.innerHTML = '';
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            this.handleInfiniteScroll();
+                        }
+                    });
                 });
-            });
-            observer.observe(paginationElement);
+                observer.observe(paginationElement);
+            }
         }
-
         /** Add keydown listener */
         document.addEventListener("keydown", (e) => {
             this.handleKeydown(e);
@@ -64,6 +66,7 @@ class ArticlePage {
             subheader.innerHTML = `<a href="${this.article.linkUrl}" target="_blank">${subheaderText}</a>`;
             this.articleElement.querySelector("header").appendChild(subheader);
         }
+
 
         this.applySettings();
 
@@ -88,10 +91,16 @@ class ArticlePage {
 
     applySettings() {
         const settings = new Settings();
-        if (settings.get("showUrlSubheader") === true) {
-            document.body.classList.add("kup-show-url-subheader");
+        /** Add anchor to options */
+        const options = document.getElementById("options");
+        if (settings.get("addOptionsAnchor") === true) {
+            options.querySelectorAll(".options__main li a").forEach((a) => {
+                a.href = a.href + "#options";
+            });
         } else {
-            document.body.classList.remove("kup-show-url-subheader");
+            options.querySelectorAll(".options__main li a").forEach((a) => {
+                a.href = a.href.replace("#options", "");
+            });
         }
     }
 

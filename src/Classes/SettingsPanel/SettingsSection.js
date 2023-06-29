@@ -1,3 +1,5 @@
+import Settings from "../Settings";
+
 class SettingsSection {
     settingsRows = []
     name;
@@ -44,6 +46,7 @@ class SettingsSection {
             className: "settings-section",
         });
         this.element = element;
+
         const header = Object.assign(document.createElement("h3"), {
             className: "settings-section-header",
             innerHTML: `<span>${this.name}</span><i class="fas fa-chevron-down icon-chevron"></i>`,
@@ -68,6 +71,12 @@ class SettingsSection {
         this.settingsRows.forEach((row) => {
             settingsRows.appendChild(row.getElement());
         });
+
+        const settings = new Settings();
+        if (settings.get("alwaysExpandSettingsSections")) {
+            this.expand();
+        }
+
         return element;
     }
 }

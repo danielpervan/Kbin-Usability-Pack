@@ -75,6 +75,7 @@
       .description {
         grid-area: description;
         font-size: 0.8em;
+        font-weight: 100;
         color: var(--kbin-secondary-text-color);
       }
 
@@ -236,6 +237,18 @@
 
     .message-icon {
       margin-right: 1em;
+    }
+
+    button {
+      background: var(--kbin-button-primary-bg);
+      color: var(--kbin-button-primary-text-color);
+      border: var(--kbin-button-primary-border);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--kbin-button-primary-hover-bg);
+        color: var(--kbin-button-primary-hover-text-color);
+      }
     }
   }
 }

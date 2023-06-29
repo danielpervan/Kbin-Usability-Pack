@@ -1,26 +1,25 @@
 import SettingsRow from "./SettingsRow";
-import Settings from "../Settings";
 
 class SettingsRowEnum extends SettingsRow {
     selectedId;
-    constructor(name, defaultValue, options={}) {
-        super(name, SettingsRow.TYPES.ENUM, "", options);
-        const { id, values } = options || {};
-        if (id) {
-            this.id = id;
-            const settings = new Settings();
-            const value = settings.get(id);
-            if (value !== undefined) {
-                this.value = value;
-            }
-        } else {
-            this.selectedId = defaultValue;
+    values = [];
+
+    constructor(name, options = {}) {
+        super(name, SettingsRow.TYPES.ENUM, options);
+        const {values, selectedId} = options || {};
+        if (selectedId) {
+            this.selectedId = selectedId;
         }
         if (values) {
             this.values = values;
-        } else {
-            throw new Error("SettingsRowEnum requires values");
         }
+    }
+
+    setSelected(id) {
+        this.selectedId = id;
+        this.element.querySelectorAll(".value").forEach((valueElement) => {
+            valueElement.classList.remove("selected");
+        });
     }
 
     getElement() {
@@ -56,7 +55,6 @@ class SettingsRowEnum extends SettingsRow {
                 innerText: value.value,
                 href: value.id,
             });
-            console.log(this.selectedId, value.id);
             if (this.selectedId === value.id) {
                 valueElement.classList.add("selected");
             }
@@ -79,6 +77,7 @@ class SettingsRowEnum extends SettingsRow {
     static fromElement(element) {
         let name = element.querySelector(":scope > span")?.innerText.trim();
         name = name.endsWith(":") ? name.slice(0, -1) : name;
+        const settingsRow = new SettingsRowEnum(name);
         const valueElements = element.querySelectorAll(":scope > div a");
         let values = [];
         let selectedId = null;
@@ -87,20 +86,19 @@ class SettingsRowEnum extends SettingsRow {
             value.value = valueElement.innerText.trim();
             value.id = valueElement.href;
             value.action = () => {
-                return fetch(valueElement.href).then(() => {
-                    window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-                });
+                settingsRow.legacyAction(valueElement);
             };
             if (valueElement.classList.contains("active")) {
                 selectedId = value.id;
             }
             values.push(value);
         });
+        settingsRow.values = values;
+        settingsRow.selectedId = selectedId;
 
-        return new SettingsRowEnum(name, selectedId, {
-            values: values,
-        });
+        return settingsRow;
     }
 
 }
+
 export default SettingsRowEnum;
