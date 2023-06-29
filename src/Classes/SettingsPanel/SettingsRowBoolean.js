@@ -131,15 +131,25 @@ class SettingsRowBoolean extends SettingsRow {
         valueElements.forEach((valueElement) => {
             if (valueElement.innerText.trim() === "Yes") {
                 settingsRow.bindTrueAction(() => {
-                    return fetch(valueElement.href).then(() => {
-                        window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-                    });
+                    if (valueElement.href?.trim().toLowerCase().startsWith("javascript:") || valueElement.href?.trim().startsWith("#")) {
+                        valueElement.click();
+                        return Promise.resolve();
+                    } else {
+                        return fetch(valueElement.href).then(() => {
+                            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+                        });
+                    }
                 });
             } else {
                 settingsRow.bindFalseAction(() => {
-                    return fetch(valueElement.href).then(() => {
-                        window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-                    });
+                    if (valueElement.href.startsWith("javascript:") || valueElement.href.startsWith("#")) {
+                        valueElement.click();
+                        return Promise.resolve();
+                    } else {
+                        return fetch(valueElement.href).then(() => {
+                            window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+                        });
+                    }
                 });
             }
         });
