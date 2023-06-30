@@ -37,16 +37,28 @@ class Settings {
         }
         return settings;
     }
-    replace(settings) {
+    replace(settings, sendEvent = true, apply = true) {
         localStorage.setItem("kup-settings", JSON.stringify(settings));
-        window.dispatchEvent(new CustomEvent("kup-settings-changed"));
-        this.apply();
+        if (sendEvent) {
+            window.dispatchEvent(new CustomEvent("kup-settings-changed"));
+        }
+        if (apply) {
+            this.apply();
+        }
     }
 
-    save(key, value) {
+    save(key, value, apply = true) {
         const settings = this.getAll();
+        const oldValue = settings[key];
         settings[key] = value;
-        this.replace(settings);
+        window.dispatchEvent(new CustomEvent("kup-settings-changed", {
+            detail: {
+                key: key,
+                newValue: value,
+                oldValue: oldValue
+            }
+        }));
+        this.replace(settings, false, apply);
     }
 
     apply() {

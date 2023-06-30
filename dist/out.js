@@ -57,15 +57,27 @@
       }
       return settings2;
     }
-    replace(settings2) {
+    replace(settings2, sendEvent = true, apply = true) {
       localStorage.setItem("kup-settings", JSON.stringify(settings2));
-      window.dispatchEvent(new CustomEvent("kup-settings-changed"));
-      this.apply();
+      if (sendEvent) {
+        window.dispatchEvent(new CustomEvent("kup-settings-changed"));
+      }
+      if (apply) {
+        this.apply();
+      }
     }
-    save(key, value) {
+    save(key, value, apply = true) {
       const settings2 = this.getAll();
+      const oldValue = settings2[key];
       settings2[key] = value;
-      this.replace(settings2);
+      window.dispatchEvent(new CustomEvent("kup-settings-changed", {
+        detail: {
+          key,
+          newValue: value,
+          oldValue
+        }
+      }));
+      this.replace(settings2, false, apply);
     }
     apply() {
       const settings2 = this.getAll();
@@ -970,7 +982,7 @@
   var SettingsSection_default = SettingsSection;
 
   // src/Classes/SettingsPanel/SettingsPanel.scss
-  inject_style('#settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
+  inject_style('body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
 
   // src/Classes/SettingsPanel/SettingsRowBoolean.js
   var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
@@ -990,7 +1002,7 @@
       const action = (newValue) => {
         if (this.id) {
           const settings2 = new Settings_default();
-          settings2.save(this.id, newValue);
+          settings2.save(this.id, newValue, !this.requireReload);
         }
         if (this.onChangeAction) {
           this.onChangeAction(newValue);
@@ -1245,43 +1257,59 @@
         this.#sections = this.#sections.filter((section2) => section2.name !== name);
       }
     }
+    rerender() {
+      this.#settingsPanelElement.innerHTML = "";
+      this.#sections.forEach((section) => {
+        this.#settingsPanelElement.appendChild(section.getElement());
+      });
+    }
     #enrichSettingsPanel() {
       const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
       const settingsList = settingsListElement.querySelectorAll(":scope > *");
       const settingsPanel2 = document.createElement("div");
       this.#settingsPanelElement = settingsPanel2;
-      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
-      let currentSection = null;
-      let sections = [];
-      settingsList.forEach((el) => {
-        if (el.tagName === "STRONG") {
-          if (currentSection) {
-            sections.push(currentSection);
-            currentSection = null;
-          }
-          currentSection = SettingsSection_default.fromHeaderElement(el);
-        } else {
-          if (!currentSection) {
-            console.error("Found setting without section: ", el);
-            currentSection = new SettingsSection_default("Other");
-          }
-          const settingsRow = settingsRowFromElement(el);
-          currentSection.addSettingsRow(settingsRow);
-        }
-      });
-      if (currentSection) {
-        sections.push(currentSection);
-      }
       settingsPanel2.classList.add("settings-panel");
-      sections.forEach((section) => {
-        settingsPanel2.appendChild(section.getElement());
-      });
-      settingsListElement.remove();
-      this.#sections = sections;
+      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
       this.#settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
         className: "settings-panel-footer",
         innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
       }));
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const settings2 = new Settings_default();
+          if (settings2.get("settingsCompatibilityMode")) {
+            this.rerender();
+          } else {
+            let currentSection = null;
+            let sections = [];
+            settingsList.forEach((el) => {
+              if (el.tagName === "STRONG") {
+                if (currentSection) {
+                  sections.push(currentSection);
+                  currentSection = null;
+                }
+                currentSection = SettingsSection_default.fromHeaderElement(el);
+              } else {
+                if (!currentSection) {
+                  console.error("Found setting without section: ", el);
+                  currentSection = new SettingsSection_default("Other");
+                }
+                const settingsRow = settingsRowFromElement(el);
+                currentSection.addSettingsRow(settingsRow);
+              }
+            });
+            if (currentSection) {
+              sections.push(currentSection);
+            }
+            sections.forEach((section) => {
+              settingsPanel2.appendChild(section.getElement());
+            });
+            settingsListElement.remove();
+            this.#sections = [...sections, ...this.#sections];
+            this.rerender();
+          }
+        }, 100);
+      });
     }
     #addSettingsNotificationElement() {
       const settingsNotificationContainer = Object.assign(document.createElement("div"), {
@@ -1331,13 +1359,18 @@
           description: "Automatically load more comments when scrolling to the bottom of the page.",
           requireReload: true
         }),
-        new SettingsRowBoolean_default("Add anchor to comment options", {
+        new SettingsRowBoolean_default("Add anchor to comment sorting options", {
           id: "addOptionsAnchor",
-          description: "Scroll to the comment section when clicking the option buttons."
+          description: "Scroll to the comment section after reloading when clicking the comment sorting buttons."
         }),
         new SettingsRowBoolean_default("Always expand settings sections", {
           id: "alwaysExpandSettingsSections",
           description: "Expand the settings sections by default."
+        }),
+        new SettingsRowBoolean_default("Settings compatibility mode", {
+          id: "settingsCompatibilityMode",
+          description: "Increase compatibility with other scripts that modify the settings panel.",
+          requireReload: true
         })
       ]);
       this.addSection(section);
