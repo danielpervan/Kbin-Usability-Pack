@@ -221,15 +221,60 @@ class Article {
         }
 
         /** Remove comment anchor */
+        const commentLinkElement = footer.querySelector("menu li [data-subject-target='commentsCounter']")?.parentElement;
         if (settings.get("removeCommentAnchor")) {
-            const commentsLinkElements = footer.querySelectorAll("menu li > a.stretched-link");
-            /** Check if link is a comment link */
-            commentsLinkElements.forEach(commentsLinkElement => {
-                if (commentsLinkElement && commentsLinkElement.href.endsWith("#comments")) {
-                    const url = new URL(commentsLinkElement.href);
-                    commentsLinkElement.href = url.pathname;
+            if (commentLinkElement && commentLinkElement.href.endsWith("#comments")) {
+                const url = new URL(commentLinkElement.href);
+                commentLinkElement.href = url.pathname;
+            }
+        }
+
+        /** Open article in new tab */
+        const articleLinkElement = this.feedElement.querySelector("header h2 a");
+        if (articleLinkElement) {
+            if (settings.get("openArticleInNewTab")) {
+                articleLinkElement.target = "_blank";
+            } else {
+                articleLinkElement.removeAttribute("target");
+            }
+        }
+        if (commentLinkElement) {
+            if (settings.get("openArticleInNewTab")) {
+                commentLinkElement.target = "_blank";
+            } else {
+                commentLinkElement.removeAttribute("target");
+            }
+        }
+
+        /** Enrich meta */
+        if (settings.get("alternativeMobileUI")) {
+            const metaEl = this.feedElement.querySelector("aside.meta");
+            if (metaEl) {
+                const userEl = metaEl.querySelector(".user-inline");
+                const magazineEl = metaEl.querySelector(".magazine-inline");
+                const timeEl = metaEl.querySelector("time");
+                metaEl.classList.add("alternative-mobile-ui");
+
+                const newMetaContent = Object.assign(document.createElement("div"), {
+                    className: "meta-content"
+                });
+                if (userEl) {
+                    newMetaContent.append(userEl);
                 }
-            });
+                if (magazineEl) {
+                    newMetaContent.append(magazineEl);
+                }
+                if (timeEl) {
+                    const timeOuter = Object.assign(document.createElement("div"), {
+                        className: "time-outer",
+                        innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
+                    });
+                    timeOuter.append(timeEl);
+                    newMetaContent.append(timeOuter);
+                }
+                metaEl.innerHTML = "";
+                metaEl.append(newMetaContent);
+            }
         }
     }
 
@@ -409,6 +454,9 @@ class Article {
             const newCommentsLinkElement = document.createElement("a");
             newCommentsLinkElement.className = "comments-link footer-button";
             newCommentsLinkElement.href = commentsURL;
+            if (settings.get("openArticleInNewTab")) {
+                newCommentsLinkElement.target = "_blank";
+            }
             newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
             commentsLi.append(newCommentsLinkElement);
 
@@ -513,10 +561,31 @@ class Article {
 
     applySettings() {
         const settings = new Settings();
-        if (settings.get("alternativeMobileUI") === true && this.articlePageElement) {
-            this.showMediaPreview();
-            if (!this.hasMedia) {
-                this.articlePageElement.classList.add("no-media-preview");
+        if (settings.get("alternativeMobileUI") === true) {
+            if (this.articlePageElement) {
+                this.showMediaPreview();
+                if (!this.hasMedia) {
+                    this.articlePageElement.classList.add("no-media-preview");
+                }
+            } else if (this.feedElement) {
+                if (settings.get("openArticleInNewTab")) {
+                    this.feedElement.querySelector(".comments-link").target = "_blank";
+                    this.feedElement.querySelector("header a").target = "_blank";
+                } else {
+                    this.feedElement.querySelector(".comments-link").removeAttribute("target");
+                    this.feedElement.querySelector("header a").removeAttribute("target");
+                }
+            }
+        } else {
+            if (this.feedElement) {
+                const commentsLink = this.feedElement.querySelector("footer menu li [data-subject-target='commentsCounter']").parentElement;
+                if (settings.get("openArticleInNewTab")) {
+                    commentsLink.target = "_blank";
+                    this.feedElement.querySelector("header a").target = "_blank";
+                } else {
+                    commentsLink.removeAttribute("target");
+                    this.feedElement.querySelector("header a").removeAttribute("target");
+                }
             }
         }
     }

@@ -7,11 +7,11 @@ body:not(.KUP-setting-showArticlePreview) {
 
 #content article.entry {
   aside.meta.entry__meta {
-    line-height: 3.5em;
+    line-height: 2em;
 
     img {
-      margin-right: .25em;
-      margin-left: .25em;
+      margin-right: .25rem;
+      margin-left: .25rem;
     }
   }
 
@@ -333,6 +333,7 @@ body.KUP-setting-alternativeMobileUI {
   .footer-button {
     font-size: 1.4em;
     vertical-align: middle;
+    white-space: nowrap;
 
     &.more-link {
       width: 1.5em;
@@ -341,11 +342,12 @@ body.KUP-setting-alternativeMobileUI {
   }
 
   @media (max-width: 689.98px) {
-    &.rounded-edges article.entry:not(.no-image) .media-preview {
+    &.rounded-edges .page-entry-single article.entry:not(.no-image) .media-preview {
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
     }
 
+    /** Article page **/
     .page-entry-single #content {
       article.entry:not(.no-image) {
         grid-template-areas:
@@ -376,12 +378,54 @@ body.KUP-setting-alternativeMobileUI {
       }
     }
 
+
+    /** Front page **/
+    &.rounded-edges .page-entry-front article.entry:not(.no-image) .media-preview img {
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
     .page-entry-front #content {
+      article.entry {
+        margin-bottom: 2rem;
+
+        .meta-content {
+          display: flex;
+          flex-flow: row;
+          justify-content: space-around;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 100%;
+          margin: auto;
+          vertical-align: middle;
+          img {
+            width: 20px;
+            height: 20px;
+            aspect-ratio: 1;
+          }
+          .time-outer {
+            vertical-align: middle;
+            display: grid;
+            grid-auto-columns: max-content;
+            grid-auto-flow: column;
+            padding: 0.5rem 0;
+
+            .timeago {
+              margin-left: 0.25rem;
+            }
+          }
+          .meta-icon {
+            font-size: 20px;
+            margin-right: 0.25rem;
+            margin-left: 0.25rem;
+          }
+        }
+      }
+
       article.entry:not(.no-image) {
         grid-template-areas:
         "image image"
           "title vote"
-          "shortDesc shortDesc"
+          "shortDesc vote"
           "meta meta"
           "body body"
           "footer footer"
@@ -392,7 +436,7 @@ body.KUP-setting-alternativeMobileUI {
           grid-template-areas:
             "image image"
             "title vote"
-            "shortDesc shortDesc"
+            "shortDesc vote"
             "meta meta"
             "body body"
             "footer footer"
@@ -403,7 +447,7 @@ body.KUP-setting-alternativeMobileUI {
       article.entry.no-image {
         grid-template-areas:
             "title vote"
-            "shortDesc shortDesc"
+            "shortDesc vote"
             "meta meta"
             "body body"
             "footer footer"
@@ -413,9 +457,34 @@ body.KUP-setting-alternativeMobileUI {
       }
     }
 
+
+    /** All pages **/
     #content {
       article.entry {
-        footer menu {
+        padding-bottom: 0;
+
+        .vote {
+          margin-right: 0;
+          margin-left: 0.5rem;
+        }
+
+        .entry__meta {
+          text-align: center;
+        }
+
+        footer {
+          text-align: center;
+          border-top: var(--kbin-section-border);
+          margin-top: 1rem;
+          padding-top: 0.8em;
+          padding-bottom: .8em;
+
+          menu {
+            place-content: space-around;
+          }
+        }
+
+        menu {
           grid-auto-columns: auto;
 
           .fa-solid.fa-thumbtack {
@@ -426,8 +495,6 @@ body.KUP-setting-alternativeMobileUI {
       }
 
       article.entry:not(.no-image) {
-        padding-bottom: 0;
-
         > figure {
           display: none;
         }
@@ -449,21 +516,6 @@ body.KUP-setting-alternativeMobileUI {
 
         grid-template-columns: auto min-content;
         padding-top: 0;
-
-        .entry__meta {
-          text-align: center;
-        }
-
-        footer {
-          text-align: center;
-          border-top: var(--kbin-section-border);
-          padding-top: 0.8em;
-          padding-bottom: .8em;
-
-          menu {
-            place-content: space-around;
-          }
-        }
 
         .media-preview {
           overflow: hidden;

@@ -192,6 +192,9 @@ class SettingsPanel {
                 id: "alternativeMobileUI",
                 description: "Use the alternative experimental mobile UI.",
                 requireReload: true,
+            }),
+            new SettingsRowBoolean("Open articles in new tab", {
+                id: "openArticleInNewTab",
             })
         ]);
         this.addSection(section);
