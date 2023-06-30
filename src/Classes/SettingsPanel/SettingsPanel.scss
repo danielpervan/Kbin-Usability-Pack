@@ -1,6 +1,8 @@
-#settings .settings-list {
-  display: none !important;
-  visibility: hidden;
+body:not(.KUP-setting-settingsCompatibilityMode) {
+  #settings .settings-list {
+    display: none !important;
+    visibility: hidden;
+  }
 }
 
 #settings .settings-panel-footer {

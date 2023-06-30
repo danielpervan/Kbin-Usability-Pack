@@ -4,6 +4,7 @@ import SettingsSection from "./SettingsSection";
 import "./SettingsPanel.scss";
 import SettingsRowBoolean from "./SettingsRowBoolean";
 import SettingsRowEnum from "./SettingsRowEnum";
+import Settings from "../Settings";
 
 function settingsRowFromElement(element) {
     let settingsRow;
@@ -83,50 +84,63 @@ class SettingsPanel {
         }
     }
 
+    rerender() {
+        this.#settingsPanelElement.innerHTML = "";
+        this.#sections.forEach((section) => {
+            this.#settingsPanelElement.appendChild(section.getElement());
+        });
+    }
+
     #enrichSettingsPanel() {
         const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
         const settingsList = settingsListElement.querySelectorAll(":scope > *");
         const settingsPanel = document.createElement("div");
         this.#settingsPanelElement = settingsPanel;
-        this.#settingsPanelContainerElement.appendChild(settingsPanel);
-
-        /** Make sure this runs last */
-        /** 500ms ought to be enough for anyone */
-
-        let currentSection = null;
-        let sections = [];
-        settingsList.forEach((el) => {
-            /* Found section */
-            if (el.tagName === "STRONG") {
-                if (currentSection) {
-                    sections.push(currentSection);
-                    currentSection = null;
-                }
-                currentSection = SettingsSection.fromHeaderElement(el);
-            } else {
-                if (!currentSection) {
-                    console.error("Found setting without section: ", el);
-                    currentSection = new SettingsSection("Other");
-                }
-                const settingsRow = settingsRowFromElement(el)
-                currentSection.addSettingsRow(settingsRow);
-            }
-        });
-        if (currentSection) {
-            sections.push(currentSection);
-        }
-
-
         settingsPanel.classList.add("settings-panel");
-        sections.forEach((section) => {
-            settingsPanel.appendChild(section.getElement());
-        });
-        settingsListElement.remove();
-        this.#sections = sections;
+        this.#settingsPanelContainerElement.appendChild(settingsPanel);
         this.#settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
             className: "settings-panel-footer",
             innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
         }));
+        /** Make sure this runs after everything is loaded */
+        /** Wait further 100ms to make sure everything is loaded */
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const settings = new Settings();
+                if (settings.get("settingsCompatibilityMode")) {
+                    this.rerender();
+                } else {
+                    let currentSection = null;
+                    let sections = [];
+                    settingsList.forEach((el) => {
+                        /* Found section */
+                        if (el.tagName === "STRONG") {
+                            if (currentSection) {
+                                sections.push(currentSection);
+                                currentSection = null;
+                            }
+                            currentSection = SettingsSection.fromHeaderElement(el);
+                        } else {
+                            if (!currentSection) {
+                                console.error("Found setting without section: ", el);
+                                currentSection = new SettingsSection("Other");
+                            }
+                            const settingsRow = settingsRowFromElement(el)
+                            currentSection.addSettingsRow(settingsRow);
+                        }
+                    });
+                    if (currentSection) {
+                        sections.push(currentSection);
+                    }
+                    sections.forEach((section) => {
+                        settingsPanel.appendChild(section.getElement());
+                    });
+                    settingsListElement.remove();
+                    this.#sections = [...sections, ...this.#sections];
+                    this.rerender();
+                }
+            }, 100);
+        });
     }
 
     #addSettingsNotificationElement() {
@@ -180,9 +194,9 @@ class SettingsPanel {
                 description: "Automatically load more comments when scrolling to the bottom of the page.",
                 requireReload: true,
             }),
-            new SettingsRowBoolean("Add anchor to comment options", {
+            new SettingsRowBoolean("Add anchor to comment sorting options", {
                 id: "addOptionsAnchor",
-                description: "Scroll to the comment section when clicking the option buttons.",
+                description: "Scroll to the comment section after reloading when clicking the comment sorting buttons.",
             }),
             new SettingsRowBoolean("Always expand settings sections", {
                 id: "alwaysExpandSettingsSections",
@@ -195,6 +209,11 @@ class SettingsPanel {
             }),
             new SettingsRowBoolean("Open articles in new tab", {
                 id: "openArticleInNewTab",
+            }),
+            new SettingsRowBoolean("Settings compatibility mode", {
+                id: "settingsCompatibilityMode",
+                description: "Increase compatibility with other scripts that modify the settings panel.",
+                requireReload: true,
             })
         ]);
         this.addSection(section);

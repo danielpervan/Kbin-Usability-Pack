@@ -23,7 +23,7 @@ class SettingsRowBoolean extends SettingsRow {
         const action = (newValue) => {
             if (this.id) {
                 const settings = new Settings();
-                settings.save(this.id, newValue);
+                settings.save(this.id, newValue, !this.requireReload);
             }
             if (this.onChangeAction) {
                 this.onChangeAction(newValue);
