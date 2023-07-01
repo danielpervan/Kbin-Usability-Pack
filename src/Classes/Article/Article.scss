@@ -6,6 +6,10 @@ body:not(.KUP-setting-showArticlePreview) {
 }
 
 #content article.entry {
+  .no-image-placeholder {
+    place-self: center;
+  }
+
   aside.meta.entry__meta {
     line-height: 2em;
 
@@ -45,15 +49,10 @@ body:not(.KUP-setting-showArticlePreview) {
   }
 
   & > figure {
-    margin: 0 1rem 0 0;
     align-self: center;
 
     img {
-      max-width: 180px;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
+      object-position: center;
     }
   }
 
@@ -63,9 +62,15 @@ body:not(.KUP-setting-showArticlePreview) {
 
   button {
     &.show-preview, &.preview-button {
-      border: 1px solid var(--kbin-section-text-color);
+      border: var(--kbin-button-primary-border);
+      color: var(--kbin-button-primary-text-color);
+      background: var(--kbin-button-primary-bg);
       padding: 0.5em;
-      background: var(--kbin-bg);
+      cursor: pointer;
+      &:hover {
+        color: var(--kbin-button-primary-text-hover-color);
+        background: var(--kbin-button-primary-hover-bg);
+      }
     }
   }
 }
@@ -129,33 +134,18 @@ main#main.view-compact {
   }
 }
 
-@media (max-width: 991.98px) {
-  #content article.entry {
-    &:not(.no-image) {
-      grid-template-areas:
-      "vote image image"
-      "vote title title"
-      "vote shortDesc shortDesc"
-      "vote meta meta"
-      "vote footer footer"
-      "body body body"
-      "preview preview preview" !important;
-    }
-  }
-}
-
 @media (max-width: 689.98px) {
   #content article.entry {
     &:not(.no-image) {
       grid-template-areas:
-        "vote image"
-        "title title"
-        "shortDesc shortDesc"
+        "image image"
+        "vote title"
+        "vote shortDesc"
         "meta meta"
-        "footer footer"
         "body body"
+        "footer footer"
         "preview preview" !important;
-      grid-template-columns: min-content auto;
+      grid-template-columns: min-content 1fr;
     }
 
     &.no-image {
@@ -166,7 +156,7 @@ main#main.view-compact {
         "vote footer"
         "body body"
         "preview preview" !important;
-      grid-template-columns: min-content auto;
+      grid-template-columns: min-content 1fr;
     }
 
     & > figure {
@@ -322,15 +312,13 @@ main#main.view-compact {
 
 body.KUP-setting-alternativeMobileUI {
   article.entry {
-    .meta-link {
-      font-size: 1.4em;
-    }
 
     .meta-content {
       display: flex;
       flex-flow: row;
-      justify-content: space-around;
+      justify-content: flex-start;
       align-items: center;
+      gap: 1em;
       flex-wrap: wrap;
       width: 100%;
       margin: auto;
@@ -370,10 +358,27 @@ body.KUP-setting-alternativeMobileUI {
       position: absolute;
     }
 
+    footer {
+      z-index: 1;
+
+      menu {
+        align-items: center;
+      }
+    }
+
+    .fa-solid.fa-thumbtack {
+      font-size: 1.4em;
+      vertical-align: middle;
+    }
+
     .footer-button {
       font-size: 1.4em;
       vertical-align: middle;
       white-space: nowrap;
+
+      &.active {
+        color: var(--kbin-button-primary-bg);
+      }
 
       &.more-link {
         width: 1.5em;
@@ -445,6 +450,13 @@ body.KUP-setting-alternativeMobileUI {
     #middle:not(.page-entry-single) #content {
       article.entry {
         margin-bottom: 2rem;
+
+        .media-preview {
+          margin-bottom: -.5rem;
+        }
+      }
+      .no-image-placeholder {
+        display: block;
       }
 
       article.entry:not(.no-image) {
@@ -472,6 +484,7 @@ body.KUP-setting-alternativeMobileUI {
 
       article.entry.no-image {
         grid-template-areas:
+            "image image"
             "title vote"
             "shortDesc vote"
             "meta meta"
@@ -489,11 +502,14 @@ body.KUP-setting-alternativeMobileUI {
       article.entry {
         padding-bottom: 0;
 
+        .meta-content {
+          justify-content: space-around;
+        }
+
         .media-preview {
           overflow: hidden;
           max-height: 90vh;
           padding: 0;
-          margin: -.5rem;
         }
 
         .media-preview img {
@@ -501,7 +517,7 @@ body.KUP-setting-alternativeMobileUI {
         }
 
         .vote {
-          margin-right: 0;
+          margin-right: 0.5rem;
           margin-left: 0.5rem;
         }
 
@@ -538,9 +554,6 @@ body.KUP-setting-alternativeMobileUI {
 
         > figure {
           display: block;
-          margin-left: -.5rem;
-          margin-right: -.5rem;
-
 
           img {
             width: 100%;

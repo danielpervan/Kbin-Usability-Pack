@@ -222,12 +222,6 @@ class Article {
 
         /** Remove comment anchor */
         const commentLinkElement = footer.querySelector("menu li [data-subject-target='commentsCounter']")?.parentElement;
-        if (settings.get("removeCommentAnchor")) {
-            if (commentLinkElement && commentLinkElement.href.endsWith("#comments")) {
-                const url = new URL(commentLinkElement.href);
-                commentLinkElement.href = url.pathname;
-            }
-        }
 
         /** Open article in new tab */
         const articleLinkElement = this.feedElement.querySelector("header h2 a");
@@ -402,6 +396,13 @@ class Article {
             fetch(url).then(response => response.json().then(data => {
                 previewContentElement.innerHTML = "";
                 previewContentElement.insertAdjacentHTML("beforeend", data.html)
+                const scripts = previewContentElement.querySelectorAll("script");
+                scripts.forEach(script => {
+                    const newScript = document.createElement("script");
+                    newScript.src = script.src;
+                    newScript.innerHTML = script.innerHTML;
+                    script.replaceWith(newScript);
+                });
                 previewContentElement.classList.add("loaded");
             })).catch(() => {
                 previewContentElement.innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Error loading media</div>';
@@ -426,6 +427,14 @@ class Article {
             if (settings.get("openArticleInNewTab")) {
                 newCommentsLinkElement.target = "_blank";
             }
+            /** Remove comment anchor */
+            if (settings.get("removeCommentAnchor") && this.feedElement) {
+                if (commentsURL.endsWith("#comments")) {
+                    const url = new URL(commentsURL);
+                    newCommentsLinkElement.href = url.pathname;
+                }
+            }
+
             newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
             commentsLi.append(newCommentsLinkElement);
 
@@ -441,6 +450,9 @@ class Article {
                 event.preventDefault();
                 boostForm.querySelector("button[type='submit']").click();
             });
+            if (boostForm.querySelector("button[type='submit']").classList.contains("active")) {
+                newBoostLinkElement.classList.add("active");
+            }
 
             /** Observe boost counter */
             const boostCounterObserver = new MutationObserver((mutations) => {
@@ -449,6 +461,11 @@ class Article {
                     const boostCounterElement = newBoostLinkElement.querySelector(".boost-counter");
                     if (boostCounterElement) {
                         boostCounterElement.innerText = boostForm.querySelector("[data-subject-target='upvoteCounter']")?.innerHTML?.trim().match(/\d+/)[0] || '';
+                    }
+                    if (boostForm.querySelector("button[type='submit']").classList.contains("active")) {
+                        newBoostLinkElement.classList.add("active");
+                    } else {
+                        newBoostLinkElement.classList.remove("active");
                     }
                 });
             });
@@ -568,6 +585,7 @@ class Article {
                     this.articlePageElement.classList.add("no-media-preview");
                 }
             } else if (this.feedElement) {
+                console.log(settings.get("openArticleInNewTab"));
                 if (settings.get("openArticleInNewTab")) {
                     this.feedElement.querySelector(".comments-link").target = "_blank";
                     this.feedElement.querySelector("header a").target = "_blank";
