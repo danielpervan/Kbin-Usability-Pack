@@ -35,7 +35,7 @@
   }
 
   // src/Classes/Article/Article.scss
-  inject_style('body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}body.KUP-setting-alternativeMobileUI .boost-link-removed{overflow:hidden;height:0;width:0;visibility:hidden;position:absolute}body.KUP-setting-alternativeMobileUI .footer-button{font-size:1.4em;vertical-align:middle;white-space:nowrap}body.KUP-setting-alternativeMobileUI .footer-button.more-link{width:1.5em;height:100%}@media (max-width: 689.98px){body.KUP-setting-alternativeMobileUI.rounded-edges .page-entry-single article.entry:not(.no-image) .media-preview{border-top-left-radius:.5rem;border-top-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image){grid-template-areas:"preview preview" "title vote" "meta meta" "body body" "footer footer"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image):not(.no-media-preview) figure img{display:none}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "meta meta" "body body" "footer footer"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content .media-preview-li{display:none}body.KUP-setting-alternativeMobileUI.rounded-edges .page-entry-front article.entry:not(.no-image) .media-preview img{border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry{margin-bottom:2rem}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry .meta-content{display:flex;flex-flow:row;justify-content:space-around;align-items:center;flex-wrap:wrap;width:100%;margin:auto;vertical-align:middle}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry .meta-content img{width:20px;height:20px;aspect-ratio:1}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry .meta-content .time-outer{vertical-align:middle;display:grid;grid-auto-columns:max-content;grid-auto-flow:column;padding:.5rem 0}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry .meta-content .time-outer .timeago{margin-left:.25rem}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry .meta-content .meta-icon{font-size:20px;margin-right:.25rem;margin-left:.25rem}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry:not(.no-image){grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI .page-entry-front #content article.entry.no-image{grid-template-areas:"title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI #content article.entry{padding-bottom:0}body.KUP-setting-alternativeMobileUI #content article.entry .vote{margin-right:0;margin-left:.5rem}body.KUP-setting-alternativeMobileUI #content article.entry .entry__meta{text-align:center}body.KUP-setting-alternativeMobileUI #content article.entry footer{text-align:center;border-top:var(--kbin-section-border);margin-top:1rem;padding-top:.8em;padding-bottom:.8em}body.KUP-setting-alternativeMobileUI #content article.entry footer menu{place-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry menu{grid-auto-columns:auto}body.KUP-setting-alternativeMobileUI #content article.entry menu .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image){grid-template-columns:auto min-content;padding-top:0}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:none}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:block;margin-left:-.5rem;margin-right:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure img{width:100%;max-width:100%;max-height:90vh;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) .media-preview{overflow:hidden;max-height:90vh;padding:0;margin:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image) .media-preview img{max-width:100%}}');
+  inject_style('body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{margin:0 1rem 0 0;align-self:center}#content article.entry>figure img{max-width:180px;max-height:100%;width:auto;height:auto;object-fit:contain}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:1px solid var(--kbin-section-text-color);padding:.5em;background:var(--kbin-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 991.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image image" "vote title title" "vote shortDesc shortDesc" "vote meta meta" "vote footer footer" "body body body" "preview preview preview"!important}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"vote image" "title title" "shortDesc shortDesc" "meta meta" "footer footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content auto}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}body.KUP-setting-alternativeMobileUI article.entry .meta-link{font-size:1.4em}body.KUP-setting-alternativeMobileUI article.entry .meta-content{display:flex;flex-flow:row;justify-content:space-around;align-items:center;flex-wrap:wrap;width:100%;margin:auto;vertical-align:middle}body.KUP-setting-alternativeMobileUI article.entry .meta-content img{width:20px;height:20px;aspect-ratio:1}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer{vertical-align:middle;display:grid;grid-auto-columns:max-content;grid-auto-flow:column;padding:.5rem 0}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer .timeago{margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry .meta-content .meta-icon{font-size:20px;margin-right:.25rem;margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry .boost-link-removed{overflow:hidden;height:0;width:0;visibility:hidden;position:absolute}body.KUP-setting-alternativeMobileUI article.entry .footer-button{font-size:1.4em;vertical-align:middle;white-space:nowrap}body.KUP-setting-alternativeMobileUI article.entry .footer-button.more-link{width:1.5em;height:100%}@media (max-width: 689.98px){body.KUP-setting-alternativeMobileUI.rounded-edges .page-entry-single article.entry:not(.no-image) .media-preview{border-top-left-radius:.5rem;border-top-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image){grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image):not(.no-media-preview) figure img{display:none}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "preview preview" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry.no-image{grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI .page-entry-single #content .media-preview-li{display:none}body.KUP-setting-alternativeMobileUI.rounded-edges #middle:not(.page-entry-single) article.entry:not(.no-image) .media-preview img{border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry{margin-bottom:2rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image){grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry.no-image{grid-template-areas:"title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI #content article.entry{padding-bottom:0}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview{overflow:hidden;max-height:90vh;padding:0;margin:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview img{max-width:100%}body.KUP-setting-alternativeMobileUI #content article.entry .vote{margin-right:0;margin-left:.5rem}body.KUP-setting-alternativeMobileUI #content article.entry .entry__meta{text-align:center}body.KUP-setting-alternativeMobileUI #content article.entry footer{text-align:center;border-top:var(--kbin-section-border);margin-top:1rem;padding-top:.8em;padding-bottom:.8em}body.KUP-setting-alternativeMobileUI #content article.entry footer menu{place-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry menu{grid-auto-columns:auto}body.KUP-setting-alternativeMobileUI #content article.entry menu .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image){grid-template-columns:auto min-content;padding-top:0}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:none}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:block;margin-left:-.5rem;margin-right:-.5rem}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure img{width:100%;max-width:100%;max-height:90vh;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}}');
 
   // src/Classes/Settings.js
   var Settings = class {
@@ -71,15 +71,27 @@
       }
       return settings2;
     }
-    replace(settings2) {
+    replace(settings2, sendEvent = true, apply = true) {
       localStorage.setItem("kup-settings", JSON.stringify(settings2));
-      window.dispatchEvent(new CustomEvent("kup-settings-changed"));
-      this.apply();
+      if (sendEvent) {
+        window.dispatchEvent(new CustomEvent("kup-settings-changed"));
+      }
+      if (apply) {
+        this.apply();
+      }
     }
-    save(key, value) {
+    save(key, value, apply = true) {
       const settings2 = this.getAll();
+      const oldValue = settings2[key];
       settings2[key] = value;
-      this.replace(settings2);
+      window.dispatchEvent(new CustomEvent("kup-settings-changed", {
+        detail: {
+          key,
+          newValue: value,
+          oldValue
+        }
+      }));
+      this.replace(settings2, false, apply);
     }
     apply() {
       const settings2 = this.getAll();
@@ -311,34 +323,6 @@
           commentLinkElement.removeAttribute("target");
         }
       }
-      if (settings2.get("alternativeMobileUI")) {
-        const metaEl = this.feedElement.querySelector("aside.meta");
-        if (metaEl) {
-          const userEl = metaEl.querySelector(".user-inline");
-          const magazineEl = metaEl.querySelector(".magazine-inline");
-          const timeEl = metaEl.querySelector("time");
-          metaEl.classList.add("alternative-mobile-ui");
-          const newMetaContent = Object.assign(document.createElement("div"), {
-            className: "meta-content"
-          });
-          if (userEl) {
-            newMetaContent.append(userEl);
-          }
-          if (magazineEl) {
-            newMetaContent.append(magazineEl);
-          }
-          if (timeEl) {
-            const timeOuter = Object.assign(document.createElement("div"), {
-              className: "time-outer",
-              innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
-            });
-            timeOuter.append(timeEl);
-            newMetaContent.append(timeOuter);
-          }
-          metaEl.innerHTML = "";
-          metaEl.append(newMetaContent);
-        }
-      }
     }
     replaceMediaPreview(parent) {
       const footer = parent.querySelector("footer");
@@ -533,6 +517,34 @@
         const moreLinkElement = articleElement.querySelector("footer menu li button[data-subject-target='more']");
         moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
         moreLinkElement.classList.add("more-link", "footer-button");
+        if (settings2.get("alternativeMobileUI")) {
+          const metaEl = articleElement.querySelector("aside.meta");
+          if (metaEl) {
+            const userEl = metaEl.querySelector(".user-inline");
+            const magazineEl = metaEl.querySelector(".magazine-inline");
+            const timeEl = metaEl.querySelector("time");
+            metaEl.classList.add("alternative-mobile-ui");
+            const newMetaContent = Object.assign(document.createElement("div"), {
+              className: "meta-content"
+            });
+            if (userEl) {
+              newMetaContent.append(userEl);
+            }
+            if (magazineEl) {
+              newMetaContent.append(magazineEl);
+            }
+            if (timeEl) {
+              const timeOuter = Object.assign(document.createElement("div"), {
+                className: "time-outer",
+                innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
+              });
+              timeOuter.append(timeEl);
+              newMetaContent.append(timeOuter);
+            }
+            metaEl.innerHTML = "";
+            metaEl.append(newMetaContent);
+          }
+        }
       }
       this.applySettings();
     }
@@ -1114,7 +1126,7 @@
   var SettingsSection_default = SettingsSection;
 
   // src/Classes/SettingsPanel/SettingsPanel.scss
-  inject_style('#settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
+  inject_style('body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
 
   // src/Classes/SettingsPanel/SettingsRowBoolean.js
   var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
@@ -1134,7 +1146,7 @@
       const action = (newValue) => {
         if (this.id) {
           const settings2 = new Settings_default();
-          settings2.save(this.id, newValue);
+          settings2.save(this.id, newValue, !this.requireReload);
         }
         if (this.onChangeAction) {
           this.onChangeAction(newValue);
@@ -1389,43 +1401,59 @@
         this.#sections = this.#sections.filter((section2) => section2.name !== name);
       }
     }
+    rerender() {
+      this.#settingsPanelElement.innerHTML = "";
+      this.#sections.forEach((section) => {
+        this.#settingsPanelElement.appendChild(section.getElement());
+      });
+    }
     #enrichSettingsPanel() {
       const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
       const settingsList = settingsListElement.querySelectorAll(":scope > *");
       const settingsPanel2 = document.createElement("div");
       this.#settingsPanelElement = settingsPanel2;
-      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
-      let currentSection = null;
-      let sections = [];
-      settingsList.forEach((el) => {
-        if (el.tagName === "STRONG") {
-          if (currentSection) {
-            sections.push(currentSection);
-            currentSection = null;
-          }
-          currentSection = SettingsSection_default.fromHeaderElement(el);
-        } else {
-          if (!currentSection) {
-            console.error("Found setting without section: ", el);
-            currentSection = new SettingsSection_default("Other");
-          }
-          const settingsRow = settingsRowFromElement(el);
-          currentSection.addSettingsRow(settingsRow);
-        }
-      });
-      if (currentSection) {
-        sections.push(currentSection);
-      }
       settingsPanel2.classList.add("settings-panel");
-      sections.forEach((section) => {
-        settingsPanel2.appendChild(section.getElement());
-      });
-      settingsListElement.remove();
-      this.#sections = sections;
+      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
       this.#settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
         className: "settings-panel-footer",
         innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
       }));
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const settings2 = new Settings_default();
+          if (settings2.get("settingsCompatibilityMode")) {
+            this.rerender();
+          } else {
+            let currentSection = null;
+            let sections = [];
+            settingsList.forEach((el) => {
+              if (el.tagName === "STRONG") {
+                if (currentSection) {
+                  sections.push(currentSection);
+                  currentSection = null;
+                }
+                currentSection = SettingsSection_default.fromHeaderElement(el);
+              } else {
+                if (!currentSection) {
+                  console.error("Found setting without section: ", el);
+                  currentSection = new SettingsSection_default("Other");
+                }
+                const settingsRow = settingsRowFromElement(el);
+                currentSection.addSettingsRow(settingsRow);
+              }
+            });
+            if (currentSection) {
+              sections.push(currentSection);
+            }
+            sections.forEach((section) => {
+              settingsPanel2.appendChild(section.getElement());
+            });
+            settingsListElement.remove();
+            this.#sections = [...sections, ...this.#sections];
+            this.rerender();
+          }
+        }, 100);
+      });
     }
     #addSettingsNotificationElement() {
       const settingsNotificationContainer = Object.assign(document.createElement("div"), {
@@ -1475,9 +1503,9 @@
           description: "Automatically load more comments when scrolling to the bottom of the page.",
           requireReload: true
         }),
-        new SettingsRowBoolean_default("Add anchor to comment options", {
+        new SettingsRowBoolean_default("Add anchor to comment sorting options", {
           id: "addOptionsAnchor",
-          description: "Scroll to the comment section when clicking the option buttons."
+          description: "Scroll to the comment section after reloading when clicking the comment sorting buttons."
         }),
         new SettingsRowBoolean_default("Always expand settings sections", {
           id: "alwaysExpandSettingsSections",
@@ -1490,6 +1518,11 @@
         }),
         new SettingsRowBoolean_default("Open articles in new tab", {
           id: "openArticleInNewTab"
+        }),
+        new SettingsRowBoolean_default("Settings compatibility mode", {
+          id: "settingsCompatibilityMode",
+          description: "Increase compatibility with other scripts that modify the settings panel.",
+          requireReload: true
         })
       ]);
       this.addSection(section);

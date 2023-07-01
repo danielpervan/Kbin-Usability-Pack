@@ -245,37 +245,6 @@ class Article {
                 commentLinkElement.removeAttribute("target");
             }
         }
-
-        /** Enrich meta */
-        if (settings.get("alternativeMobileUI")) {
-            const metaEl = this.feedElement.querySelector("aside.meta");
-            if (metaEl) {
-                const userEl = metaEl.querySelector(".user-inline");
-                const magazineEl = metaEl.querySelector(".magazine-inline");
-                const timeEl = metaEl.querySelector("time");
-                metaEl.classList.add("alternative-mobile-ui");
-
-                const newMetaContent = Object.assign(document.createElement("div"), {
-                    className: "meta-content"
-                });
-                if (userEl) {
-                    newMetaContent.append(userEl);
-                }
-                if (magazineEl) {
-                    newMetaContent.append(magazineEl);
-                }
-                if (timeEl) {
-                    const timeOuter = Object.assign(document.createElement("div"), {
-                        className: "time-outer",
-                        innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
-                    });
-                    timeOuter.append(timeEl);
-                    newMetaContent.append(timeOuter);
-                }
-                metaEl.innerHTML = "";
-                metaEl.append(newMetaContent);
-            }
-        }
     }
 
     replaceMediaPreview(parent) {
@@ -494,6 +463,37 @@ class Article {
             const moreLinkElement = articleElement.querySelector("footer menu li button[data-subject-target='more']");
             moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
             moreLinkElement.classList.add("more-link", "footer-button");
+
+            /** Enrich meta */
+            if (settings.get("alternativeMobileUI")) {
+                const metaEl = articleElement.querySelector("aside.meta");
+                if (metaEl) {
+                    const userEl = metaEl.querySelector(".user-inline");
+                    const magazineEl = metaEl.querySelector(".magazine-inline");
+                    const timeEl = metaEl.querySelector("time");
+                    metaEl.classList.add("alternative-mobile-ui");
+
+                    const newMetaContent = Object.assign(document.createElement("div"), {
+                        className: "meta-content"
+                    });
+                    if (userEl) {
+                        newMetaContent.append(userEl);
+                    }
+                    if (magazineEl) {
+                        newMetaContent.append(magazineEl);
+                    }
+                    if (timeEl) {
+                        const timeOuter = Object.assign(document.createElement("div"), {
+                            className: "time-outer",
+                            innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
+                        });
+                        timeOuter.append(timeEl);
+                        newMetaContent.append(timeOuter);
+                    }
+                    metaEl.innerHTML = "";
+                    metaEl.append(newMetaContent);
+                }
+            }
         }
         this.applySettings();
     }

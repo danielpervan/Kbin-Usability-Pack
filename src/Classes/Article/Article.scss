@@ -321,23 +321,64 @@ main#main.view-compact {
 /** Alternative Mobile UI **/
 
 body.KUP-setting-alternativeMobileUI {
+  article.entry {
+    .meta-link {
+      font-size: 1.4em;
+    }
 
-  .boost-link-removed {
-    overflow: hidden;
-    height: 0;
-    width: 0;
-    visibility: hidden;
-    position: absolute;
-  }
+    .meta-content {
+      display: flex;
+      flex-flow: row;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      margin: auto;
+      vertical-align: middle;
 
-  .footer-button {
-    font-size: 1.4em;
-    vertical-align: middle;
-    white-space: nowrap;
+      img {
+        width: 20px;
+        height: 20px;
+        aspect-ratio: 1;
+      }
 
-    &.more-link {
-      width: 1.5em;
-      height: 100%;
+
+      .time-outer {
+        vertical-align: middle;
+        display: grid;
+        grid-auto-columns: max-content;
+        grid-auto-flow: column;
+        padding: 0.5rem 0;
+
+        .timeago {
+          margin-left: 0.25rem;
+        }
+      }
+
+      .meta-icon {
+        font-size: 20px;
+        margin-right: 0.25rem;
+        margin-left: 0.25rem;
+      }
+    }
+
+    .boost-link-removed {
+      overflow: hidden;
+      height: 0;
+      width: 0;
+      visibility: hidden;
+      position: absolute;
+    }
+
+    .footer-button {
+      font-size: 1.4em;
+      vertical-align: middle;
+      white-space: nowrap;
+
+      &.more-link {
+        width: 1.5em;
+        height: 100%;
+      }
     }
   }
 
@@ -353,9 +394,11 @@ body.KUP-setting-alternativeMobileUI {
         grid-template-areas:
           "preview preview"
           "title vote"
+          "shortDesc shortDesc"
           "meta meta"
-          "body body"
-          "footer footer" !important;
+          "footer footer"
+          "image image"
+          "body body" !important;
 
         &:not(.no-media-preview) {
           figure img {
@@ -367,10 +410,25 @@ body.KUP-setting-alternativeMobileUI {
           grid-template-areas:
             "image image"
             "title vote"
+            "shortDesc shortDesc"
             "meta meta"
-            "body body"
-            "footer footer" !important;
+            "footer footer"
+            "preview preview"
+            "body body" !important;
         }
+      }
+
+      article.entry.no-image {
+        grid-template-areas:
+          "preview preview"
+          "title vote"
+          "shortDesc shortDesc"
+          "meta meta"
+          "footer footer"
+          "image image"
+          "body body" !important;
+        grid-template-columns: auto min-content;
+
       }
 
       .media-preview-li {
@@ -380,45 +438,13 @@ body.KUP-setting-alternativeMobileUI {
 
 
     /** Front page **/
-    &.rounded-edges .page-entry-front article.entry:not(.no-image) .media-preview img {
+    &.rounded-edges #middle:not(.page-entry-single) article.entry:not(.no-image) .media-preview img {
       border-bottom-left-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem;
     }
-    .page-entry-front #content {
+    #middle:not(.page-entry-single) #content {
       article.entry {
         margin-bottom: 2rem;
-
-        .meta-content {
-          display: flex;
-          flex-flow: row;
-          justify-content: space-around;
-          align-items: center;
-          flex-wrap: wrap;
-          width: 100%;
-          margin: auto;
-          vertical-align: middle;
-          img {
-            width: 20px;
-            height: 20px;
-            aspect-ratio: 1;
-          }
-          .time-outer {
-            vertical-align: middle;
-            display: grid;
-            grid-auto-columns: max-content;
-            grid-auto-flow: column;
-            padding: 0.5rem 0;
-
-            .timeago {
-              margin-left: 0.25rem;
-            }
-          }
-          .meta-icon {
-            font-size: 20px;
-            margin-right: 0.25rem;
-            margin-left: 0.25rem;
-          }
-        }
       }
 
       article.entry:not(.no-image) {
@@ -462,6 +488,17 @@ body.KUP-setting-alternativeMobileUI {
     #content {
       article.entry {
         padding-bottom: 0;
+
+        .media-preview {
+          overflow: hidden;
+          max-height: 90vh;
+          padding: 0;
+          margin: -.5rem;
+        }
+
+        .media-preview img {
+          max-width: 100%;
+        }
 
         .vote {
           margin-right: 0;
@@ -516,17 +553,6 @@ body.KUP-setting-alternativeMobileUI {
 
         grid-template-columns: auto min-content;
         padding-top: 0;
-
-        .media-preview {
-          overflow: hidden;
-          max-height: 90vh;
-          padding: 0;
-          margin: -.5rem;
-        }
-
-        .media-preview img {
-          max-width: 100%;
-        }
       }
     }
   }
