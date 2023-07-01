@@ -39,11 +39,11 @@ class Settings {
     }
     replace(settings, sendEvent = true, apply = true) {
         localStorage.setItem("kup-settings", JSON.stringify(settings));
-        if (sendEvent) {
-            window.dispatchEvent(new CustomEvent("kup-settings-changed"));
-        }
         if (apply) {
             this.apply();
+        }
+        if (sendEvent) {
+            window.dispatchEvent(new CustomEvent("kup-settings-changed"));
         }
     }
 
@@ -51,6 +51,10 @@ class Settings {
         const settings = this.getAll();
         const oldValue = settings[key];
         settings[key] = value;
+        localStorage.setItem("kup-settings", JSON.stringify(settings));
+        if (apply) {
+            this.apply();
+        }
         window.dispatchEvent(new CustomEvent("kup-settings-changed", {
             detail: {
                 key: key,
@@ -58,7 +62,6 @@ class Settings {
                 oldValue: oldValue
             }
         }));
-        this.replace(settings, false, apply);
     }
 
     apply() {
