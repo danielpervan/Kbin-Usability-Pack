@@ -1,6 +1,11 @@
 import User from "../User/User";
-import "./Article.scss";
+if (isNewKbinVersion()) {
+    import("./Article.scss");
+} else {
+    import("./Article_old.scss");
+}
 import Settings from "../Settings";
+import {isNewKbinVersion} from "../../Utils/utils";
 
 class Article {
     feedElement = null;
