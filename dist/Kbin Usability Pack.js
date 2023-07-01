@@ -39,7 +39,16 @@
   var init_Article = __esm({
     "src/Classes/Article/Article.scss"() {
       init_index();
-      inject_style('body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}#content article.entry .no-image-placeholder{place-self:center}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"}#content article.entry:not(.no-image){grid-template-areas:"vote image title" "vote image shortDesc" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important;grid-template-columns:min-content min-content auto}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{align-self:center}#content article.entry>figure img{object-position:center}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:var(--kbin-button-primary-border);color:var(--kbin-button-primary-text-color);background:var(--kbin-button-primary-bg);padding:.5em;cursor:pointer}#content article.entry button.show-preview:hover,#content article.entry button.preview-button:hover{color:var(--kbin-button-primary-text-hover-color);background:var(--kbin-button-primary-hover-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}@media (max-width: 689.98px){#content article.entry:not(.no-image){grid-template-areas:"image image" "vote title" "vote shortDesc" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:min-content 1fr}#content article.entry.no-image{grid-template-areas:"vote title" "vote shortDesc" "vote meta" "vote footer" "body body" "preview preview"!important;grid-template-columns:min-content 1fr}#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}body.KUP-setting-alternativeMobileUI article.entry .meta-content{display:flex;flex-flow:row;justify-content:flex-start;align-items:center;gap:1em;flex-wrap:wrap;width:100%;margin:auto;vertical-align:middle}body.KUP-setting-alternativeMobileUI article.entry .meta-content img{width:20px;height:20px;aspect-ratio:1}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer{vertical-align:middle;display:grid;grid-auto-columns:max-content;grid-auto-flow:column;padding:.5rem 0}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer .timeago{margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry .meta-content .meta-icon{font-size:20px;margin-right:.25rem;margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry .boost-link-removed{overflow:hidden;height:0;width:0;visibility:hidden;position:absolute}body.KUP-setting-alternativeMobileUI article.entry footer{z-index:1}body.KUP-setting-alternativeMobileUI article.entry footer menu{align-items:center}body.KUP-setting-alternativeMobileUI article.entry .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI article.entry .footer-button{font-size:1.4em;vertical-align:middle;white-space:nowrap}body.KUP-setting-alternativeMobileUI article.entry .footer-button.active{color:var(--kbin-button-primary-bg)}body.KUP-setting-alternativeMobileUI article.entry .footer-button.more-link{width:1.5em;height:100%}@media (max-width: 689.98px){body.KUP-setting-alternativeMobileUI.rounded-edges .page-entry-single article.entry:not(.no-image) .media-preview{border-top-left-radius:.5rem;border-top-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image){grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image):not(.no-media-preview) figure img{display:none}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "preview preview" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry.no-image{grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI .page-entry-single #content .media-preview-li{display:none}body.KUP-setting-alternativeMobileUI.rounded-edges #middle:not(.page-entry-single) article.entry:not(.no-image) .media-preview img{border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry{margin-bottom:2rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry .media-preview{margin-bottom:-.5rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content .no-image-placeholder{display:block}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image){grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry.no-image{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI #content article.entry{padding-bottom:0}body.KUP-setting-alternativeMobileUI #content article.entry .meta-content{justify-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview{overflow:hidden;max-height:90vh;padding:0}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview img{max-width:100%}body.KUP-setting-alternativeMobileUI #content article.entry .vote{margin-right:.5rem;margin-left:.5rem}body.KUP-setting-alternativeMobileUI #content article.entry .entry__meta{text-align:center}body.KUP-setting-alternativeMobileUI #content article.entry footer{text-align:center;border-top:var(--kbin-section-border);margin-top:1rem;padding-top:.8em;padding-bottom:.8em}body.KUP-setting-alternativeMobileUI #content article.entry footer menu{place-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry menu{grid-auto-columns:auto}body.KUP-setting-alternativeMobileUI #content article.entry menu .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image){grid-template-columns:auto min-content;padding-top:0}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:none}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:block}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure img{width:100%;max-width:100%;max-height:90vh;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}}');
+      inject_style('body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}#content article.entry .no-image-placeholder{place-self:center}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{align-self:center}#content article.entry>figure img{object-position:center}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:var(--kbin-button-primary-border);color:var(--kbin-button-primary-text-color);background:var(--kbin-button-primary-bg);padding:.5em;cursor:pointer}#content article.entry button.show-preview:hover,#content article.entry button.preview-button:hover{color:var(--kbin-button-primary-text-hover-color);background:var(--kbin-button-primary-hover-bg)}main#main.view-compact article.entry{grid-template-areas:"vote image title" "vote image meta" "vote image footer" "body body body" "preview preview preview"!important}main#main.view-compact article.entry.no-image{grid-template-areas:"vote title" "vote meta" "vote footer" "body body" "preview preview"!important}main#main.view-compact article.entry figure{margin-right:1rem}main#main.view-compact article.entry figure img{max-height:100px;max-width:120px}@media (max-width: 689.98px){main#main.view-compact article.entry{grid-template-areas:"image vote" "title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}main#main.view-compact article.entry figure img{object-fit:contain}main#main.view-compact article.entry.no-image{grid-template-areas:"title vote" "meta vote" "footer vote" "body body" "preview preview"!important;grid-template-columns:auto min-content}}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border);padding:1em}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}@media (max-width: 689.98px){#content article.entry>figure{margin:0}#content article.entry aside.vote{place-self:center}}');
+    }
+  });
+
+  // src/Classes/Article/Article_alt_ui.scss
+  var Article_alt_ui_exports = {};
+  var init_Article_alt_ui = __esm({
+    "src/Classes/Article/Article_alt_ui.scss"() {
+      init_index();
+      inject_style('body.KUP-setting-alternativeMobileUI article.entry .meta-content{display:flex;flex-flow:row;justify-content:flex-start;align-items:center;gap:1em;flex-wrap:wrap;width:100%;margin:auto;vertical-align:middle}body.KUP-setting-alternativeMobileUI article.entry .meta-content img{width:20px;height:20px;aspect-ratio:1}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer{vertical-align:middle;display:grid;grid-auto-columns:max-content;grid-auto-flow:column;padding:.5rem 0}body.KUP-setting-alternativeMobileUI article.entry .meta-content .time-outer .timeago{margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry .meta-content .meta-icon{font-size:20px;margin-right:.25rem;margin-left:.25rem}body.KUP-setting-alternativeMobileUI article.entry footer{z-index:1}body.KUP-setting-alternativeMobileUI article.entry footer menu{align-items:center}body.KUP-setting-alternativeMobileUI article.entry footer menu .boost-link-removed{overflow:hidden;height:0;width:0;visibility:hidden;position:absolute}body.KUP-setting-alternativeMobileUI article.entry .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI article.entry .footer-button{font-size:1.4em;vertical-align:middle;white-space:nowrap}body.KUP-setting-alternativeMobileUI article.entry .footer-button.active{color:var(--kbin-button-primary-bg)}body.KUP-setting-alternativeMobileUI article.entry .footer-button.more-link{width:1.5em;height:100%}@media (max-width: 689.98px){body.KUP-setting-alternativeMobileUI.rounded-edges .page-entry-single article.entry:not(.no-image) .media-preview{border-top-left-radius:.5rem;border-top-right-radius:.5rem}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image){grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image):not(.no-media-preview) figure img{display:none}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "preview preview" "body body"!important}body.KUP-setting-alternativeMobileUI .page-entry-single #content article.entry.no-image{grid-template-areas:"preview preview" "title vote" "shortDesc shortDesc" "meta meta" "footer footer" "image image" "body body"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI .page-entry-single #content .media-preview-li{display:none}body.KUP-setting-alternativeMobileUI.rounded-edges #middle:not(.page-entry-single) article.entry:not(.no-image) .media-preview img{border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry{margin-bottom:2rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry .media-preview{margin-bottom:-.5rem}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content .no-image-placeholder{display:block}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image){grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry:not(.no-image).no-media-preview{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important}body.KUP-setting-alternativeMobileUI #middle:not(.page-entry-single) #content article.entry.no-image{grid-template-areas:"image image" "title vote" "shortDesc vote" "meta meta" "body body" "footer footer" "preview preview"!important;grid-template-columns:auto min-content}body.KUP-setting-alternativeMobileUI #content article.entry{padding-bottom:0}body.KUP-setting-alternativeMobileUI #content article.entry .meta-content{justify-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview{overflow:hidden;max-height:90vh;padding:0}body.KUP-setting-alternativeMobileUI #content article.entry .media-preview img{max-width:100%}body.KUP-setting-alternativeMobileUI #content article.entry .vote{margin-right:.5rem;margin-left:.5rem}body.KUP-setting-alternativeMobileUI #content article.entry .entry__meta{text-align:center}body.KUP-setting-alternativeMobileUI #content article.entry footer{text-align:center;border-top:var(--kbin-section-border);margin-top:1rem;padding-top:.8em;padding-bottom:.8em}body.KUP-setting-alternativeMobileUI #content article.entry footer menu{place-content:space-around}body.KUP-setting-alternativeMobileUI #content article.entry menu{grid-auto-columns:auto}body.KUP-setting-alternativeMobileUI #content article.entry menu .fa-solid.fa-thumbtack{font-size:1.4em;vertical-align:middle}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image){grid-template-columns:auto min-content;padding-top:0}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:none}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure{display:block}body.KUP-setting-alternativeMobileUI #content article.entry:not(.no-image)>figure img{width:100%;max-width:100%;max-height:90vh;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}}');
     }
   });
 
@@ -68,37 +77,37 @@
     constructor() {
     }
     get(key) {
-      const settings2 = this.getAll();
-      if (settings2[key] === void 0) {
+      const settings3 = this.getAll();
+      if (settings3[key] === void 0) {
         return null;
       }
-      return settings2[key];
+      return settings3[key];
     }
     getAll() {
       const data = localStorage.getItem("kup-settings");
-      let settings2 = {};
+      let settings3 = {};
       if (data) {
-        settings2 = JSON.parse(data);
+        settings3 = JSON.parse(data);
       }
-      if (settings2.showUrlSubheader === void 0) {
-        settings2.showUrlSubheader = true;
+      if (settings3.showUrlSubheader === void 0) {
+        settings3.showUrlSubheader = true;
       }
-      if (settings2.removeCommentAnchor === void 0) {
-        settings2.removeCommentAnchor = true;
+      if (settings3.removeCommentAnchor === void 0) {
+        settings3.removeCommentAnchor = true;
       }
-      if (settings2.showArticlePreview === void 0) {
-        settings2.showArticlePreview = true;
+      if (settings3.showArticlePreview === void 0) {
+        settings3.showArticlePreview = true;
       }
-      if (settings2.infiniteCommentScroll === void 0) {
-        settings2.infiniteCommentScroll = true;
+      if (settings3.infiniteCommentScroll === void 0) {
+        settings3.infiniteCommentScroll = true;
       }
-      if (settings2.addOptionsAnchor === void 0) {
-        settings2.addOptionsAnchor = true;
+      if (settings3.addOptionsAnchor === void 0) {
+        settings3.addOptionsAnchor = true;
       }
-      return settings2;
+      return settings3;
     }
-    replace(settings2, sendEvent = true, apply = true) {
-      localStorage.setItem("kup-settings", JSON.stringify(settings2));
+    replace(settings3, sendEvent = true, apply = true) {
+      localStorage.setItem("kup-settings", JSON.stringify(settings3));
       if (apply) {
         this.apply();
       }
@@ -107,10 +116,10 @@
       }
     }
     save(key, value, apply = true) {
-      const settings2 = this.getAll();
-      const oldValue = settings2[key];
-      settings2[key] = value;
-      localStorage.setItem("kup-settings", JSON.stringify(settings2));
+      const settings3 = this.getAll();
+      const oldValue = settings3[key];
+      settings3[key] = value;
+      localStorage.setItem("kup-settings", JSON.stringify(settings3));
       if (apply) {
         this.apply();
       }
@@ -123,8 +132,8 @@
       }));
     }
     apply() {
-      const settings2 = this.getAll();
-      for (const [key, value] of Object.entries(settings2)) {
+      const settings3 = this.getAll();
+      for (const [key, value] of Object.entries(settings3)) {
         if (value === true || value === false) {
           document.body.classList.toggle("KUP-setting-" + key, value);
         }
@@ -143,8 +152,12 @@
   }
 
   // src/Classes/Article/Article.js
+  var settings = new Settings_default();
   if (isNewKbinVersion()) {
     Promise.resolve().then(() => init_Article());
+    if (settings.get("alternativeMobileUI")) {
+      Promise.resolve().then(() => init_Article_alt_ui());
+    }
   } else {
     Promise.resolve().then(() => init_Article_old());
   }
@@ -300,7 +313,7 @@
       if (!this.feedElement) {
         return;
       }
-      const settings2 = new Settings_default();
+      const settings3 = new Settings_default();
       const footer = this.feedElement.querySelector("footer");
       const footerMenu = footer.querySelector("menu");
       const previewOuter = Object.assign(document.createElement("div"), {
@@ -340,14 +353,14 @@
       const commentLinkElement = footer.querySelector("menu li [data-subject-target='commentsCounter']")?.parentElement;
       const articleLinkElement = this.feedElement.querySelector("header h2 a");
       if (articleLinkElement) {
-        if (settings2.get("openArticleInNewTab")) {
+        if (settings3.get("openArticleInNewTab")) {
           articleLinkElement.target = "_blank";
         } else {
           articleLinkElement.removeAttribute("target");
         }
       }
       if (commentLinkElement) {
-        if (settings2.get("openArticleInNewTab")) {
+        if (settings3.get("openArticleInNewTab")) {
           commentLinkElement.target = "_blank";
         } else {
           commentLinkElement.removeAttribute("target");
@@ -394,8 +407,8 @@
       });
       this.articlePageElement.append(previewOuter);
       this.replaceMediaPreview(this.articlePageElement);
-      const settings2 = new Settings_default();
-      if (settings2.get("alternativeMobileUI")) {
+      const settings3 = new Settings_default();
+      if (settings3.get("alternativeMobileUI")) {
         this.showMediaPreview();
       }
     }
@@ -509,9 +522,9 @@
       }
     }
     enrichElement() {
-      const settings2 = new Settings_default();
+      const settings3 = new Settings_default();
       const articleElement = this.feedElement || this.articlePageElement;
-      if (settings2.get("alternativeMobileUI")) {
+      if (settings3.get("alternativeMobileUI")) {
         const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
         const commentsLi = commentsLinkElement?.parentElement;
         const commentsURL = commentsLinkElement?.href;
@@ -520,10 +533,10 @@
         const newCommentsLinkElement = document.createElement("a");
         newCommentsLinkElement.className = "comments-link footer-button";
         newCommentsLinkElement.href = commentsURL;
-        if (settings2.get("openArticleInNewTab")) {
+        if (settings3.get("openArticleInNewTab")) {
           newCommentsLinkElement.target = "_blank";
         }
-        if (settings2.get("removeCommentAnchor") && this.feedElement) {
+        if (settings3.get("removeCommentAnchor") && this.feedElement) {
           if (commentsURL.endsWith("#comments")) {
             const url = new URL(commentsURL);
             newCommentsLinkElement.href = url.pathname;
@@ -568,7 +581,7 @@
         const moreLinkElement = articleElement.querySelector("footer menu li button[data-subject-target='more']");
         moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
         moreLinkElement.classList.add("more-link", "footer-button");
-        if (settings2.get("alternativeMobileUI")) {
+        if (settings3.get("alternativeMobileUI")) {
           const metaEl = articleElement.querySelector("aside.meta");
           if (metaEl) {
             const userEl = metaEl.querySelector(".user-inline");
@@ -601,7 +614,7 @@
       const thumbnail = thumbnailFigure?.querySelector("a img");
       if (thumbnail) {
         thumbnail.style.objectFit = null;
-        if (settings2.get("alternativeMobileUI") && !isNewKbinVersion()) {
+        if (settings3.get("alternativeMobileUI") && !isNewKbinVersion()) {
           thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
         }
       }
@@ -662,16 +675,16 @@
       }
     }
     applySettings() {
-      const settings2 = new Settings_default();
-      if (settings2.get("alternativeMobileUI") === true) {
+      const settings3 = new Settings_default();
+      if (settings3.get("alternativeMobileUI") === true) {
         if (this.articlePageElement) {
           this.showMediaPreview();
           if (!this.hasMedia) {
             this.articlePageElement.classList.add("no-media-preview");
           }
         } else if (this.feedElement) {
-          console.log(settings2.get("openArticleInNewTab"));
-          if (settings2.get("openArticleInNewTab")) {
+          console.log(settings3.get("openArticleInNewTab"));
+          if (settings3.get("openArticleInNewTab")) {
             this.feedElement.querySelector(".comments-link").target = "_blank";
             this.feedElement.querySelector("header a").target = "_blank";
           } else {
@@ -682,7 +695,7 @@
       } else {
         if (this.feedElement) {
           const commentsLink = this.feedElement.querySelector("footer menu li [data-subject-target='commentsCounter']").parentElement;
-          if (settings2.get("openArticleInNewTab")) {
+          if (settings3.get("openArticleInNewTab")) {
             commentsLink.target = "_blank";
             this.feedElement.querySelector("header a").target = "_blank";
           } else {
@@ -829,8 +842,8 @@
       }
     }
     applySettings() {
-      const settings2 = new Settings_default();
-      if (settings2.get("showArticlePreview")) {
+      const settings3 = new Settings_default();
+      if (settings3.get("showArticlePreview")) {
         document.body.classList.add("kup-show-article-preview");
       } else {
         document.body.classList.remove("kup-show-article-preview");
@@ -881,8 +894,8 @@
       this.articleElement = document.querySelector("article.entry");
       this.article = Article_default.fromArticlePage(this.articleElement);
       this.article.enrichArticlePage();
-      const settings2 = new Settings_default();
-      if (settings2.get("infiniteCommentScroll")) {
+      const settings3 = new Settings_default();
+      if (settings3.get("infiniteCommentScroll")) {
         const paginationElement = document.querySelector("nav.pagination.section");
         let currentPage = this.url.searchParams.get("p");
         if (currentPage) {
@@ -938,9 +951,9 @@
       }
     }
     applySettings() {
-      const settings2 = new Settings_default();
+      const settings3 = new Settings_default();
       const options = document.getElementById("options");
-      if (settings2.get("addOptionsAnchor") === true) {
+      if (settings3.get("addOptionsAnchor") === true) {
         options.querySelectorAll(".options__main li a").forEach((a) => {
           a.href = a.href + "#options";
         });
@@ -1035,8 +1048,8 @@
     }
     setId(id) {
       this.id = id;
-      const settings2 = new Settings_default();
-      const value = settings2.get(id);
+      const settings3 = new Settings_default();
+      const value = settings3.get(id);
       if (value !== void 0) {
         this.value = value;
       }
@@ -1177,8 +1190,8 @@
       this.settingsRows.forEach((row) => {
         settingsRows.appendChild(row.getElement());
       });
-      const settings2 = new Settings_default();
-      if (settings2.get("alwaysExpandSettingsSections")) {
+      const settings3 = new Settings_default();
+      if (settings3.get("alwaysExpandSettingsSections")) {
         this.expand();
       }
       return element;
@@ -1207,8 +1220,8 @@
       }
       const action = (newValue) => {
         if (this.id) {
-          const settings2 = new Settings_default();
-          settings2.save(this.id, newValue, !this.requireReload);
+          const settings3 = new Settings_default();
+          settings3.save(this.id, newValue, !this.requireReload);
         }
         if (this.onChangeAction) {
           this.onChangeAction(newValue);
@@ -1482,8 +1495,8 @@
       }));
       window.addEventListener("load", () => {
         setTimeout(() => {
-          const settings2 = new Settings_default();
-          if (settings2.get("settingsCompatibilityMode")) {
+          const settings3 = new Settings_default();
+          if (settings3.get("settingsCompatibilityMode")) {
             this.rerender();
           } else {
             let currentSection = null;
@@ -1602,11 +1615,11 @@
   var navigator = new Navigator_default();
   var articlePage = new ArticlePage_default();
   var settingsPanel = new SettingsPanel_default();
-  var settings = new Settings_default();
+  var settings2 = new Settings_default();
   articlesHandler.init();
   navigator.init();
   articlePage.init();
   settingsPanel.init();
-  settings.apply();
+  settings2.apply();
 })();
 })();

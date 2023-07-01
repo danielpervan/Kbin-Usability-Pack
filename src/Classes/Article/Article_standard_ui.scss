@@ -1,0 +1,51 @@
+#content article.entry {
+  &.no-image {
+    grid-template-areas:
+      "vote title"
+      "vote shortDesc"
+      "vote meta"
+      "vote footer"
+      "body body"
+      "preview preview";
+  }
+
+  &:not(.no-image) {
+    grid-template-areas:
+      "vote image title"
+      "vote image shortDesc"
+      "vote image meta"
+      "vote image footer"
+      "body body body"
+      "preview preview preview" !important;
+    grid-template-columns: min-content min-content auto;
+  }
+}
+
+@media (max-width: 689.98px) {
+  #content article.entry {
+    &:not(.no-image) {
+      grid-template-areas:
+        "image image"
+        "vote title"
+        "vote shortDesc"
+        "meta meta"
+        "body body"
+        "footer footer"
+        "preview preview" !important;
+      grid-template-columns: min-content 1fr;
+    }
+
+    &.no-image {
+      grid-template-areas:
+        "vote title"
+        "vote shortDesc"
+        "vote meta"
+        "vote footer"
+        "body body"
+        "preview preview" !important;
+      grid-template-columns: min-content 1fr;
+    }
+  }
+}
+
+

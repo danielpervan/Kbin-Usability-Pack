@@ -1,11 +1,17 @@
 import User from "../User/User";
+import Settings from "../Settings";
+import {isNewKbinVersion} from "../../Utils/utils";
+
+const settings = new Settings();
 if (isNewKbinVersion()) {
     import("./Article.scss");
+    if (settings.get("alternativeMobileUI")) {
+        import("./Article_alt_ui.scss");
+    }
 } else {
     import("./Article_old.scss");
 }
-import Settings from "../Settings";
-import {isNewKbinVersion} from "../../Utils/utils";
+
 
 class Article {
     feedElement = null;
