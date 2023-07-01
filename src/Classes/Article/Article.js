@@ -183,11 +183,6 @@ class Article {
             className: "preview-outer"
         });
         this.feedElement.append(previewOuter);
-        /** Fix thumbnail */
-        const thumbnail = this.feedElement.querySelector("figure a img");
-        if (thumbnail) {
-            thumbnail.style.objectFit = null;
-        }
 
         /** Replace media preview */
         this.replaceMediaPreview(this.feedElement);
@@ -418,8 +413,8 @@ class Article {
 
     enrichElement() {
         const settings = new Settings();
+        const articleElement = this.feedElement || this.articlePageElement;
         if (settings.get("alternativeMobileUI")) {
-            let articleElement = this.articlePageElement ?? this.feedElement;
             /** Replace comments link */
             const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
             const commentsLi = commentsLinkElement?.parentElement;
@@ -517,6 +512,17 @@ class Article {
                 }
             }
         }
+
+        /** Fix thumbnail */
+        const thumbnailFigure = articleElement.querySelector("figure");
+        const thumbnail =  thumbnailFigure?.querySelector("a img");
+        if (thumbnail) {
+            thumbnail.style.objectFit = null;
+            if (settings.get("alternativeMobileUI") && !isNewKbinVersion()) {
+                thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
+            }
+        }
+
         this.applySettings();
     }
 
