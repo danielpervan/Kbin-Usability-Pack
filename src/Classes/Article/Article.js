@@ -7,6 +7,8 @@ if (isNewKbinVersion()) {
     import("./Article.scss");
     if (settings.get("alternativeMobileUI")) {
         import("./Article_alt_ui.scss");
+    } else {
+        import("./Article_standard_ui.scss");
     }
 } else {
     import("./Article_old.scss");
@@ -39,7 +41,6 @@ class Article {
 
     constructor() {
         window.addEventListener("kup-settings-changed", () => {
-            console.log("kup-settings-changed");
             this.applySettings();
         });
     }
@@ -140,7 +141,7 @@ class Article {
         article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
         article.linkUrl = articleElement.querySelector("header h1>a")?.href;
         article.thumbUrl = articleElement.querySelector("figure a img")?.src;
-        article.mediaUrl = articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
+        article.mediaUrl = articleElement.querySelector("footer button.show-preview")?.dataset?.previewUrlParam ?? articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam
         article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
         article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
         const upvoteElement = articleElement.querySelector("aside.vote .vote__up");
@@ -420,25 +421,27 @@ class Article {
     enrichElement() {
         const settings = new Settings();
         const articleElement = this.feedElement || this.articlePageElement;
+        const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
+
+        /** Remove comment anchor */
+        if (settings.get("removeCommentAnchor") && this.feedElement) {
+            if (commentsLinkElement?.href.endsWith("#comments")) {
+                const url = new URL(commentsLinkElement?.href);
+                commentsLinkElement.href = url.pathname;
+            }
+        }
+
         if (settings.get("alternativeMobileUI")) {
             /** Replace comments link */
-            const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
+            const commentsCount = parseInt(commentsLinkElement.querySelector("[data-subject-target='commentsCounter']").innerText);
             const commentsLi = commentsLinkElement?.parentElement;
             const commentsURL = commentsLinkElement?.href;
-            const commentsCount = parseInt(commentsLinkElement.querySelector("[data-subject-target='commentsCounter']").innerText);
             commentsLinkElement.remove();
             const newCommentsLinkElement = document.createElement("a");
             newCommentsLinkElement.className = "comments-link footer-button";
             newCommentsLinkElement.href = commentsURL;
             if (settings.get("openArticleInNewTab")) {
                 newCommentsLinkElement.target = "_blank";
-            }
-            /** Remove comment anchor */
-            if (settings.get("removeCommentAnchor") && this.feedElement) {
-                if (commentsURL.endsWith("#comments")) {
-                    const url = new URL(commentsURL);
-                    newCommentsLinkElement.href = url.pathname;
-                }
             }
 
             newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
@@ -462,7 +465,6 @@ class Article {
 
             /** Observe boost counter */
             const boostCounterObserver = new MutationObserver((mutations) => {
-                console.log("Boost counter observer");
                 mutations.forEach(() => {
                     const boostCounterElement = newBoostLinkElement.querySelector(".boost-counter");
                     if (boostCounterElement) {
@@ -488,8 +490,41 @@ class Article {
             moreLinkElement.classList.add("more-link", "footer-button");
 
             /** Enrich meta */
+            const metaEl = articleElement.querySelector("aside.meta");
+            if (metaEl && settings.get("showInstanceName")) {
+                const magEl = metaEl.querySelector(".magazine-inline");
+
+                if (magEl) {
+                    const magImgEl = magEl.querySelector("img");
+                    const magName = magEl.innerText;
+
+                    /** Check if mag name has already been replaced */
+                    if (!magName.match(/.*@.+\..+/)) {
+                        magEl.innerHTML = "";
+                        if (magImgEl) {
+                            magEl.append(magImgEl);
+                        }
+
+                        const magNameEl = document.createElement("span");
+                        magNameEl.className = "mag-name";
+                        magNameEl.innerText = magName;
+                        magEl.append(magNameEl);
+
+                        const magInstanceName = magEl.href.match(/\/m\/.*@(.*)/)
+                        if (magInstanceName && !window.location.hostname.endsWith(magInstanceName[1])) {
+                            const magInstanceEl = document.createElement("span");
+                            magInstanceEl.className = "mag-instance";
+                            magInstanceEl.innerText = "@" + magInstanceName[1];
+                            magEl.append(magInstanceEl);
+                        }
+                    } else {
+                        console.warn("Magazine name already modified. Are you using multiple scripts?");
+                    }
+                }
+            }
+
+
             if (settings.get("alternativeMobileUI")) {
-                const metaEl = articleElement.querySelector("aside.meta");
                 if (metaEl) {
                     const userEl = metaEl.querySelector(".user-inline");
                     const magazineEl = metaEl.querySelector(".magazine-inline");
@@ -500,14 +535,16 @@ class Article {
                         className: "meta-content"
                     });
                     if (userEl) {
+                        userEl.classList.add("meta-item");
                         newMetaContent.append(userEl);
                     }
                     if (magazineEl) {
+                        magazineEl.classList.add("meta-item");
                         newMetaContent.append(magazineEl);
                     }
                     if (timeEl) {
                         const timeOuter = Object.assign(document.createElement("div"), {
-                            className: "time-outer",
+                            className: "time-outer meta-item",
                             innerHTML: '<span class="meta-icon"><i class="fas fa-clock"></i> </span>'
                         });
                         timeOuter.append(timeEl);
@@ -521,7 +558,7 @@ class Article {
 
         /** Fix thumbnail */
         const thumbnailFigure = articleElement.querySelector("figure");
-        const thumbnail =  thumbnailFigure?.querySelector("a img");
+        const thumbnail = thumbnailFigure?.querySelector("a img");
         if (thumbnail) {
             thumbnail.style.objectFit = null;
             if (settings.get("alternativeMobileUI") && !isNewKbinVersion()) {
@@ -595,14 +632,15 @@ class Article {
 
     applySettings() {
         const settings = new Settings();
+        const element = this.feedElement ?? this.articlePageElement;
+
+        if (!this.hasMedia) {
+            element.classList.add("no-media-preview");
+        }
         if (settings.get("alternativeMobileUI") === true) {
             if (this.articlePageElement) {
                 this.showMediaPreview();
-                if (!this.hasMedia) {
-                    this.articlePageElement.classList.add("no-media-preview");
-                }
             } else if (this.feedElement) {
-                console.log(settings.get("openArticleInNewTab"));
                 if (settings.get("openArticleInNewTab")) {
                     this.feedElement.querySelector(".comments-link").target = "_blank";
                     this.feedElement.querySelector("header a").target = "_blank";

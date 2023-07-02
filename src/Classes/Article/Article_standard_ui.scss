@@ -21,6 +21,8 @@
   }
 }
 
+
+/** Mobile All pages **/
 @media (max-width: 689.98px) {
   #content article.entry {
     &:not(.no-image) {
@@ -29,8 +31,8 @@
         "vote title"
         "vote shortDesc"
         "meta meta"
-        "body body"
         "footer footer"
+        "body body"
         "preview preview" !important;
       grid-template-columns: min-content 1fr;
     }
@@ -48,4 +50,61 @@
   }
 }
 
+/** Compact mode **/
 
+main#main.view-compact {
+  article.entry {
+    grid-template-areas:
+      "vote title image"
+      "vote meta image"
+      "vote footer image"
+      "body body body"
+      "preview preview preview" !important;
+    grid-template-columns: min-content 1fr min-content;
+
+    &.no-image {
+      grid-template-areas:
+      "vote title"
+      "vote meta"
+      "vote footer"
+      "body body"
+      "preview preview" !important;
+    }
+
+    figure {
+      /*img {
+        max-height: 100px;
+        max-width: 120px;
+      }*/
+    }
+  }
+
+  @media (max-width: 689.98px) {
+    article.entry {
+      grid-template-areas:
+      "title title vote"
+      "meta meta image"
+      "footer footer image"
+      "body body body"
+      "preview preview preview" !important;
+      grid-template-columns: 1fr min-content min-content;
+
+      figure {
+        img {
+          object-fit: contain;
+        }
+      }
+
+      &.no-image {
+        grid-template-areas:
+          "title vote"
+          "meta vote"
+          "footer vote"
+          "body body"
+          "preview preview" !important;
+        grid-template-columns: auto min-content;
+      }
+
+    }
+  }
+}

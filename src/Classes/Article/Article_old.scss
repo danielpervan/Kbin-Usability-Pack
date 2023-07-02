@@ -38,6 +38,7 @@ body:not(.KUP-setting-showArticlePreview) {
       "body body body"
       "preview preview preview" !important;
     grid-template-columns: min-content min-content auto;
+
   }
 
   &.selected {
@@ -133,7 +134,7 @@ main#main.view-compact {
   #content article.entry {
     &:not(.no-image) {
       grid-template-areas:
-      "vote image image"
+      "image image image"
       "vote title title"
       "vote shortDesc shortDesc"
       "vote meta meta"
@@ -323,12 +324,43 @@ main#main.view-compact {
 
 body.KUP-setting-alternativeMobileUI {
 
+  /** Compact view **/
+  #middle main#main.view-compact {
+
+    article.entry > figure {
+      margin: 0 1rem 0 0;
+      min-width: 100px;
+    }
+  }
+
+  &.rounded-edges #middle main#main.view-compact article.entry > figure {
+    border-radius: 0.5rem;
+  }
+
+
   @media (min-width: 991.98px) {
     #content article.entry > figure {
       background-image: none !important;
     }
   }
   @media (max-width: 991.98px) {
+    &.rounded-edges #middle article.entry > figure {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    #middle:not(.page-entry-single) article.entry > figure {
+      margin-top: -1rem;
+      margin-left: -.5rem;
+      margin-right: -.5rem;
+    }
+
+    #middle.page-entry-single article.entry > figure {
+      margin-top: -2rem;
+      margin-left: -.5rem;
+      margin-right: -.5rem;
+    }
+
     #content article.entry > figure {
       height: 110px;
       background-position: center;
@@ -361,6 +393,10 @@ body.KUP-setting-alternativeMobileUI {
       width: 100%;
       margin: auto;
       vertical-align: middle;
+
+      .mag-instance {
+        font-weight: 100;
+      }
 
       img {
         width: 20px;
@@ -414,6 +450,11 @@ body.KUP-setting-alternativeMobileUI {
       border-top-right-radius: 0.5rem;
     }
 
+    &.rounded-edges #middle article.entry > figure {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
     /** Article page **/
     .page-entry-single #content {
       article.entry:not(.no-image) {
@@ -427,7 +468,7 @@ body.KUP-setting-alternativeMobileUI {
           "body body" !important;
 
         &:not(.no-media-preview) {
-          figure img {
+          figure {
             display: none;
           }
         }
@@ -566,6 +607,7 @@ body.KUP-setting-alternativeMobileUI {
           display: block;
           margin-left: -.5rem;
           margin-right: -.5rem;
+          margin-top: 0;
           height: 110px;
 
           img {

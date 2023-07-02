@@ -5,6 +5,14 @@ body:not(.KUP-setting-showArticlePreview) {
   }
 }
 
+/** Rounded edges **/
+.media-preview-content {
+  position: relative;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  overflow: hidden;
+}
+
 #content article.entry {
   .no-image-placeholder {
     place-self: center;
@@ -21,6 +29,10 @@ body:not(.KUP-setting-showArticlePreview) {
 
   .magazine-inline {
     white-space: nowrap;
+
+    .mag-instance {
+      font-weight: 100;
+    }
   }
 
   &.selected {
@@ -59,66 +71,6 @@ body:not(.KUP-setting-showArticlePreview) {
   }
 }
 
-/** Compact mode **/
-main#main.view-compact {
-  article.entry {
-    grid-template-areas:
-      "vote image title"
-      "vote image meta"
-      "vote image footer"
-      "body body body"
-      "preview preview preview" !important;
-
-    &.no-image {
-      grid-template-areas:
-      "vote title"
-      "vote meta"
-      "vote footer"
-      "body body"
-      "preview preview" !important;
-    }
-
-    figure {
-      margin-right: 1rem;
-
-      img {
-        max-height: 100px;
-        max-width: 120px;
-      }
-    }
-  }
-
-  @media (max-width: 689.98px) {
-    article.entry {
-      grid-template-areas:
-        "image vote"
-        "title vote"
-        "meta vote"
-        "footer vote"
-        "body body"
-        "preview preview" !important;
-      grid-template-columns: auto min-content;
-
-      figure {
-        img {
-          object-fit: contain;
-        }
-      }
-
-      &.no-image {
-        grid-template-areas:
-          "title vote"
-          "meta vote"
-          "footer vote"
-          "body body"
-          "preview preview" !important;
-        grid-template-columns: auto min-content;
-      }
-
-    }
-  }
-}
-
 /** Preview **/
 .preview-outer {
   grid-area: preview;
@@ -127,7 +79,6 @@ main#main.view-compact {
     position: relative;
     display: none;
     border-top: var(--kbin-meta-border);
-    padding: 1em;
 
     &.show {
       display: block;
@@ -143,10 +94,10 @@ main#main.view-compact {
       animation: showPreviewLoading 0.25s ease-in-out;
     }
 
-
     /** Article preview **/
     .article-preview-content {
       position: relative;
+      padding: 1em;
 
       &.loaded {
         animation: articlePreviewFadeIn 0.5s ease-in-out;
@@ -156,12 +107,16 @@ main#main.view-compact {
     /** Media preview **/
     .media-preview-content {
       position: relative;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      overflow: hidden;
 
       img {
         max-width: 100%;
         max-height: 100%;
         min-width: 100px;
         object-fit: contain;
+        vertical-align: middle;
 
         &.animateMinResize {
           animation: animateMinResize 0.25s ease-out;
@@ -264,10 +219,6 @@ main#main.view-compact {
 /** Mobile **/
 @media (max-width: 689.98px) {
   #content article.entry {
-    & > figure {
-      margin: 0;
-    }
-
     /** Mobile - Vote **/
     aside.vote {
       place-self: center;

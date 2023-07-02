@@ -10,10 +10,9 @@ class ArticlesHandler {
     }
 
     init() {
-        if (!document.querySelector("#content>div article.entry")) {
+        if (!document.querySelector("#content article.entry")) {
             return;
         }
-
         this.applySettings();
         window.addEventListener("kup-settings-changed", () => {
             this.applySettings();
@@ -48,7 +47,7 @@ class ArticlesHandler {
     }
 
     parseArticles() {
-        document.querySelectorAll("#content>div>article.entry").forEach((el) => {
+        document.querySelectorAll("#middle:not(.page-entry-single) #content article.entry").forEach((el) => {
             this.parseArticle(el)
         });
     }
