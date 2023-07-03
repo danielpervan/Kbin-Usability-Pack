@@ -1,6 +1,6 @@
 {
   "name": "kbin-usability-pack",
-  "version": "0.3.2",
+  "version": "0.3.3a",
   "description": "A collection of usability enhancements for Kbin",
   "main": "src/index.js",
   "scripts": {
