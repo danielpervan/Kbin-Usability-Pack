@@ -2,7 +2,7 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.3.1
+// @version      0.3.2
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
@@ -186,7 +186,6 @@
     }
     static getInstance() {
       if (!_NotificationHandler.#instance) {
-        console.log("Creating new NotificationHandler instance");
         _NotificationHandler.#instance = new _NotificationHandler();
         _NotificationHandler.#instance.init();
       }
@@ -201,10 +200,8 @@
       this.#containerElement.classList.add("visible");
       let notificationElement;
       if (id && this.#activeNotifications[id]) {
-        console.log("Notification with id", id, "already exists, updating");
         notificationElement = this.#activeNotifications[id];
       } else {
-        console.log("Creating new notification with id", id);
         notificationElement = document.createElement("div");
         notificationElement.classList.add("notification", "visible");
         this.#activeNotifications[id] = notificationElement;
@@ -350,7 +347,6 @@
      * Show the notification
      */
     show() {
-      console.log("Showing notification", this);
       this.#element = this.#notificationHandler.createNotification(this.message, this.type, this.id, this.action);
     }
     /**
