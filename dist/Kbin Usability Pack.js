@@ -950,7 +950,7 @@
     }
     init() {
       const currentURL = new URL(window.location.href);
-      if (!currentURL.pathname.match(/\/m\/.+?\/t\/.+?/)) {
+      if (!document.querySelector("#middle.page-entry-single")) {
         return;
       }
       this.url = currentURL;

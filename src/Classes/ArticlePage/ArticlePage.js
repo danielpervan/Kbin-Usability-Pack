@@ -11,8 +11,7 @@ class ArticlePage {
     init() {
         const currentURL = new URL(window.location.href);
         /** Abort if not an article page */
-        /** m/[magazine]/t/[article] */
-        if (!currentURL.pathname.match(/\/m\/.+?\/t\/.+?/)) {
+        if (!document.querySelector("#middle.page-entry-single")) {
             return;
         }
 
