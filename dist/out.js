@@ -765,7 +765,6 @@
       });
     }
     parseArticle(element) {
-      const settings3 = new Settings_default();
       const article = Article_default.fromFeedElement(element);
       article.enrichFeedElement();
       element.addEventListener("click", () => {

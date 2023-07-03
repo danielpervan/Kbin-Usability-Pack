@@ -39,7 +39,6 @@ class ArticlesHandler {
     }
 
     parseArticle(element) {
-        const settings = new Settings();
         const article = Article.fromFeedElement(element);
         article.enrichFeedElement();
         element.addEventListener("click", () => {
