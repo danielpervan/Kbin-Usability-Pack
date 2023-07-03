@@ -437,6 +437,10 @@ body.KUP-setting-alternativeMobileUI {
       vertical-align: middle;
       white-space: nowrap;
 
+      &.active {
+        color: var(--kbin-button-primary-bg);
+      }
+
       &.more-link {
         width: 1.5em;
         height: 100%;
