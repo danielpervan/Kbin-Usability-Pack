@@ -2,7 +2,7 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.3.0
+// @version      0.3.1
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
