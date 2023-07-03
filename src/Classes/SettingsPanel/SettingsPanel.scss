@@ -120,6 +120,19 @@ body:not(.KUP-setting-settingsCompatibilityMode) {
           }
         }
 
+        button {
+          background: var(--kbin-button-primary-bg);
+          color: var(--kbin-button-primary-text-color);
+          border: var(--kbin-button-primary-border);
+          cursor: pointer;
+          font-size: 0.8em;
+
+          &:hover {
+            background: var(--kbin-button-primary-hover-bg);
+            color: var(--kbin-button-primary-hover-text-color);
+          }
+        }
+
         .switch {
           position: relative;
           display: inline-block;
@@ -188,69 +201,6 @@ body:not(.KUP-setting-settingsCompatibilityMode) {
           transform: translateX(1.5em);
           background: var(--kbin-button-primary-bg);
         }
-      }
-    }
-  }
-}
-
-#settings-notification-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 1em;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-
-  &.visible {
-    display: flex;
-  }
-
-  .notification {
-    pointer-events: initial;
-    margin-bottom: 1em;
-    padding: 1em;
-    border-radius: 0.25rem;
-    background-color: var(--kbin-bg);
-    box-shadow: var(--kbin-shadow);
-    border: var(--kbin-section-border);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    animation: showNotification 0.25s ease-in-out;
-
-    @keyframes showNotification {
-      from {
-        opacity: 0;
-        transform: translateY(1em);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .message {
-      margin-right: 1em;
-    }
-
-    .message-icon {
-      margin-right: 1em;
-    }
-
-    button {
-      background: var(--kbin-button-primary-bg);
-      color: var(--kbin-button-primary-text-color);
-      border: var(--kbin-button-primary-border);
-      cursor: pointer;
-
-      &:hover {
-        background: var(--kbin-button-primary-hover-bg);
-        color: var(--kbin-button-primary-hover-text-color);
       }
     }
   }

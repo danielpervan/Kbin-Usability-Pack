@@ -1,6 +1,7 @@
 import User from "../User/User";
 import Settings from "../Settings";
 import {isNewKbinVersion} from "../../Utils/utils";
+import LocalNotification from "../Notification/LocalNotification";
 
 const settings = new Settings();
 if (isNewKbinVersion()) {
@@ -519,6 +520,17 @@ class Article {
                         }
                     } else {
                         console.warn("Magazine name already modified. Are you using multiple scripts?");
+                        const notification = new LocalNotification("Can't show instance name because magazine name already modified. Are you using multiple scripts?", {
+                            type: LocalNotification.TYPES.WARNING,
+                            action: {
+                                text: "Disable setting",
+                                callback: () => {
+                                    settings.save("showInstanceName", false);
+                                }
+                            },
+                            id: "showInstanceName-already-modified-warning"
+                        });
+                        notification.show();
                     }
                 }
             }
@@ -565,6 +577,7 @@ class Article {
                 thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
             }
         }
+
 
         this.applySettings();
     }

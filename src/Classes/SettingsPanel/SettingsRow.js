@@ -1,4 +1,5 @@
 import Settings from "../Settings";
+import LocalNotification from "../Notification/LocalNotification";
 
 class SettingsRow {
     element;
@@ -9,16 +10,18 @@ class SettingsRow {
     id;
     static TYPES = {
         BOOLEAN: "boolean",
+        BUTTON: "button",
         STRING: "string",
         NUMBER: "number",
         ENUM: "enum",
         CUSTOM: "custom",
     }
-    constructor(name, type, options={}) {
+
+    constructor(name, type, options = {}) {
         this.name = name;
         this.type = type;
 
-        const { description, value, id } = options || {};
+        const {description, value, id} = options || {};
         this.value = value;
         this.description = description;
 
@@ -70,9 +73,26 @@ class SettingsRow {
             return Promise.resolve();
         } else {
             return fetch(valueElement.href).then(() => {
-                window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+                this.showSettingsSavedNotification(true);
             });
         }
+    }
+
+    showSettingsSavedNotification(requireReload = false) {
+        let notification
+        if (requireReload) {
+            notification = new LocalNotification("Settings updated. Some changes require reload to take effect.", {
+                type: LocalNotification.TYPES.INFO,
+                action: LocalNotification.ACTION_TYPES.RELOAD,
+                id: "settings-updated-require-reload",
+            });
+        } else {
+            notification = new LocalNotification("Settings saved.", {
+                type: LocalNotification.TYPES.SUCCESS,
+                action: LocalNotification.ACTION_TYPES.NONE,
+            });
+        }
+        notification.show();
     }
 
     static detectType(element) {

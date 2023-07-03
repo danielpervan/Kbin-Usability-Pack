@@ -160,6 +160,215 @@
     return reportIssueEl && reportIssueEl.href.startsWith("https://codeberg.org/Kbin/");
   }
 
+  // src/Classes/Notification/Notification.scss
+  init_index();
+  inject_style("#kup-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#kup-notification-container.visible{display:flex}#kup-notification-container .notification{display:none;pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out;transition:width .25s ease-in-out,font-size .25s ease-in-out}#kup-notification-container .notification.visible{display:flex}#kup-notification-container .notification.hidden{animation:hideNotification .5s ease-in-out;animation-fill-mode:forwards}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}@keyframes hideNotification{0%{opacity:1;transform:translateY(0)}50%{opacity:0;transform:translateY(1em);font-size:1em}to{opacity:0;font-size:0}}#kup-notification-container .notification .message,#kup-notification-container .notification .message-icon{margin-right:1em}#kup-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#kup-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}");
+
+  // src/Classes/Notification/NotificationHandler.js
+  var NotificationHandler = class _NotificationHandler {
+    static #instance;
+    #containerElement;
+    #activeNotifications;
+    static TYPES = {
+      INFO: "info",
+      ERROR: "error",
+      SUCCESS: "success",
+      WARNING: "warning"
+    };
+    static ACTION_TYPES = {
+      RELOAD: "reload",
+      HIDE: "hide",
+      NEVER_SHOW: "never-show",
+      NONE: "none"
+    };
+    constructor() {
+      this.#activeNotifications = [];
+    }
+    static getInstance() {
+      if (!_NotificationHandler.#instance) {
+        console.log("Creating new NotificationHandler instance");
+        _NotificationHandler.#instance = new _NotificationHandler();
+        _NotificationHandler.#instance.init();
+      }
+      return _NotificationHandler.#instance;
+    }
+    createNotification(message, type = _NotificationHandler.TYPES.INFO, id = null, action = _NotificationHandler.ACTION_TYPES.NONE, options = { delay: 5e3 }) {
+      const { delay } = options || {};
+      if (!this.#containerElement) {
+        console.error("NotificationHandler not initialised");
+        return;
+      }
+      this.#containerElement.classList.add("visible");
+      let notificationElement;
+      if (id && this.#activeNotifications[id]) {
+        console.log("Notification with id", id, "already exists, updating");
+        notificationElement = this.#activeNotifications[id];
+      } else {
+        console.log("Creating new notification with id", id);
+        notificationElement = document.createElement("div");
+        notificationElement.classList.add("notification", "visible");
+        this.#activeNotifications[id] = notificationElement;
+        this.#containerElement.insertBefore(notificationElement, this.#containerElement.firstChild);
+      }
+      let messageElement = Object.assign(document.createElement("span"), {
+        className: "message",
+        innerText: message
+      });
+      let icon;
+      let color;
+      switch (type) {
+        case _NotificationHandler.TYPES.INFO:
+          icon = "fas fa-circle-info";
+          color = "var(--kbin-button-primary-bg)";
+          break;
+        case _NotificationHandler.TYPES.ERROR:
+          icon = "fas fa-circle-xmark";
+          color = "var(--kbin-danger-color)";
+          break;
+        case _NotificationHandler.TYPES.SUCCESS:
+          icon = "fas fa-check";
+          color = "var(--kbin-success-color)";
+          break;
+        case _NotificationHandler.TYPES.WARNING:
+          icon = "fas fa-triangle-exclamation";
+          color = "#f0ad4e";
+          break;
+        default:
+          icon = "fas fa-circle-info";
+          color = "var(--kbin-button-primary-bg)";
+          break;
+      }
+      let button;
+      if (typeof action === "object") {
+        const hideOnClick = action.hideOnClick === void 0 ? true : action.hideOnClick;
+        button = Object.assign(document.createElement("button"), {
+          classList: ["btn btn-primary"],
+          innerText: action.text
+        });
+        button.addEventListener("click", () => {
+          if (hideOnClick) {
+            this.hideNotification(id);
+          }
+          action.callback();
+        });
+      } else {
+        switch (action) {
+          case _NotificationHandler.ACTION_TYPES.RELOAD:
+            button = Object.assign(document.createElement("button"), {
+              classList: ["btn btn-primary"],
+              innerText: "Reload"
+            });
+            button.addEventListener("click", () => {
+              messageElement.innerText = "Reloading...";
+              window.location.reload();
+            });
+            break;
+          case _NotificationHandler.ACTION_TYPES.HIDE:
+            button = Object.assign(document.createElement("button"), {
+              classList: ["btn btn-primary"],
+              innerText: "Close"
+            });
+            button.addEventListener("click", () => {
+              this.hideNotification(id);
+            });
+            break;
+          case _NotificationHandler.ACTION_TYPES.NEVER_SHOW:
+            button = Object.assign(document.createElement("button"), {
+              classList: ["btn btn-primary"],
+              innerText: "Never show again"
+            });
+            button.addEventListener("click", () => {
+              this.hideNotification(id);
+              const settings3 = new Settings_default();
+              settings3.save("hide-notification-" + id, true);
+            });
+            break;
+          default:
+            button = null;
+            setTimeout(() => {
+              this.hideNotification(id);
+            }, delay);
+            break;
+        }
+      }
+      notificationElement.innerHTML = `
+            <span class="message-icon" style="color:${color}"><i class="${icon}"></i></span>
+        `;
+      notificationElement.appendChild(messageElement);
+      if (button) {
+        notificationElement.appendChild(button);
+      }
+      return notificationElement;
+    }
+    hideNotification(id) {
+      if (this.#activeNotifications[id]) {
+        this.#activeNotifications[id].classList.add("hidden");
+        const element = this.#activeNotifications[id];
+        this.#activeNotifications[id].addEventListener("animationend", () => {
+          element.remove();
+        });
+        this.#activeNotifications[id] = null;
+      }
+      if (Object.keys(this.#activeNotifications).length === 0) {
+        this.#containerElement.classList.remove("visible");
+      }
+    }
+    init() {
+      const notificationContainer = Object.assign(document.createElement("div"), {
+        id: "kup-notification-container"
+      });
+      document.body.appendChild(notificationContainer);
+      this.#containerElement = notificationContainer;
+    }
+  };
+  var NotificationHandler_default = NotificationHandler;
+
+  // src/Classes/Notification/LocalNotification.js
+  var LocalNotification = class _LocalNotification {
+    static TYPES = NotificationHandler_default.TYPES;
+    static ACTION_TYPES = NotificationHandler_default.ACTION_TYPES;
+    #element = null;
+    #notificationHandler;
+    /**
+     * Create a new notification
+     * @param message {string}
+     * @param options {{[type=LocalNotification.TYPES.INFO]: LocalNotification.TYPES, [action=LocalNotification.ACTION_TYPES.NONE]: LocalNotification.ACTION_TYPES | function, [id]: string}}
+     */
+    constructor(message, options = {
+      type: _LocalNotification.TYPES.INFO,
+      action: _LocalNotification.ACTION_TYPES.NONE,
+      id: null
+    }) {
+      const { type, action, id } = options || {};
+      this.type = type;
+      this.action = action;
+      this.id = id || Math.round(Math.random() * 1e17);
+      this.message = message;
+      this.#notificationHandler = NotificationHandler_default.getInstance();
+    }
+    /**
+     * Show the notification
+     */
+    show() {
+      console.log("Showing notification", this);
+      this.#element = this.#notificationHandler.createNotification(this.message, this.type, this.id, this.action);
+    }
+    /**
+     * Show a new notification
+     * @param message
+     * @param options {{[type=LocalNotification.TYPES.INFO]: LocalNotification.TYPES, [action=LocalNotification.ACTION_TYPES.NONE]: LocalNotification.ACTION_TYPES | function, [id]: string}}
+     */
+    static show(message, options = {
+      type: _LocalNotification.TYPES.INFO,
+      action: _LocalNotification.ACTION_TYPES.NONE,
+      id: null
+    }) {
+      const notification = new _LocalNotification(message, options);
+      notification.show();
+    }
+  };
+  var LocalNotification_default = LocalNotification;
+
   // src/Classes/Article/Article.js
   var settings = new Settings_default();
   if (isNewKbinVersion()) {
@@ -614,6 +823,17 @@
               }
             } else {
               console.warn("Magazine name already modified. Are you using multiple scripts?");
+              const notification = new LocalNotification_default("Can't show instance name because magazine name already modified. Are you using multiple scripts?", {
+                type: LocalNotification_default.TYPES.WARNING,
+                action: {
+                  text: "Disable setting",
+                  callback: () => {
+                    settings3.save("showInstanceName", false);
+                  }
+                },
+                id: "showInstanceName-already-modified-warning"
+              });
+              notification.show();
             }
           }
         }
@@ -1068,6 +1288,7 @@
     id;
     static TYPES = {
       BOOLEAN: "boolean",
+      BUTTON: "button",
       STRING: "string",
       NUMBER: "number",
       ENUM: "enum",
@@ -1123,9 +1344,25 @@
         return Promise.resolve();
       } else {
         return fetch(valueElement.href).then(() => {
-          window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
+          this.showSettingsSavedNotification(true);
         });
       }
+    }
+    showSettingsSavedNotification(requireReload = false) {
+      let notification;
+      if (requireReload) {
+        notification = new LocalNotification_default("Settings updated. Some changes require reload to take effect.", {
+          type: LocalNotification_default.TYPES.INFO,
+          action: LocalNotification_default.ACTION_TYPES.RELOAD,
+          id: "settings-updated-require-reload"
+        });
+      } else {
+        notification = new LocalNotification_default("Settings saved.", {
+          type: LocalNotification_default.TYPES.SUCCESS,
+          action: LocalNotification_default.ACTION_TYPES.NONE
+        });
+      }
+      notification.show();
     }
     static detectType(element) {
       const valueElement = element.querySelector(":scope > div");
@@ -1264,7 +1501,7 @@
 
   // src/Classes/SettingsPanel/SettingsPanel.scss
   init_index();
-  inject_style('body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}#settings-notification-container{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:1em;display:none;flex-direction:column;align-items:center;pointer-events:none}#settings-notification-container.visible{display:flex}#settings-notification-container .notification{pointer-events:initial;margin-bottom:1em;padding:1em;border-radius:.25rem;background-color:var(--kbin-bg);box-shadow:var(--kbin-shadow);border:var(--kbin-section-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;animation:showNotification .25s ease-in-out}@keyframes showNotification{0%{opacity:0;transform:translateY(1em)}to{opacity:1;transform:translateY(0)}}#settings-notification-container .notification .message,#settings-notification-container .notification .message-icon{margin-right:1em}#settings-notification-container .notification button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer}#settings-notification-container .notification button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}');
+  inject_style('body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer;font-size:.8em}.settings-panel .settings-section .settings-row .value-container button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}');
 
   // src/Classes/SettingsPanel/SettingsRowBoolean.js
   var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
@@ -1289,9 +1526,7 @@
         if (this.onChangeAction) {
           this.onChangeAction(newValue);
         }
-        if (this.requireReload) {
-          window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-        }
+        this.showSettingsSavedNotification(this.requireReload);
       };
       this.bindTrueAction(() => {
         action(true);
@@ -1472,6 +1707,63 @@
   };
   var SettingsRowEnum_default = SettingsRowEnum;
 
+  // src/Classes/SettingsPanel/SettingsRowButton.js
+  var SettingsRowButton = class extends SettingsRow_default {
+    constructor(name, options = {
+      label: "Click me!",
+      onClick: () => {
+      },
+      requireReload: false
+    }) {
+      super(name, SettingsRow_default.TYPES.BUTTON, options);
+      const { label, onClick, requireReload } = options || {};
+      this.label = label ?? "Click me!";
+      this.onClick = onClick;
+      this.requireReload = requireReload;
+    }
+    getElement() {
+      if (this.element) {
+        return this.element;
+      }
+      const element = Object.assign(document.createElement("div"), {
+        className: "settings-row"
+      });
+      this.element = element;
+      const name = Object.assign(document.createElement("span"), {
+        className: "name",
+        innerText: this.name
+      });
+      element.appendChild(name);
+      if (this.description) {
+        element.classList.add("has-description");
+        const description = Object.assign(document.createElement("span"), {
+          className: "description",
+          innerText: this.description
+        });
+        element.appendChild(description);
+      }
+      const valueContainer = Object.assign(document.createElement("div"), {
+        className: "value-container"
+      });
+      const button = Object.assign(document.createElement("button"), {
+        className: "btn btn-primary",
+        innerText: this.label
+      });
+      button.addEventListener("click", () => {
+        if (this.onClick) {
+          this.onClick();
+        }
+        if (this.requireReload) {
+          this.showSettingsSavedNotification(this.requireReload);
+        }
+      });
+      valueContainer.appendChild(button);
+      element.appendChild(valueContainer);
+      return element;
+    }
+  };
+  var SettingsRowButton_default = SettingsRowButton;
+
   // src/Classes/SettingsPanel/SettingsPanel.js
   function settingsRowFromElement(element) {
     let settingsRow;
@@ -1490,7 +1782,6 @@
   }
   var SettingsPanel = class {
     #initiated = false;
-    #notificationElement;
     #sections = [];
     #settingsPanelElement;
     #settingsPanelContainerElement;
@@ -1503,19 +1794,16 @@
       }
       this.#initiated = true;
       this.#settingsPanelContainerElement = document.getElementById("settings");
-      this.#addSettingsNotificationElement();
       document.KUP.settingsPanel = this;
       if (!document.KUP.components) {
         document.KUP.components = {};
       }
       document.KUP.components.SettingsPanelBooleanRow = SettingsRowBoolean_default;
+      document.KUP.components.SettingsPanelButtonRow = SettingsRowButton_default;
       document.KUP.components.SettingsPanelEnumRow = SettingsRowEnum_default;
       document.KUP.components.SettingsPanelSection = SettingsSection_default;
       this.#enrichSettingsPanel();
       this.#populateKUPSettings();
-      window.addEventListener("kup-settings-needs-reload", () => {
-        this.showNotification("Settings updated. Some changes require reload to take effect.");
-      });
       window.addEventListener("kup-settings-expand-all-sections", (e) => {
         this.#sections.forEach((section) => {
           e.detail.expand ? section.expand() : section.collapse();
@@ -1562,61 +1850,47 @@
           if (settings3.get("settingsCompatibilityMode")) {
             this.rerender();
           } else {
-            let currentSection = null;
-            let sections = [];
-            settingsList.forEach((el) => {
-              if (el.tagName === "STRONG") {
-                if (currentSection) {
-                  sections.push(currentSection);
-                  currentSection = null;
+            try {
+              let currentSection = null;
+              let sections = [];
+              settingsList.forEach((el) => {
+                if (el.tagName === "STRONG") {
+                  if (currentSection) {
+                    sections.push(currentSection);
+                    currentSection = null;
+                  }
+                  currentSection = SettingsSection_default.fromHeaderElement(el);
+                } else {
+                  if (!currentSection) {
+                    console.error("Found setting without section: ", el);
+                    currentSection = new SettingsSection_default("Other");
+                  }
+                  const settingsRow = settingsRowFromElement(el);
+                  currentSection.addSettingsRow(settingsRow);
                 }
-                currentSection = SettingsSection_default.fromHeaderElement(el);
-              } else {
-                if (!currentSection) {
-                  console.error("Found setting without section: ", el);
-                  currentSection = new SettingsSection_default("Other");
-                }
-                const settingsRow = settingsRowFromElement(el);
-                currentSection.addSettingsRow(settingsRow);
+              });
+              if (currentSection) {
+                sections.push(currentSection);
               }
-            });
-            if (currentSection) {
-              sections.push(currentSection);
+              sections.forEach((section) => {
+                settingsPanel2.appendChild(section.getElement());
+              });
+              settingsListElement.remove();
+              this.#sections = [...sections, ...this.#sections];
+            } catch (e) {
+              console.error("Error while parsing settings, enabling high compatibility mode: ", e);
+              settings3.save("settingsCompatibilityMode", true);
+              const notification = new LocalNotification_default("There was a problem setting up the settings panel. Turning on compatibility mode...", {
+                type: LocalNotification_default.TYPES.ERROR,
+                action: LocalNotification_default.ACTION_TYPES.HIDE
+              });
+              notification.show();
+              return;
             }
-            sections.forEach((section) => {
-              settingsPanel2.appendChild(section.getElement());
-            });
-            settingsListElement.remove();
-            this.#sections = [...sections, ...this.#sections];
             this.rerender();
           }
         }, 100);
       });
-    }
-    #addSettingsNotificationElement() {
-      const settingsNotificationContainer = Object.assign(document.createElement("div"), {
-        id: "settings-notification-container"
-      });
-      const settingsNotificationElement = document.createElement("div");
-      settingsNotificationElement.classList.add("notification");
-      settingsNotificationElement.innerHTML = `
-            <span class="message-icon"><i class="fas fa-circle-info"></i></span>
-            <span class="message"></span>
-            <button class="btn btn-primary">Reload</button>
-        `;
-      settingsNotificationElement.querySelector("button").addEventListener("click", () => {
-        window.location.reload();
-      });
-      settingsNotificationContainer.appendChild(settingsNotificationElement);
-      document.body.appendChild(settingsNotificationContainer);
-      this.#notificationElement = settingsNotificationContainer;
-    }
-    showNotification(message) {
-      this.#notificationElement.classList.add("visible");
-      this.#notificationElement.querySelector(".message").innerText = message;
-    }
-    hideNotification() {
-      this.#notificationElement.classList.remove("visible");
     }
     #populateKUPSettings() {
       const section = new SettingsSection_default("Kbin Usability Pack");
@@ -1670,6 +1944,16 @@
           id: "settingsCompatibilityMode",
           description: "Increase compatibility with other scripts that modify the settings panel.",
           requireReload: true
+        }),
+        new SettingsRowButton_default("Reset settings", {
+          id: "resetSettings",
+          description: "Reset all KUP settings to their default values.",
+          requireReload: true,
+          onClick: () => {
+            const settings3 = new Settings_default();
+            settings3.reset();
+          },
+          label: "Reset"
         })
       ]);
       this.addSection(section);
@@ -1680,6 +1964,7 @@
   // src/index.js
   document.body.classList.add("KUP-injected");
   document.KUP = {};
+  document.KUP.LocalNotification = LocalNotification_default;
   if (!isNewKbinVersion()) {
     document.body.classList.add("old-version");
   }
@@ -1688,6 +1973,21 @@
   var articlePage = new ArticlePage_default();
   var settingsPanel = new SettingsPanel_default();
   var settings2 = new Settings_default();
+  if (!settings2.get("installedVersion")) {
+    const notification = new LocalNotification_default("Kbin Usability Pack installed", {
+      type: LocalNotification_default.TYPES.SUCCESS,
+      action: LocalNotification_default.ACTION_TYPES.NONE
+    });
+    notification.show();
+    settings2.save("installedVersion", GM_info.script.version);
+  } else if (settings2.get("installedVersion") !== GM_info.script.version) {
+    const notification = new LocalNotification_default("Kbin Usability Pack updated to version " + GM_info.script.version, {
+      type: LocalNotification_default.TYPES.SUCCESS,
+      action: LocalNotification_default.ACTION_TYPES.NONE
+    });
+    notification.show();
+    settings2.save("installedVersion", GM_info.script.version);
+  }
   articlesHandler.init();
   navigator.init();
   articlePage.init();

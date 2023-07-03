@@ -5,6 +5,8 @@ import "./SettingsPanel.scss";
 import SettingsRowBoolean from "./SettingsRowBoolean";
 import SettingsRowEnum from "./SettingsRowEnum";
 import Settings from "../Settings";
+import LocalNotification from "../Notification/LocalNotification";
+import SettingsRowButton from "./SettingsRowButton";
 
 function settingsRowFromElement(element) {
     let settingsRow;
@@ -24,7 +26,6 @@ function settingsRowFromElement(element) {
 
 class SettingsPanel {
     #initiated = false;
-    #notificationElement;
     #sections = [];
     #settingsPanelElement;
     #settingsPanelContainerElement;
@@ -39,22 +40,17 @@ class SettingsPanel {
         }
         this.#initiated = true;
         this.#settingsPanelContainerElement = document.getElementById("settings");
-        this.#addSettingsNotificationElement();
         document.KUP.settingsPanel = this;
         if (!document.KUP.components) {
             document.KUP.components = {};
         }
         document.KUP.components.SettingsPanelBooleanRow = SettingsRowBoolean;
+        document.KUP.components.SettingsPanelButtonRow = SettingsRowButton;
         document.KUP.components.SettingsPanelEnumRow = SettingsRowEnum;
         document.KUP.components.SettingsPanelSection = SettingsSection;
 
         this.#enrichSettingsPanel();
         this.#populateKUPSettings();
-
-
-        window.addEventListener("kup-settings-needs-reload", () => {
-            this.showNotification("Settings updated. Some changes require reload to take effect.");
-        });
 
         window.addEventListener("kup-settings-expand-all-sections", (e) => {
             this.#sections.forEach((section) => {
@@ -110,65 +106,50 @@ class SettingsPanel {
                 if (settings.get("settingsCompatibilityMode")) {
                     this.rerender();
                 } else {
-                    let currentSection = null;
-                    let sections = [];
-                    settingsList.forEach((el) => {
-                        /* Found section */
-                        if (el.tagName === "STRONG") {
-                            if (currentSection) {
-                                sections.push(currentSection);
-                                currentSection = null;
+                    try {
+                        let currentSection = null;
+                        let sections = [];
+                        settingsList.forEach((el) => {
+                            /* Found section */
+                            if (el.tagName === "STRONG") {
+                                if (currentSection) {
+                                    sections.push(currentSection);
+                                    currentSection = null;
+                                }
+                                currentSection = SettingsSection.fromHeaderElement(el);
+                            } else {
+                                if (!currentSection) {
+                                    console.error("Found setting without section: ", el);
+                                    currentSection = new SettingsSection("Other");
+                                }
+                                const settingsRow = settingsRowFromElement(el)
+                                currentSection.addSettingsRow(settingsRow);
                             }
-                            currentSection = SettingsSection.fromHeaderElement(el);
-                        } else {
-                            if (!currentSection) {
-                                console.error("Found setting without section: ", el);
-                                currentSection = new SettingsSection("Other");
-                            }
-                            const settingsRow = settingsRowFromElement(el)
-                            currentSection.addSettingsRow(settingsRow);
+
+                        });
+
+                        if (currentSection) {
+                            sections.push(currentSection);
                         }
-                    });
-                    if (currentSection) {
-                        sections.push(currentSection);
+                        sections.forEach((section) => {
+                            settingsPanel.appendChild(section.getElement());
+                        });
+                        settingsListElement.remove();
+                        this.#sections = [...sections, ...this.#sections];
+                    } catch (e) {
+                        console.error("Error while parsing settings, enabling high compatibility mode: ", e);
+                        settings.save("settingsCompatibilityMode", true);
+                        const notification = new LocalNotification("There was a problem setting up the settings panel. Turning on compatibility mode...", {
+                            type: LocalNotification.TYPES.ERROR,
+                            action: LocalNotification.ACTION_TYPES.HIDE
+                        });
+                        notification.show();
+                        return;
                     }
-                    sections.forEach((section) => {
-                        settingsPanel.appendChild(section.getElement());
-                    });
-                    settingsListElement.remove();
-                    this.#sections = [...sections, ...this.#sections];
                     this.rerender();
                 }
             }, 100);
         });
-    }
-
-    #addSettingsNotificationElement() {
-        const settingsNotificationContainer = Object.assign(document.createElement("div"), {
-            id: "settings-notification-container",
-        });
-        const settingsNotificationElement = document.createElement("div");
-        settingsNotificationElement.classList.add("notification");
-        settingsNotificationElement.innerHTML = `
-            <span class="message-icon"><i class="fas fa-circle-info"></i></span>
-            <span class="message"></span>
-            <button class="btn btn-primary">Reload</button>
-        `;
-        settingsNotificationElement.querySelector("button").addEventListener("click", () => {
-            window.location.reload();
-        });
-        settingsNotificationContainer.appendChild(settingsNotificationElement);
-        document.body.appendChild(settingsNotificationContainer);
-        this.#notificationElement = settingsNotificationContainer;
-    }
-
-    showNotification(message) {
-        this.#notificationElement.classList.add("visible");
-        this.#notificationElement.querySelector(".message").innerText = message;
-    }
-
-    hideNotification() {
-        this.#notificationElement.classList.remove("visible");
     }
 
     #populateKUPSettings() {
@@ -223,6 +204,16 @@ class SettingsPanel {
                 id: "settingsCompatibilityMode",
                 description: "Increase compatibility with other scripts that modify the settings panel.",
                 requireReload: true
+            }),
+            new SettingsRowButton("Reset settings", {
+                id: "resetSettings",
+                description: "Reset all KUP settings to their default values.",
+                requireReload: true,
+                onClick: () => {
+                    const settings = new Settings();
+                    settings.reset();
+                },
+                label: "Reset",
             })
         ]);
         this.addSection(section);

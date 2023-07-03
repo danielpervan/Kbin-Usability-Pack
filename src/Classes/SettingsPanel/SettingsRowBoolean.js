@@ -28,9 +28,7 @@ class SettingsRowBoolean extends SettingsRow {
             if (this.onChangeAction) {
                 this.onChangeAction(newValue);
             }
-            if (this.requireReload) {
-                window.dispatchEvent(new CustomEvent("kup-settings-needs-reload"));
-            }
+            this.showSettingsSavedNotification(this.requireReload);
         }
 
         this.bindTrueAction(() => {
