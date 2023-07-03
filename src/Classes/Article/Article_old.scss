@@ -72,6 +72,13 @@ body:not(.KUP-setting-showArticlePreview) {
 }
 
 main#main.view-compact {
+  @media (max-width: 689.98px) {
+    article.entry figure {
+      margin-left: -0.5em;
+      margin-right: -0.5em;
+    }
+  }
+
   article.entry {
     grid-template-areas:
       "vote image title"
@@ -326,11 +333,13 @@ body.KUP-setting-alternativeMobileUI {
 
   /** Compact view **/
   #middle main#main.view-compact {
-
-    article.entry > figure {
-      margin: 0 1rem 0 0;
-      min-width: 100px;
+    @media (min-width: 689.98px) {
+      article.entry > figure {
+        margin: 0 1rem 0 0;
+        min-width: 100px;
+      }
     }
+
   }
 
   &.rounded-edges #middle main#main.view-compact article.entry > figure {
