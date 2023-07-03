@@ -215,10 +215,14 @@ class SettingsPanel {
                 description: "Show the instance name for federated posts.",
                 requireReload: true
             }),
+            new SettingsRowBoolean("Auto article preview", {
+                id: "autoArticlePreview",
+                description: "Automatically show article preview after a short delay.",
+            }),
             new SettingsRowBoolean("Settings compatibility mode", {
                 id: "settingsCompatibilityMode",
                 description: "Increase compatibility with other scripts that modify the settings panel.",
-                requireReload: true,
+                requireReload: true
             })
         ]);
         this.addSection(section);

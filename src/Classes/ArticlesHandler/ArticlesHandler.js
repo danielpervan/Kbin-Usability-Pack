@@ -4,6 +4,7 @@ import Settings from "../Settings";
 class ArticlesHandler {
     #articles;
     currentArticle;
+    showArticlePreview = false;
 
     constructor() {
         this.#articles = [];
@@ -38,11 +39,38 @@ class ArticlesHandler {
     }
 
     parseArticle(element) {
+        const settings = new Settings();
         const article = Article.fromFeedElement(element);
         article.enrichFeedElement();
         element.addEventListener("click", () => {
             this.selectArticle(article);
         });
+
+        /** Show preview when element is in view */
+        const showMediaPreview = element.classList.contains("show-preview");
+        if (showMediaPreview || this.showArticlePreview) {
+            const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        const timeout = element.autoPreviewTimeout;
+                        if (timeout && !entry.isIntersecting) {
+                            clearTimeout(timeout);
+                            element.autoPreviewTimeout = null;
+                        } else if (!timeout && entry.isIntersecting) {
+                            element.autoPreviewTimeout = setTimeout(() => {
+                                if (entry.isIntersecting) {
+                                    if (showMediaPreview) {
+                                        article.showMediaPreview();
+                                    }
+                                    if (this.showArticlePreview) {
+                                        article.showArticlePreview();
+                                    }
+                                }
+                            }, 1000);
+                        }
+                    });
+                });
+            observer.observe(element);
+        }
         this.#articles.push(article);
     }
 
@@ -153,6 +181,9 @@ class ArticlesHandler {
                 article.hideArticlePreview();
             });
         }
+
+        this.showArticlePreview = settings.get("autoArticlePreview");
+
     }
 }
 

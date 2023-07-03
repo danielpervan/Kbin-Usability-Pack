@@ -733,6 +733,7 @@
   var ArticlesHandler = class {
     #articles;
     currentArticle;
+    showArticlePreview = false;
     constructor() {
       this.#articles = [];
     }
@@ -764,11 +765,36 @@
       });
     }
     parseArticle(element) {
+      const settings3 = new Settings_default();
       const article = Article_default.fromFeedElement(element);
       article.enrichFeedElement();
       element.addEventListener("click", () => {
         this.selectArticle(article);
       });
+      const showMediaPreview = element.classList.contains("show-preview");
+      if (showMediaPreview || this.showArticlePreview) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const timeout = element.autoPreviewTimeout;
+            if (timeout && !entry.isIntersecting) {
+              clearTimeout(timeout);
+              element.autoPreviewTimeout = null;
+            } else if (!timeout && entry.isIntersecting) {
+              element.autoPreviewTimeout = setTimeout(() => {
+                if (entry.isIntersecting) {
+                  if (showMediaPreview) {
+                    article.showMediaPreview();
+                  }
+                  if (this.showArticlePreview) {
+                    article.showArticlePreview();
+                  }
+                }
+              }, 1e3);
+            }
+          });
+        });
+        observer.observe(element);
+      }
       this.#articles.push(article);
     }
     parseArticles() {
@@ -872,6 +898,7 @@
           article.hideArticlePreview();
         });
       }
+      this.showArticlePreview = settings3.get("autoArticlePreview");
     }
   };
   var ArticlesHandler_default = ArticlesHandler;
@@ -1619,6 +1646,10 @@
           id: "showInstanceName",
           description: "Show the instance name for federated posts.",
           requireReload: true
+        }),
+        new SettingsRowBoolean_default("Auto article preview", {
+          id: "autoArticlePreview",
+          description: "Automatically show article preview after a short delay."
         }),
         new SettingsRowBoolean_default("Settings compatibility mode", {
           id: "settingsCompatibilityMode",
