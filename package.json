@@ -1,12 +1,12 @@
 {
   "name": "kbin-usability-pack",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A collection of usability enhancements for Kbin",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.mjs",
-    "monkey": "cat src/Template/header.template dist/out.js src/Template/footer.template > dist/\"Kbin Usability Pack.js\"",
+    "monkey": "cat src/Template/header.template dist/out.js src/Template/footer.template > dist/\"Kbin Usability Pack.user.js\"",
     "watch": "node build.mjs --watch"
   },
   "repository": {
