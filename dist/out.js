@@ -70,37 +70,37 @@
     constructor() {
     }
     get(key) {
-      const settings3 = this.getAll();
-      if (settings3[key] === void 0) {
+      const settings2 = this.getAll();
+      if (settings2[key] === void 0) {
         return null;
       }
-      return settings3[key];
+      return settings2[key];
     }
     getAll() {
       const data = localStorage.getItem("kup-settings");
-      let settings3 = {};
+      let settings2 = {};
       if (data) {
-        settings3 = JSON.parse(data);
+        settings2 = JSON.parse(data);
       }
-      if (settings3.showUrlSubheader === void 0) {
-        settings3.showUrlSubheader = true;
+      if (settings2.showUrlSubheader === void 0) {
+        settings2.showUrlSubheader = true;
       }
-      if (settings3.removeCommentAnchor === void 0) {
-        settings3.removeCommentAnchor = true;
+      if (settings2.removeCommentAnchor === void 0) {
+        settings2.removeCommentAnchor = true;
       }
-      if (settings3.showArticlePreview === void 0) {
-        settings3.showArticlePreview = true;
+      if (settings2.showArticlePreview === void 0) {
+        settings2.showArticlePreview = true;
       }
-      if (settings3.infiniteCommentScroll === void 0) {
-        settings3.infiniteCommentScroll = true;
+      if (settings2.infiniteCommentScroll === void 0) {
+        settings2.infiniteCommentScroll = true;
       }
-      if (settings3.addOptionsAnchor === void 0) {
-        settings3.addOptionsAnchor = true;
+      if (settings2.addOptionsAnchor === void 0) {
+        settings2.addOptionsAnchor = true;
       }
-      return settings3;
+      return settings2;
     }
-    replace(settings3, sendEvent = true, apply = true) {
-      localStorage.setItem("kup-settings", JSON.stringify(settings3));
+    replace(settings2, sendEvent = true, apply = true) {
+      localStorage.setItem("kup-settings", JSON.stringify(settings2));
       if (apply) {
         this.apply();
       }
@@ -109,10 +109,10 @@
       }
     }
     save(key, value, apply = true) {
-      const settings3 = this.getAll();
-      const oldValue = settings3[key];
-      settings3[key] = value;
-      localStorage.setItem("kup-settings", JSON.stringify(settings3));
+      const settings2 = this.getAll();
+      const oldValue = settings2[key];
+      settings2[key] = value;
+      localStorage.setItem("kup-settings", JSON.stringify(settings2));
       if (apply) {
         this.apply();
       }
@@ -125,8 +125,8 @@
       }));
     }
     apply() {
-      const settings3 = this.getAll();
-      for (const [key, value] of Object.entries(settings3)) {
+      const settings2 = this.getAll();
+      for (const [key, value] of Object.entries(settings2)) {
         if (value === true || value === false) {
           document.body.classList.toggle("KUP-setting-" + key, value);
         }
@@ -260,8 +260,8 @@
             });
             button.addEventListener("click", () => {
               this.hideNotification(id);
-              const settings3 = new Settings_default();
-              settings3.save("hide-notification-" + id, true);
+              const settings2 = new Settings_default();
+              settings2.save("hide-notification-" + id, true);
             });
             break;
           default:
@@ -512,7 +512,7 @@
       if (!this.feedElement) {
         return;
       }
-      const settings3 = new Settings_default();
+      const settings2 = new Settings_default();
       const footer = this.feedElement.querySelector("footer");
       const footerMenu = footer.querySelector("menu");
       const previewOuter = Object.assign(document.createElement("div"), {
@@ -552,14 +552,14 @@
       const commentLinkElement = footer.querySelector("menu li [data-subject-target='commentsCounter']")?.parentElement;
       const articleLinkElement = this.feedElement.querySelector("header h2 a");
       if (articleLinkElement) {
-        if (settings3.get("openArticleInNewTab")) {
+        if (settings2.get("openArticleInNewTab")) {
           articleLinkElement.target = "_blank";
         } else {
           articleLinkElement.removeAttribute("target");
         }
       }
       if (commentLinkElement) {
-        if (settings3.get("openArticleInNewTab")) {
+        if (settings2.get("openArticleInNewTab")) {
           commentLinkElement.target = "_blank";
         } else {
           commentLinkElement.removeAttribute("target");
@@ -606,8 +606,8 @@
       });
       this.articlePageElement.append(previewOuter);
       this.replaceMediaPreview(this.articlePageElement);
-      const settings3 = new Settings_default();
-      if (settings3.get("alternativeMobileUI")) {
+      const settings2 = new Settings_default();
+      if (settings2.get("alternativeMobileUI")) {
         this.showMediaPreview();
       }
     }
@@ -721,16 +721,16 @@
       }
     }
     enrichElement() {
-      const settings3 = new Settings_default();
+      const settings2 = new Settings_default();
       const articleElement = this.feedElement || this.articlePageElement;
       const commentsLinkElement = articleElement.querySelector("footer menu li > a.stretched-link");
-      if (settings3.get("removeCommentAnchor") && this.feedElement) {
+      if (settings2.get("removeCommentAnchor") && this.feedElement) {
         if (commentsLinkElement?.href.endsWith("#comments")) {
           const url = new URL(commentsLinkElement?.href);
           commentsLinkElement.href = url.pathname;
         }
       }
-      if (settings3.get("alternativeMobileUI")) {
+      if (settings2.get("alternativeMobileUI")) {
         const commentsCount = parseInt(commentsLinkElement.querySelector("[data-subject-target='commentsCounter']").innerText);
         const commentsLi = commentsLinkElement?.parentElement;
         const commentsURL = commentsLinkElement?.href;
@@ -738,7 +738,7 @@
         const newCommentsLinkElement = document.createElement("a");
         newCommentsLinkElement.className = "comments-link footer-button";
         newCommentsLinkElement.href = commentsURL;
-        if (settings3.get("openArticleInNewTab")) {
+        if (settings2.get("openArticleInNewTab")) {
           newCommentsLinkElement.target = "_blank";
         }
         newCommentsLinkElement.innerHTML = `<i class="fas fa-comments"></i> ${commentsCount}`;
@@ -780,7 +780,7 @@
         moreLinkElement.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
         moreLinkElement.classList.add("more-link", "footer-button");
         const metaEl = articleElement.querySelector("aside.meta");
-        if (metaEl && settings3.get("showInstanceName")) {
+        if (metaEl && settings2.get("showInstanceName")) {
           const magEl = metaEl.querySelector(".magazine-inline");
           if (magEl) {
             const magImgEl = magEl.querySelector("img");
@@ -808,7 +808,7 @@
                 action: {
                   text: "Disable setting",
                   callback: () => {
-                    settings3.save("showInstanceName", false);
+                    settings2.save("showInstanceName", false);
                   }
                 },
                 id: "showInstanceName-already-modified-warning"
@@ -817,7 +817,7 @@
             }
           }
         }
-        if (settings3.get("alternativeMobileUI")) {
+        if (settings2.get("alternativeMobileUI")) {
           if (metaEl) {
             const userEl = metaEl.querySelector(".user-inline");
             const magazineEl = metaEl.querySelector(".magazine-inline");
@@ -851,7 +851,7 @@
       const thumbnail = thumbnailFigure?.querySelector("a img");
       if (thumbnail) {
         thumbnail.style.objectFit = null;
-        if (settings3.get("alternativeMobileUI") && !isNewKbinVersion()) {
+        if (settings2.get("alternativeMobileUI") && !isNewKbinVersion()) {
           thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
         }
       }
@@ -912,16 +912,16 @@
       }
     }
     applySettings() {
-      const settings3 = new Settings_default();
+      const settings2 = new Settings_default();
       const element = this.feedElement ?? this.articlePageElement;
       if (!this.hasMedia) {
         element.classList.add("no-media-preview");
       }
-      if (settings3.get("alternativeMobileUI") === true) {
+      if (settings2.get("alternativeMobileUI") === true) {
         if (this.articlePageElement) {
           this.showMediaPreview();
         } else if (this.feedElement) {
-          if (settings3.get("openArticleInNewTab")) {
+          if (settings2.get("openArticleInNewTab")) {
             this.feedElement.querySelector(".comments-link").target = "_blank";
             this.feedElement.querySelector("header a").target = "_blank";
           } else {
@@ -932,7 +932,7 @@
       } else {
         if (this.feedElement) {
           const commentsLink = this.feedElement.querySelector("footer menu li [data-subject-target='commentsCounter']").parentElement;
-          if (settings3.get("openArticleInNewTab")) {
+          if (settings2.get("openArticleInNewTab")) {
             commentsLink.target = "_blank";
             this.feedElement.querySelector("header a").target = "_blank";
           } else {
@@ -1104,8 +1104,8 @@
       }
     }
     applySettings() {
-      const settings3 = new Settings_default();
-      if (settings3.get("showArticlePreview")) {
+      const settings2 = new Settings_default();
+      if (settings2.get("showArticlePreview")) {
         document.body.classList.add("kup-show-article-preview");
       } else {
         document.body.classList.remove("kup-show-article-preview");
@@ -1113,7 +1113,7 @@
           article.hideArticlePreview();
         });
       }
-      this.showArticlePreview = settings3.get("autoArticlePreview");
+      this.showArticlePreview = settings2.get("autoArticlePreview");
     }
   };
   var ArticlesHandler_default = ArticlesHandler;
@@ -1157,8 +1157,8 @@
       this.articleElement = document.querySelector("article.entry");
       this.article = Article_default.fromArticlePage(this.articleElement);
       this.article.enrichArticlePage();
-      const settings3 = new Settings_default();
-      if (settings3.get("infiniteCommentScroll")) {
+      const settings2 = new Settings_default();
+      if (settings2.get("infiniteCommentScroll")) {
         const paginationElement = document.querySelector("nav.pagination.section");
         let currentPage = this.url.searchParams.get("p");
         if (currentPage) {
@@ -1214,9 +1214,9 @@
       }
     }
     applySettings() {
-      const settings3 = new Settings_default();
+      const settings2 = new Settings_default();
       const options = document.getElementById("options");
-      if (settings3.get("addOptionsAnchor") === true) {
+      if (settings2.get("addOptionsAnchor") === true) {
         options.querySelectorAll(".options__main li a").forEach((a) => {
           a.href = a.href + "#options";
         });
@@ -1312,8 +1312,8 @@
     }
     setId(id) {
       this.id = id;
-      const settings3 = new Settings_default();
-      const value = settings3.get(id);
+      const settings2 = new Settings_default();
+      const value = settings2.get(id);
       if (value !== void 0) {
         this.value = value;
       }
@@ -1470,8 +1470,8 @@
       this.settingsRows.forEach((row) => {
         settingsRows.appendChild(row.getElement());
       });
-      const settings3 = new Settings_default();
-      if (settings3.get("alwaysExpandSettingsSections")) {
+      const settings2 = new Settings_default();
+      if (settings2.get("alwaysExpandSettingsSections")) {
         this.expand();
       }
       return element;
@@ -1500,8 +1500,8 @@
       }
       const action = (newValue) => {
         if (this.id) {
-          const settings3 = new Settings_default();
-          settings3.save(this.id, newValue, !this.requireReload);
+          const settings2 = new Settings_default();
+          settings2.save(this.id, newValue, !this.requireReload);
         }
         if (this.onChangeAction) {
           this.onChangeAction(newValue);
@@ -1816,18 +1816,18 @@
     #enrichSettingsPanel() {
       const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
       const settingsList = settingsListElement.querySelectorAll(":scope > *");
-      const settingsPanel2 = document.createElement("div");
-      this.#settingsPanelElement = settingsPanel2;
-      settingsPanel2.classList.add("settings-panel");
-      this.#settingsPanelContainerElement.appendChild(settingsPanel2);
+      const settingsPanel = document.createElement("div");
+      this.#settingsPanelElement = settingsPanel;
+      settingsPanel.classList.add("settings-panel");
+      this.#settingsPanelContainerElement.appendChild(settingsPanel);
       this.#settingsPanelContainerElement.appendChild(Object.assign(document.createElement("div"), {
         className: "settings-panel-footer",
         innerHTML: '<div><i class="fas fa-info-circle"></i> <span>Shift click to toggle all sections</span></div>'
       }));
       window.addEventListener("load", () => {
         setTimeout(() => {
-          const settings3 = new Settings_default();
-          if (settings3.get("settingsCompatibilityMode")) {
+          const settings2 = new Settings_default();
+          if (settings2.get("settingsCompatibilityMode")) {
             this.rerender();
           } else {
             try {
@@ -1853,13 +1853,13 @@
                 sections.push(currentSection);
               }
               sections.forEach((section) => {
-                settingsPanel2.appendChild(section.getElement());
+                settingsPanel.appendChild(section.getElement());
               });
               settingsListElement.remove();
               this.#sections = [...sections, ...this.#sections];
             } catch (e) {
               console.error("Error while parsing settings, enabling high compatibility mode: ", e);
-              settings3.save("settingsCompatibilityMode", true);
+              settings2.save("settingsCompatibilityMode", true);
               const notification = new LocalNotification_default("There was a problem setting up the settings panel. Turning on compatibility mode...", {
                 type: LocalNotification_default.TYPES.ERROR,
                 action: LocalNotification_default.ACTION_TYPES.HIDE
@@ -1930,8 +1930,8 @@
           description: "Reset all KUP settings to their default values.",
           requireReload: true,
           onClick: () => {
-            const settings3 = new Settings_default();
-            settings3.reset();
+            const settings2 = new Settings_default();
+            settings2.reset();
           },
           label: "Reset"
         })
@@ -1942,35 +1942,38 @@
   var SettingsPanel_default = SettingsPanel;
 
   // src/index.js
-  document.body.classList.add("KUP-injected");
-  document.KUP = {};
-  document.KUP.LocalNotification = LocalNotification_default;
-  if (!isNewKbinVersion()) {
-    document.body.classList.add("old-version");
+  if (!document.body.classList.contains("KUP-injected")) {
+    console.warn("Kbin Usability Pack is already injected");
+    document.body.classList.add("KUP-injected");
+    document.KUP = {};
+    document.KUP.LocalNotification = LocalNotification_default;
+    if (!isNewKbinVersion()) {
+      document.body.classList.add("old-version");
+    }
+    const articlesHandler = new ArticlesHandler_default();
+    const navigator = new Navigator_default();
+    const articlePage = new ArticlePage_default();
+    const settingsPanel = new SettingsPanel_default();
+    const settings2 = new Settings_default();
+    if (!settings2.get("installedVersion")) {
+      const notification = new LocalNotification_default("Kbin Usability Pack installed", {
+        type: LocalNotification_default.TYPES.SUCCESS,
+        action: LocalNotification_default.ACTION_TYPES.NONE
+      });
+      notification.show();
+      settings2.save("installedVersion", GM_info.script.version);
+    } else if (settings2.get("installedVersion") !== GM_info.script.version) {
+      const notification = new LocalNotification_default("Kbin Usability Pack updated to version " + GM_info.script.version, {
+        type: LocalNotification_default.TYPES.SUCCESS,
+        action: LocalNotification_default.ACTION_TYPES.NONE
+      });
+      notification.show();
+      settings2.save("installedVersion", GM_info.script.version);
+    }
+    articlesHandler.init();
+    navigator.init();
+    articlePage.init();
+    settingsPanel.init();
+    settings2.apply();
   }
-  var articlesHandler = new ArticlesHandler_default();
-  var navigator = new Navigator_default();
-  var articlePage = new ArticlePage_default();
-  var settingsPanel = new SettingsPanel_default();
-  var settings2 = new Settings_default();
-  if (!settings2.get("installedVersion")) {
-    const notification = new LocalNotification_default("Kbin Usability Pack installed", {
-      type: LocalNotification_default.TYPES.SUCCESS,
-      action: LocalNotification_default.ACTION_TYPES.NONE
-    });
-    notification.show();
-    settings2.save("installedVersion", GM_info.script.version);
-  } else if (settings2.get("installedVersion") !== GM_info.script.version) {
-    const notification = new LocalNotification_default("Kbin Usability Pack updated to version " + GM_info.script.version, {
-      type: LocalNotification_default.TYPES.SUCCESS,
-      action: LocalNotification_default.ACTION_TYPES.NONE
-    });
-    notification.show();
-    settings2.save("installedVersion", GM_info.script.version);
-  }
-  articlesHandler.init();
-  navigator.init();
-  articlePage.init();
-  settingsPanel.init();
-  settings2.apply();
 })();
