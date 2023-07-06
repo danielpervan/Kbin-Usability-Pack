@@ -35,6 +35,11 @@ class Settings {
         if (settings.addOptionsAnchor === undefined) {
             settings.addOptionsAnchor = true;
         }
+
+        if (settings.fixCSS === undefined) {
+            settings.fixCSS = true;
+        }
+
         return settings;
     }
     replace(settings, sendEvent = true, apply = true) {

@@ -2,7 +2,7 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.3.5
+// @version      0.3.6
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
@@ -121,6 +121,9 @@
       }
       if (settings2.addOptionsAnchor === void 0) {
         settings2.addOptionsAnchor = true;
+      }
+      if (settings2.fixCSS === void 0) {
+        settings2.fixCSS = true;
       }
       return settings2;
     }
@@ -1143,6 +1146,10 @@
   };
   var ArticlesHandler_default = ArticlesHandler;
 
+  // src/Classes/Navigator/Navigator.scss
+  init_index();
+  inject_style("@media (max-width: 689.98px){.KUP-setting-fixCSS #header menu .dropdown__menu{left:auto;right:0}}");
+
   // src/Classes/Navigator/Navigator.js
   var Navigator = class {
     constructor() {
@@ -1933,6 +1940,10 @@
         new SettingsRowBoolean_default("Auto article preview", {
           id: "autoArticlePreview",
           description: "Automatically show article preview after a short delay."
+        }),
+        new SettingsRowBoolean_default("Fix styles", {
+          id: "fixCSS",
+          description: "Fix some common CSS issues unrelated to KUP."
         }),
         new SettingsRowBoolean_default("Settings compatibility mode", {
           id: "settingsCompatibilityMode",

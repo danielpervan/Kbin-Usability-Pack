@@ -1,3 +1,4 @@
+import "./Navigator.scss";
 class Navigator {
     constructor() {
     }

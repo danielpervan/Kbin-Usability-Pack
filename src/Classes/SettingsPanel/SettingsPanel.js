@@ -200,10 +200,14 @@ class SettingsPanel {
                 id: "autoArticlePreview",
                 description: "Automatically show article preview after a short delay.",
             }),
+            new SettingsRowBoolean("Fix styles", {
+                id: "fixCSS",
+                description: "Fix some common CSS issues unrelated to KUP.",
+            }),
             new SettingsRowBoolean("Settings compatibility mode", {
                 id: "settingsCompatibilityMode",
                 description: "Increase compatibility with other scripts that modify the settings panel.",
-                requireReload: true
+                requireReload: true,
             }),
             new SettingsRowButton("Reset settings", {
                 id: "resetSettings",
