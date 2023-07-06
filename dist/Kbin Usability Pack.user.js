@@ -74,9 +74,18 @@
   var User = class {
     username;
     avatar;
+    reputation;
     constructor(username, avatar = null) {
       this.username = username;
       this.avatar = avatar;
+    }
+    fetchData() {
+      return fetch("/ajax/fetch_user_popup/" + this.username).then((response) => response.text()).then((text) => {
+        const { html } = JSON.parse(text);
+        let dom = new DOMParser().parseFromString(html, "text/html");
+        this.avatar = dom.querySelector("img").src;
+        this.reputation = html.match(/Reputation points: (\d)/)?.[0] ?? null;
+      });
     }
   };
   var User_default = User;
@@ -1139,17 +1148,6 @@
     constructor() {
     }
     init() {
-      this.fixMobileLogoLink();
-    }
-    fixMobileLogoLink() {
-      const nav = document.querySelector("nav.head-nav");
-      const logo = document.querySelector("nav.head-nav .brand > a");
-      const hamburger = document.querySelector("nav.head-nav .brand > div");
-      const homeButton = document.querySelector("#sidebar .section.mobile-close a.btn");
-      const action = nav.dataset.action;
-      nav.dataset.action = "";
-      hamburger.dataset.action = action;
-      homeButton.href = logo.href;
     }
   };
   var Navigator_default = Navigator;
