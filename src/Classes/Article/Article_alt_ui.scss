@@ -338,6 +338,22 @@ body.KUP-setting-alternativeMobileUI {
       .meta-content .meta-item {
         padding: 0;
       }
+
+      > figure {
+        align-self: flex-start;
+        max-height: min(90vh, 10rem);
+        img {
+          position: relative;
+          vertical-align: middle;
+        }
+      }
+
+      .no-image-placeholder {
+        height: fit-content;
+        padding: 1rem 0;
+        place-self: flex-start center;
+        width: 4rem;
+      }
     }
 
     @media (max-width: 689.98px) {
@@ -349,12 +365,24 @@ body.KUP-setting-alternativeMobileUI {
           "body body body"
           "preview preview preview";
         grid-template-columns: 1fr min-content min-content;
+
+        > figure {
+          height: fit-content;
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+          width: fit-content;
+        }
       }
     }
   }
 
   /** Compact Article page **/
   #middle.page-entry-single main#main.view-compact #content {
+    article.entry {
+      figure {
+        height: fit-content;
+      }
+    }
     @media (max-width: 689.98px) {
       article.entry:not(.no-image) {
         grid-template-areas:
