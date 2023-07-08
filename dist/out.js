@@ -2228,6 +2228,7 @@
           onClick: () => {
             const settings2 = new Settings_default();
             settings2.reset();
+            localStorage.removeItem("kup-bookmarks");
           },
           label: "Reset"
         })

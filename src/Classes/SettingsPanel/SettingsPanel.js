@@ -221,6 +221,7 @@ class SettingsPanel {
                 onClick: () => {
                     const settings = new Settings();
                     settings.reset();
+                    localStorage.removeItem("kup-bookmarks");
                 },
                 label: "Reset",
             })

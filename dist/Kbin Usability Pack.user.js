@@ -2,7 +2,7 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.4.2
+// @version      0.4.3
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
@@ -2244,6 +2244,7 @@
           onClick: () => {
             const settings2 = new Settings_default();
             settings2.reset();
+            localStorage.removeItem("kup-bookmarks");
           },
           label: "Reset"
         })
