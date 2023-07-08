@@ -225,3 +225,13 @@ body:not(.KUP-setting-showArticlePreview) {
     }
   }
 }
+
+/** Bookmarks **/
+article.entry {
+  .bookmark-button {
+    transition: all 0.25s ease-in-out;
+    &.bookmarked {
+      color: var(--kbin-button-primary-bg);
+    }
+  }
+}

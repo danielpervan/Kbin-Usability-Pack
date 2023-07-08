@@ -1,0 +1,206 @@
+.rounded-edges {
+  .modal {
+    border-radius: var(--kbin-rounded-edges-radius);
+  }
+}
+
+.modal-background {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  backdrop-filter: blur(2px);
+  animation: showBookmarkModalBackground 0.25s ease-in-out;
+
+  @keyframes showBookmarkModalBackground {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &.show {
+    display: flex;
+  }
+
+  .modal.modal-bookmarks {
+    width: fit-content;
+    max-width: 50rem;
+    position: fixed;
+    top: 4rem;
+    max-height: calc(100% - 4rem - 1rem);
+    background: var(--kbin-section-bg);
+    border: var(--kbin-section-border);
+    padding: 1em;
+    min-width: 50vw;
+    overflow: auto;
+    animation: showBookmarkModal 0.25s ease-in-out;
+
+    @keyframes showBookmarkModal {
+      0% {
+        opacity: 0;
+        /*transform: scale(0.95);*/
+        transform: translateY(-1em);
+      }
+      75% {
+        opacity: 1;
+        /*transform: scale(1.02);*/
+        transform: translateY(0.1em);
+      }
+      100% {
+        opacity: 1;
+        /*transform: scale(1);*/
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 1em;
+      text-align: center;
+      background: var(--kbin-section-bg);
+      position: sticky;
+      top: -1em;
+
+      h2 {
+        margin: 0;
+
+
+      }
+    }
+
+    .modal-close {
+      font-size: 28px;
+      cursor: pointer;
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+    }
+
+
+    .modal-content {
+      animation: showModalContent 0.25s 0.1s ease-in-out;
+      animation-fill-mode: backwards;
+      padding: 1em;
+
+      .bookmarks-menu-item.placeholder {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        font-size: 1.5em;
+        opacity: 0.5;
+      }
+
+      @keyframes showModalContent {
+        0% {
+          transform: translateY(-1em);
+        }
+        75% {
+          transform: translateY(0.1em);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          display: grid;
+          grid-template-columns: auto min-content;
+          width: 100%;
+          gap: 2em;
+          grid-template-areas: "link actions";
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5em 0;
+          border-bottom: var(--kbin-section-border);
+          margin-bottom: 0.5em;
+
+          &.hide {
+            animation: hideBookmarkItem 0.25s ease-in-out;
+            animation-fill-mode: forwards;
+          }
+
+          @keyframes hideBookmarkItem {
+            0% {
+              overflow: hidden;
+              opacity: 1;
+              max-height: 5em;
+            }
+            100% {
+              opacity: 0;
+              max-height: 0;
+              overflow: hidden;
+              display: none;
+            }
+          }
+
+          &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+          }
+
+          .bookmark-link {
+            grid-area: link;
+            display: grid;
+            grid-template-areas: "title" "magazine";
+            align-items: center;
+            transition: color 0.25s ease-in-out;
+          }
+
+          .bookmark-title {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            grid-area: title;
+            font-weight: bold;
+            margin: 0;
+          }
+
+          .bookmark-magazine {
+            grid-area: magazine;
+            font-weight: 100;
+            color: var(--kbin-text-color-secondary);
+            margin: 0;
+          }
+
+          .bookmark-actions {
+            grid-area: actions;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .bookmark-action {
+              cursor: pointer;
+              font-size: 1.25em;
+              color: var(--kbin-text-color-secondary);
+              transition: color 0.25s ease-in-out;
+
+              &:hover {
+                color: var(--kbin-text-color);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -204,6 +204,11 @@ class SettingsPanel {
                 id: "fixCSS",
                 description: "Fix some common CSS issues unrelated to KUP.",
             }),
+            new SettingsRowBoolean("Enable bookmarks", {
+                id: "enableBookmarks",
+                description: "Bookmark notable articles for later",
+                requireReload: true
+            }),
             new SettingsRowBoolean("Settings compatibility mode", {
                 id: "settingsCompatibilityMode",
                 description: "Increase compatibility with other scripts that modify the settings panel.",

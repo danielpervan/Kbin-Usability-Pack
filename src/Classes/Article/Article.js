@@ -2,6 +2,7 @@ import User from "../User/User";
 import Settings from "../Settings";
 import {isNewKbinVersion} from "../../Utils/utils";
 import LocalNotification from "../Notification/LocalNotification";
+import BookmarkHandler from "../Bookmark/BookmarkHandler";
 
 const settings = new Settings();
 if (isNewKbinVersion()) {
@@ -25,6 +26,8 @@ class Article {
     mediaUrl = null;
     magazine = null;
     linkUrl = null;
+    instanceName = null;
+    id = null;
 
     hasMedia = false;
     articlePreviewOpen = false;
@@ -49,14 +52,16 @@ class Article {
     static fromFeedElement(element) {
         let article = new Article();
         article.feedElement = element;
-        article.subject = element.querySelector("header h2").innerText;
+        article.subject = element.querySelector("header h2 a").innerText;
         article.author = new User(element.querySelector(".meta .user-inline").innerText, element.querySelector(".meta .user-inline img")?.src);
         article.date = new Date(element.querySelector(".meta.entry__meta time")?.innerText);
         article.articleUrl = element.querySelector("header h2 a")?.href;
         article.thumbUrl = element.querySelector("figure a img")?.src;
         article.mediaUrl = element.querySelector("button.show-preview")?.dataset?.previewUrlParam;
         article.magazine = element.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
+        article.instanceName = article.articleUrl.match(/\/m\/.*@(.*?)\//)?.[1];
         article.shortDescription = element.querySelector(".content.short-desc")?.innerText?.trim();
+        article.id = element.id;
         const upvoteElement = element.querySelector("aside.vote .vote__up");
         const downvoteElement = element.querySelector("aside.vote .vote__down");
         article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
@@ -137,19 +142,24 @@ class Article {
 
     static fromArticlePage(articleElement) {
         let article = new Article();
-        article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.innerText?.trim();
+        article.subject = articleElement.querySelector("header h1 a")?.firstChild?.textContent?.trim() || articleElement.querySelector("header h1")?.firstChild?.textContent?.trim();
         article.author = new User(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
         article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
         article.linkUrl = articleElement.querySelector("header h1>a")?.href;
         article.thumbUrl = articleElement.querySelector("figure a img")?.src;
         article.mediaUrl = articleElement.querySelector("footer button.show-preview")?.dataset?.previewUrlParam ?? articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam
-        article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
+        article.articleUrl = window.location.pathname;
+        const magMatch = article.articleUrl.match(/\/m\/(.*)@(.*?)\//)
+        article.magazine = magMatch?.[1];
+        article.instanceName = magMatch?.[2];
         article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
         const upvoteElement = articleElement.querySelector("aside.vote .vote__up");
         const downvoteElement = articleElement.querySelector("aside.vote .vote__down");
         article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
         article.downvotes = parseInt(downvoteElement?.querySelector("span")?.innerText) || 0;
-
+        article.id = articleElement.id;
+        console.log(article.articleUrl);
+        console.log(article.magazine);
         article.enableArticlePreview = false;
 
         article.#articleLoaded = true;
@@ -246,6 +256,22 @@ class Article {
             } else {
                 commentLinkElement.removeAttribute("target");
             }
+        }
+    }
+
+    removeBookmark() {
+        this.bookmarkButton.classList.remove("bookmarked");
+    }
+
+    addBookmark() {
+        this.bookmarkButton.classList.add("bookmarked");
+    }
+
+    toggleBookmark() {
+        if (this.bookmarkButton.classList.contains("bookmarked")) {
+            this.removeBookmark();
+        } else {
+            this.addBookmark();
         }
     }
 
@@ -535,7 +561,6 @@ class Article {
                 }
             }
 
-
             if (settings.get("alternativeMobileUI")) {
                 if (metaEl) {
                     const userEl = metaEl.querySelector(".user-inline");
@@ -576,6 +601,41 @@ class Article {
             if (settings.get("alternativeMobileUI") && !isNewKbinVersion()) {
                 thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
             }
+        }
+
+        /** Add bookmark button */
+        if (settings.get("enableBookmarks")) {
+            const footer = articleElement.querySelector("footer");
+            const footerMenu = footer.querySelector("menu");
+            const bookmarkHandler = BookmarkHandler.getInstance();
+
+            const bookmarkButton = document.createElement("button");
+            bookmarkButton.classList.add("bookmark-button");
+            bookmarkButton.innerHTML = '<i class="fas fa-bookmark"></i>';
+            bookmarkButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                bookmarkHandler.toggleBookmark(this);
+            });
+
+            if (bookmarkHandler.isBookmarked(this)) {
+                bookmarkButton.classList.add("bookmarked");
+            }
+            this.bookmarkButton = bookmarkButton;
+
+            const bookmarkLi = document.createElement("li");
+            bookmarkLi.classList.add("bookmark-li");
+            bookmarkLi.append(bookmarkButton);
+            footerMenu.insertBefore(bookmarkLi, footerMenu.querySelector(".dropdown"));
+
+            window.addEventListener("KUP-bookmark-changed", (event) => {
+                if (event.detail.articleId === this.id) {
+                    if (event.detail.bookmarked) {
+                        this.addBookmark();
+                    } else {
+                        this.removeBookmark();
+                    }
+                }
+            });
         }
 
 

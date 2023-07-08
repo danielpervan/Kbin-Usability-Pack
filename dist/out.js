@@ -23,7 +23,7 @@
   var init_Article = __esm({
     "src/Classes/Article/Article.scss"() {
       init_index();
-      inject_style("body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}.media-preview-content{position:relative;border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem;overflow:hidden}#content article.entry .no-image-placeholder{place-self:center}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry .magazine-inline .mag-instance{font-weight:100}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{align-self:center}#content article.entry>figure img{object-position:center}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:var(--kbin-button-primary-border);color:var(--kbin-button-primary-text-color);background:var(--kbin-button-primary-bg);padding:.5em;cursor:pointer}#content article.entry button.show-preview:hover,#content article.entry button.preview-button:hover{color:var(--kbin-button-primary-text-hover-color);background:var(--kbin-button-primary-hover-bg)}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border)}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative;padding:1em}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative;border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem;overflow:hidden}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain;vertical-align:middle}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}@media (max-width: 689.98px){#content article.entry aside.vote{place-self:center}}");
+      inject_style("body:not(.KUP-setting-showArticlePreview) .show-article-preview{display:none!important}.media-preview-content{position:relative;border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem;overflow:hidden}#content article.entry .no-image-placeholder{place-self:center}#content article.entry aside.meta.entry__meta{line-height:2em}#content article.entry aside.meta.entry__meta img{margin-right:.25rem;margin-left:.25rem}#content article.entry .magazine-inline{white-space:nowrap}#content article.entry .magazine-inline .mag-instance{font-weight:100}#content article.entry.selected{border:var(--kbin-meta-border)}#content article.entry>figure{align-self:center}#content article.entry>figure img{object-position:center}#content article.entry aside.vote{place-content:center}#content article.entry button.show-preview,#content article.entry button.preview-button{border:var(--kbin-button-primary-border);color:var(--kbin-button-primary-text-color);background:var(--kbin-button-primary-bg);padding:.5em;cursor:pointer}#content article.entry button.show-preview:hover,#content article.entry button.preview-button:hover{color:var(--kbin-button-primary-text-hover-color);background:var(--kbin-button-primary-hover-bg)}.preview-outer{grid-area:preview}.preview-outer .preview-inner{position:relative;display:none;border-top:var(--kbin-meta-border)}.preview-outer .preview-inner.show{display:block}.preview-outer .preview-inner .loading{position:relative;height:3em;z-index:1;display:flex;justify-content:center;align-items:center;animation:showPreviewLoading .25s ease-in-out}.preview-outer .preview-inner .article-preview-content{position:relative;padding:1em}.preview-outer .preview-inner .article-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}.preview-outer .preview-inner .media-preview-content{position:relative;border-bottom-left-radius:.5rem;border-bottom-right-radius:.5rem;overflow:hidden}.preview-outer .preview-inner .media-preview-content img{max-width:100%;max-height:100%;min-width:100px;object-fit:contain;vertical-align:middle}.preview-outer .preview-inner .media-preview-content img.animateMinResize{animation:animateMinResize .25s ease-out;transform-origin:left top}@keyframes animateMinResize{0%{opacity:1;transform:scale(1)}33%{opacity:.8;transform:scale(.95)}66%{opacity:1;transform:scale(1.01)}to{opacity:1;transform:scale(1)}}.preview-outer .preview-inner .media-preview-content.oembed-embed{position:relative;overflow:hidden;max-width:100%;height:100vh;margin:0 auto}.preview-outer .preview-inner .media-preview-content.oembed-embed iframe{position:absolute;top:0;left:0;overflow:hidden;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.youtube-embed{position:relative;overflow:hidden;max-width:100%;max-height:100vh;margin:0 auto;aspect-ratio:16/9}.preview-outer .preview-inner .media-preview-content.youtube-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}.preview-outer .preview-inner .media-preview-content.loaded{animation:articlePreviewFadeIn .5s ease-in-out}@keyframes showPreviewLoading{0%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}80%{transform:scale(.9)}to{transform:scale(1)}}@keyframes articlePreviewFadeIn{0%{opacity:0;transform:translateY(-.5em)}to{opacity:1}}@media (max-width: 689.98px){#content article.entry aside.vote{place-self:center}}article.entry .bookmark-button{transition:all .25s ease-in-out}article.entry .bookmark-button.bookmarked{color:var(--kbin-button-primary-bg)}");
     }
   });
 
@@ -108,6 +108,9 @@
       }
       if (settings2.fixCSS === void 0) {
         settings2.fixCSS = true;
+      }
+      if (settings2.enableBookmarks === void 0) {
+        settings2.enableBookmarks = true;
       }
       return settings2;
     }
@@ -361,6 +364,224 @@
   };
   var LocalNotification_default = LocalNotification;
 
+  // src/Classes/Bookmark/BookmarkHandler.scss
+  init_index();
+  inject_style('.rounded-edges .modal{border-radius:var(--kbin-rounded-edges-radius)}.modal-background{background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:5;width:100%;height:100%;justify-content:center;align-items:center;display:none;backdrop-filter:blur(2px);animation:showBookmarkModalBackground .25s ease-in-out}@keyframes showBookmarkModalBackground{0%{opacity:0}to{opacity:1}}.modal-background.show{display:flex}.modal-background .modal.modal-bookmarks{width:fit-content;max-width:50rem;position:fixed;top:4rem;max-height:calc(100% - 5rem);background:var(--kbin-section-bg);border:var(--kbin-section-border);padding:1em;min-width:50vw;overflow:auto;animation:showBookmarkModal .25s ease-in-out}@keyframes showBookmarkModal{0%{opacity:0;transform:translateY(-1em)}75%{opacity:1;transform:translateY(.1em)}to{opacity:1;transform:translateY(0)}}.modal-background .modal.modal-bookmarks .modal-header{display:flex;justify-content:space-around;align-items:center;margin-bottom:1em;text-align:center;background:var(--kbin-section-bg);position:sticky;top:-1em}.modal-background .modal.modal-bookmarks .modal-header h2{margin:0}.modal-background .modal.modal-bookmarks .modal-close{font-size:28px;cursor:pointer;position:absolute;top:.5rem;right:1rem}.modal-background .modal.modal-bookmarks .modal-content{animation:showModalContent .25s .1s ease-in-out;animation-fill-mode:backwards;padding:1em}.modal-background .modal.modal-bookmarks .modal-content .bookmarks-menu-item.placeholder{justify-content:center;align-items:center;display:flex;flex-direction:column;height:100%;width:100%;font-size:1.5em;opacity:.5}@keyframes showModalContent{0%{transform:translateY(-1em)}75%{transform:translateY(.1em)}to{transform:translateY(0)}}.modal-background .modal.modal-bookmarks .modal-content ul{list-style:none;padding:0;margin:0}.modal-background .modal.modal-bookmarks .modal-content ul li{display:grid;grid-template-columns:auto min-content;width:100%;gap:2em;grid-template-areas:"link actions";justify-content:space-between;align-items:center;padding:.5em 0;border-bottom:var(--kbin-section-border);margin-bottom:.5em}.modal-background .modal.modal-bookmarks .modal-content ul li.hide{animation:hideBookmarkItem .25s ease-in-out;animation-fill-mode:forwards}@keyframes hideBookmarkItem{0%{overflow:hidden;opacity:1;max-height:5em}to{opacity:0;max-height:0;overflow:hidden;display:none}}.modal-background .modal.modal-bookmarks .modal-content ul li:last-child{border-bottom:none;margin-bottom:0}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-link{grid-area:link;display:grid;grid-template-areas:"title" "magazine";align-items:center;transition:color .25s ease-in-out}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-title{text-overflow:ellipsis;overflow:hidden;white-space:nowrap;grid-area:title;font-weight:700;margin:0}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-magazine{grid-area:magazine;font-weight:100;color:var(--kbin-text-color-secondary);margin:0}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-actions{grid-area:actions;display:flex;justify-content:space-between;align-items:center}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-actions .bookmark-action{cursor:pointer;font-size:1.25em;color:var(--kbin-text-color-secondary);transition:color .25s ease-in-out}.modal-background .modal.modal-bookmarks .modal-content ul li .bookmark-actions .bookmark-action:hover{color:var(--kbin-text-color)}');
+
+  // src/Classes/Bookmark/Bookmark.js
+  var Bookmark = class {
+    constructor(title, url, articleId, magazine, instanceName = null) {
+      this.title = title;
+      this.magazine = magazine;
+      this.url = url;
+      this.instanceName = instanceName;
+      this.articleId = articleId;
+    }
+    getElement() {
+      let mag = this.magazine;
+      if (this.instanceName) {
+        mag += "@" + this.instanceName;
+      }
+      const li = Object.assign(document.createElement("li"), {
+        className: "bookmarks-menu-item",
+        innerHTML: `<a href="${this.url}" class="bookmark-link"><span class="bookmark-title">${this.title}</span><span class="bookmark-magazine">${mag}</span></a>`
+      });
+      const actions = Object.assign(document.createElement("div"), {
+        className: "bookmark-actions"
+      });
+      const removeButton = Object.assign(document.createElement("a"), {
+        className: "bookmark-remove bookmark-action",
+        innerHTML: '<i class="fas fa-check"></i>',
+        href: "#"
+      });
+      actions.appendChild(removeButton);
+      li.append(actions);
+      return li;
+    }
+  };
+  var Bookmark_default = Bookmark;
+
+  // src/Classes/Bookmark/BookmarkHandler.js
+  var BookmarkHandler = class _BookmarkHandler {
+    static instance;
+    bookmarks = [];
+    static initialised = false;
+    #menuButtonContainer;
+    constructor() {
+      this.loadBookmarks();
+      if (!_BookmarkHandler.instance) {
+        _BookmarkHandler.instance = this;
+      }
+    }
+    static getInstance() {
+      if (!_BookmarkHandler.instance) {
+        _BookmarkHandler.instance = new _BookmarkHandler();
+        _BookmarkHandler.instance.init();
+      }
+      return _BookmarkHandler.instance;
+    }
+    init() {
+      if (_BookmarkHandler.initialised) {
+        console.warn("BookmarkHandler already initialised");
+        return;
+      }
+      _BookmarkHandler.initialised = true;
+      const settings2 = new Settings_default();
+      if (!settings2.get("enableBookmarks")) {
+        return;
+      }
+      this.#menuButtonContainer = Object.assign(document.createElement("li"), {
+        className: "toolbar-bookmarks dropdown"
+      });
+      const menuButton = Object.assign(document.createElement("a"), {
+        className: "bookmark-menu-button",
+        href: "#",
+        innerHTML: '<i class="fa fa-bookmark"></i>'
+      });
+      menuButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.toggleMenu();
+      });
+      this.#menuButtonContainer.appendChild(menuButton);
+      const menu = document.querySelector(".kbin-container > menu");
+      menu.insertBefore(this.#menuButtonContainer, menu.firstChild);
+      const bookmarksMenu = Object.assign(document.createElement("ul"), {
+        className: "bookmarks-menu dropdown__menu"
+      });
+      this.#menuButtonContainer.appendChild(bookmarksMenu);
+      const modalBackground = Object.assign(document.createElement("div"), {
+        className: "modal-background"
+      });
+      modalBackground.addEventListener("click", (e) => {
+        if (e.target === modalBackground) {
+          e.preventDefault();
+          this.closeMenu();
+        }
+      });
+      const menuModal = Object.assign(document.createElement("div"), {
+        className: "modal modal-bookmarks",
+        innerHTML: `
+                <div class="modal-header">
+                    <h2>Bookmarks</h2>
+                    <a class="modal-close"><i class="fa fa-times"></i></a>
+                </div>
+                <div class="modal-content">
+                    <ul class="bookmarks-menu"></ul>
+                </div>
+            `
+      });
+      const modalCloseButton = menuModal.querySelector(".modal-close");
+      modalCloseButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.closeMenu();
+      });
+      document.body.appendChild(modalBackground);
+      modalBackground.appendChild(menuModal);
+      this.populateBookmarksMenu();
+      window.addEventListener("hide-all-modals", () => {
+        this.closeMenu();
+      });
+    }
+    populateBookmarksMenu() {
+      const bookmarksContent = document.querySelector(".modal-bookmarks .modal-content ul");
+      const bookmarks = this.getBookmarks();
+      bookmarksContent.innerHTML = "";
+      if (bookmarks.length > 0) {
+        bookmarks.forEach((bookmark) => {
+          const bookmarkElement = bookmark.getElement();
+          const removeButton = bookmarkElement.querySelector(".bookmark-remove");
+          removeButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            bookmarkElement.classList.add("hide");
+            bookmarkElement.addEventListener("animationend", () => {
+              this.removeBookmark(bookmark);
+            });
+          });
+          bookmarksContent.appendChild(bookmarkElement);
+        });
+      } else {
+        const bookmarkElement = Object.assign(document.createElement("li"), {
+          className: "bookmarks-menu-item placeholder",
+          innerHTML: "<h3>No bookmarks</h3>"
+        });
+        bookmarksContent.appendChild(bookmarkElement);
+      }
+    }
+    getBookmarks() {
+      return this.bookmarks;
+    }
+    addBookmark(bookmark) {
+      this.bookmarks.push(bookmark);
+      localStorage.setItem("kup-bookmarks", JSON.stringify(this.bookmarks));
+      this.populateBookmarksMenu();
+      window.dispatchEvent(new CustomEvent("KUP-bookmark-changed", {
+        detail: {
+          bookmarked: true,
+          articleUrl: bookmark.url,
+          articleId: bookmark.articleId
+        }
+      }));
+    }
+    loadBookmarks() {
+      const bookmarks = JSON.parse(localStorage.getItem("kup-bookmarks")) || [];
+      bookmarks.forEach((bookmark) => {
+        this.bookmarks.push(new Bookmark_default(bookmark.title, bookmark.url, bookmark.articleId, bookmark.magazine, bookmark.instanceName));
+      });
+    }
+    reloadBookmarks() {
+      this.bookmarks = [];
+      this.loadBookmarks();
+      this.populateBookmarksMenu();
+    }
+    toggleMenu() {
+      const modalBackground = document.querySelector(".modal-background");
+      if (modalBackground.classList.contains("show")) {
+        this.closeMenu();
+      } else {
+        this.showMenu();
+      }
+    }
+    /**
+     * Toggles the bookmark status of an article
+     * @param {Article} article
+     */
+    toggleBookmark(article) {
+      const bookmark = this.bookmarks.find((bookmark2) => bookmark2.articleId === article.id);
+      if (bookmark) {
+        this.removeBookmark(bookmark);
+        return false;
+      } else {
+        this.addBookmark(new Bookmark_default(article.subject, article.articleUrl, article.id, article.magazine, article.instanceName));
+        return true;
+      }
+    }
+    removeBookmark(bookmark) {
+      this.bookmarks = this.bookmarks.filter((b) => b.articleId !== bookmark.articleId);
+      localStorage.setItem("kup-bookmarks", JSON.stringify(this.bookmarks));
+      this.populateBookmarksMenu();
+      window.dispatchEvent(new CustomEvent("KUP-bookmark-changed", {
+        detail: {
+          bookmarked: false,
+          articleUrl: bookmark.url,
+          articleId: bookmark.articleId
+        }
+      }));
+    }
+    isBookmarked(article) {
+      return this.bookmarks.find((bookmark) => bookmark.articleId === article.id);
+    }
+    closeMenu() {
+      const modalBackground = document.querySelector(".modal-background");
+      modalBackground.classList.remove("show");
+    }
+    showMenu() {
+      window.dispatchEvent(new Event("hide-all-modals"));
+      const modalBackground = document.querySelector(".modal-background");
+      modalBackground.classList.add("show");
+    }
+  };
+  var BookmarkHandler_default = BookmarkHandler;
+
   // src/Classes/Article/Article.js
   var settings = new Settings_default();
   if (isNewKbinVersion()) {
@@ -382,6 +603,8 @@
     mediaUrl = null;
     magazine = null;
     linkUrl = null;
+    instanceName = null;
+    id = null;
     hasMedia = false;
     articlePreviewOpen = false;
     mediaPreviewOpen = false;
@@ -402,14 +625,16 @@
     static fromFeedElement(element) {
       let article = new _Article();
       article.feedElement = element;
-      article.subject = element.querySelector("header h2").innerText;
+      article.subject = element.querySelector("header h2 a").innerText;
       article.author = new User_default(element.querySelector(".meta .user-inline").innerText, element.querySelector(".meta .user-inline img")?.src);
       article.date = new Date(element.querySelector(".meta.entry__meta time")?.innerText);
       article.articleUrl = element.querySelector("header h2 a")?.href;
       article.thumbUrl = element.querySelector("figure a img")?.src;
       article.mediaUrl = element.querySelector("button.show-preview")?.dataset?.previewUrlParam;
       article.magazine = element.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
+      article.instanceName = article.articleUrl.match(/\/m\/.*@(.*?)\//)?.[1];
       article.shortDescription = element.querySelector(".content.short-desc")?.innerText?.trim();
+      article.id = element.id;
       const upvoteElement = element.querySelector("aside.vote .vote__up");
       const downvoteElement = element.querySelector("aside.vote .vote__down");
       article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
@@ -484,18 +709,24 @@
     }
     static fromArticlePage(articleElement) {
       let article = new _Article();
-      article.subject = articleElement.querySelector("header h1")?.childNodes[0]?.innerText?.trim();
+      article.subject = articleElement.querySelector("header h1 a")?.firstChild?.textContent?.trim() || articleElement.querySelector("header h1")?.firstChild?.textContent?.trim();
       article.author = new User_default(articleElement.querySelector(".meta .user-inline").innerText, articleElement.querySelector(".meta .user-inline img")?.src);
       article.date = new Date(articleElement.querySelector(".meta.entry__meta time")?.innerText);
       article.linkUrl = articleElement.querySelector("header h1>a")?.href;
       article.thumbUrl = articleElement.querySelector("figure a img")?.src;
       article.mediaUrl = articleElement.querySelector("footer button.show-preview")?.dataset?.previewUrlParam ?? articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
-      article.magazine = articleElement.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
+      article.articleUrl = window.location.pathname;
+      const magMatch = article.articleUrl.match(/\/m\/(.*)@(.*?)\//);
+      article.magazine = magMatch?.[1];
+      article.instanceName = magMatch?.[2];
       article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
       const upvoteElement = articleElement.querySelector("aside.vote .vote__up");
       const downvoteElement = articleElement.querySelector("aside.vote .vote__down");
       article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
       article.downvotes = parseInt(downvoteElement?.querySelector("span")?.innerText) || 0;
+      article.id = articleElement.id;
+      console.log(article.articleUrl);
+      console.log(article.magazine);
       article.enableArticlePreview = false;
       article.#articleLoaded = true;
       article.articlePageElement = articleElement;
@@ -576,6 +807,19 @@
         } else {
           commentLinkElement.removeAttribute("target");
         }
+      }
+    }
+    removeBookmark() {
+      this.bookmarkButton.classList.remove("bookmarked");
+    }
+    addBookmark() {
+      this.bookmarkButton.classList.add("bookmarked");
+    }
+    toggleBookmark() {
+      if (this.bookmarkButton.classList.contains("bookmarked")) {
+        this.removeBookmark();
+      } else {
+        this.addBookmark();
       }
     }
     replaceMediaPreview(parent) {
@@ -866,6 +1110,35 @@
         if (settings2.get("alternativeMobileUI") && !isNewKbinVersion()) {
           thumbnailFigure.style.backgroundImage = "url(" + thumbnail.src + ")";
         }
+      }
+      if (settings2.get("enableBookmarks")) {
+        const footer = articleElement.querySelector("footer");
+        const footerMenu = footer.querySelector("menu");
+        const bookmarkHandler = BookmarkHandler_default.getInstance();
+        const bookmarkButton = document.createElement("button");
+        bookmarkButton.classList.add("bookmark-button");
+        bookmarkButton.innerHTML = '<i class="fas fa-bookmark"></i>';
+        bookmarkButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          bookmarkHandler.toggleBookmark(this);
+        });
+        if (bookmarkHandler.isBookmarked(this)) {
+          bookmarkButton.classList.add("bookmarked");
+        }
+        this.bookmarkButton = bookmarkButton;
+        const bookmarkLi = document.createElement("li");
+        bookmarkLi.classList.add("bookmark-li");
+        bookmarkLi.append(bookmarkButton);
+        footerMenu.insertBefore(bookmarkLi, footerMenu.querySelector(".dropdown"));
+        window.addEventListener("KUP-bookmark-changed", (event) => {
+          if (event.detail.articleId === this.id) {
+            if (event.detail.bookmarked) {
+              this.addBookmark();
+            } else {
+              this.removeBookmark();
+            }
+          }
+        });
       }
       this.applySettings();
     }
@@ -1929,6 +2202,11 @@
           id: "fixCSS",
           description: "Fix some common CSS issues unrelated to KUP."
         }),
+        new SettingsRowBoolean_default("Enable bookmarks", {
+          id: "enableBookmarks",
+          description: "Bookmark notable articles for later",
+          requireReload: true
+        }),
         new SettingsRowBoolean_default("Settings compatibility mode", {
           id: "settingsCompatibilityMode",
           description: "Increase compatibility with other scripts that modify the settings panel.",
@@ -1952,13 +2230,10 @@
 
   // src/index.js
   if (!document.body.classList.contains("KUP-injected")) {
-    console.warn("Kbin Usability Pack is already injected");
     document.body.classList.add("KUP-injected");
     document.KUP = {};
     document.KUP.LocalNotification = LocalNotification_default;
-    if (!isNewKbinVersion()) {
-      document.body.classList.add("old-version");
-    }
+    const bookmarkHandler = new BookmarkHandler_default();
     const articlesHandler = new ArticlesHandler_default();
     const navigator = new Navigator_default();
     const articlePage = new ArticlePage_default();
@@ -1983,6 +2258,9 @@
     navigator.init();
     articlePage.init();
     settingsPanel.init();
+    bookmarkHandler.init();
     settings2.apply();
+  } else {
+    console.warn("Kbin Usability Pack already injected!");
   }
 })();

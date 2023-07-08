@@ -40,6 +40,10 @@ class Settings {
             settings.fixCSS = true;
         }
 
+        if (settings.enableBookmarks === undefined) {
+            settings.enableBookmarks = true;
+        }
+
         return settings;
     }
     replace(settings, sendEvent = true, apply = true) {

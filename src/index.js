@@ -5,20 +5,16 @@ import SettingsPanel from "./Classes/SettingsPanel/SettingsPanel";
 import Settings from "./Classes/Settings";
 import {isNewKbinVersion} from "./Utils/utils";
 import LocalNotification from "./Classes/Notification/LocalNotification";
+import BookmarkHandler from "./Classes/Bookmark/BookmarkHandler";
 
 /** Do the stuff */
 if (!document.body.classList.contains("KUP-injected")) {
-    console.warn("Kbin Usability Pack is already injected");
     document.body.classList.add("KUP-injected");
     document.KUP = {}
 
     document.KUP.LocalNotification = LocalNotification;
 
-    /** Detect version */
-    if (!isNewKbinVersion()) {
-        document.body.classList.add("old-version");
-    }
-
+    const bookmarkHandler = new BookmarkHandler();
     const articlesHandler = new ArticlesHandler();
     const navigator = new Navigator();
     const articlePage = new ArticlePage();
@@ -44,5 +40,8 @@ if (!document.body.classList.contains("KUP-injected")) {
     navigator.init();
     articlePage.init();
     settingsPanel.init();
+    bookmarkHandler.init();
     settings.apply();
+} else {
+    console.warn("Kbin Usability Pack already injected!");
 }
