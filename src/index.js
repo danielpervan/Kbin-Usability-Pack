@@ -3,7 +3,6 @@ import Navigator from "./Classes/Navigator/Navigator";
 import ArticlePage from "./Classes/ArticlePage/ArticlePage";
 import SettingsPanel from "./Classes/SettingsPanel/SettingsPanel";
 import Settings from "./Classes/Settings";
-import {isNewKbinVersion} from "./Utils/utils";
 import LocalNotification from "./Classes/Notification/LocalNotification";
 import BookmarkHandler from "./Classes/Bookmark/BookmarkHandler";
 
