@@ -2,7 +2,7 @@
 // @name         Kbin Usability Pack
 // @namespace    https://perry.dev
 // @license      MIT
-// @version      0.4.0
+// @version      0.4.1
 // @description  A collection of usability enhancements for Kbin
 // @author       Daniel Pervan
 // @match        https://kbin.social/*
@@ -647,8 +647,9 @@
       article.articleUrl = element.querySelector("header h2 a")?.href;
       article.thumbUrl = element.querySelector("figure a img")?.src;
       article.mediaUrl = element.querySelector("button.show-preview")?.dataset?.previewUrlParam;
-      article.magazine = element.querySelector(".meta.entry__meta .magazine-inline")?.innerText;
-      article.instanceName = article.articleUrl.match(/\/m\/.*@(.*?)\//)?.[1];
+      const magMatch = article.articleUrl.match(/\/m\/(.*?)[\/]?(@(.*?))?\//);
+      article.magazine = magMatch?.[1];
+      article.instanceName = magMatch?.[3];
       article.shortDescription = element.querySelector(".content.short-desc")?.innerText?.trim();
       article.id = element.id;
       const upvoteElement = element.querySelector("aside.vote .vote__up");
@@ -732,17 +733,15 @@
       article.thumbUrl = articleElement.querySelector("figure a img")?.src;
       article.mediaUrl = articleElement.querySelector("footer button.show-preview")?.dataset?.previewUrlParam ?? articleElement.querySelector("button.show-preview")?.dataset?.previewUrlParam;
       article.articleUrl = window.location.pathname;
-      const magMatch = article.articleUrl.match(/\/m\/(.*)@(.*?)\//);
+      const magMatch = article.articleUrl.match(/\/m\/(.*?)[\/]?(@(.*?))?\//);
       article.magazine = magMatch?.[1];
-      article.instanceName = magMatch?.[2];
+      article.instanceName = magMatch?.[3];
       article.#content = articleElement.querySelector(".entry__body .content")?.innerHTML ?? null;
       const upvoteElement = articleElement.querySelector("aside.vote .vote__up");
       const downvoteElement = articleElement.querySelector("aside.vote .vote__down");
       article.upvotes = parseInt(upvoteElement?.querySelector("span")?.innerText) || 0;
       article.downvotes = parseInt(downvoteElement?.querySelector("span")?.innerText) || 0;
       article.id = articleElement.id;
-      console.log(article.articleUrl);
-      console.log(article.magazine);
       article.enableArticlePreview = false;
       article.#articleLoaded = true;
       article.articlePageElement = articleElement;
@@ -2220,7 +2219,7 @@
         }),
         new SettingsRowBoolean_default("Enable bookmarks", {
           id: "enableBookmarks",
-          description: "Bookmark notable articles for later",
+          description: "Enable the bookmarks feature. Save articles to read later.",
           requireReload: true
         }),
         new SettingsRowBoolean_default("Settings compatibility mode", {

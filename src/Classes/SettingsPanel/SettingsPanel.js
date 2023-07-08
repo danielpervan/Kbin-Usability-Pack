@@ -206,7 +206,7 @@ class SettingsPanel {
             }),
             new SettingsRowBoolean("Enable bookmarks", {
                 id: "enableBookmarks",
-                description: "Bookmark notable articles for later",
+                description: "Enable the bookmarks feature. Save articles to read later.",
                 requireReload: true
             }),
             new SettingsRowBoolean("Settings compatibility mode", {
