@@ -52,6 +52,18 @@ class BookmarkHandler {
         const menu = document.querySelector('.kbin-container > menu');
         menu.insertBefore(this.#menuButtonContainer, menu.firstChild);
 
+        /** Add mobile menu button **/
+        const mobileMenu = document.querySelector('.options--top.mobile-close');
+        const mobileMenuButton = Object.assign(document.createElement('button'), {
+            className: 'mobile-bookmarks-button btn btn__secondary',
+            innerHTML: '<i class="fa fa-bookmark"></i>',
+        });
+        mobileMenuButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleMenu();
+        });
+        mobileMenu.insertBefore(mobileMenuButton, mobileMenu.lastChild.previousSibling);
+
         const bookmarksMenu = Object.assign(document.createElement('ul'), {
             className: 'bookmarks-menu dropdown__menu',
         });

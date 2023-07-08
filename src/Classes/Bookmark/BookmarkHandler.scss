@@ -4,6 +4,20 @@
   }
 }
 
+.mobile-bookmarks-button {
+  display: none;
+}
+
+@media (max-width: 689.98px) {
+  #header .bookmark-menu-button {
+    display: none;
+  }
+
+  .mobile-bookmarks-button {
+    display: block;
+  }
+}
+
 .modal-background {
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -32,15 +46,15 @@
   }
 
   .modal.modal-bookmarks {
-    width: fit-content;
-    max-width: 50rem;
+    width: 100%;
+    max-width: 40rem;
+    min-width: 20rem;
     position: fixed;
     top: 4rem;
     max-height: calc(100% - 4rem - 1rem);
     background: var(--kbin-section-bg);
     border: var(--kbin-section-border);
     padding: 1em;
-    min-width: 50vw;
     overflow: auto;
     animation: showBookmarkModal 0.25s ease-in-out;
 
@@ -172,6 +186,10 @@
             grid-area: title;
             font-weight: bold;
             margin: 0;
+
+            @media (max-width: 689.98px) {
+              font-size: 0.8em;
+            }
           }
 
           .bookmark-magazine {
@@ -179,6 +197,9 @@
             font-weight: 100;
             color: var(--kbin-text-color-secondary);
             margin: 0;
+            @media (max-width: 689.98px) {
+              font-size: 0.8em;
+            }
           }
 
           .bookmark-actions {
