@@ -15,6 +15,7 @@ class SettingsRow {
         NUMBER: "number",
         ENUM: "enum",
         CUSTOM: "custom",
+        STANDARD: "standard"
     }
 
     constructor(name, type, options = {}) {
@@ -55,7 +56,7 @@ class SettingsRow {
     }
 
     static fromElement(element) {
-        return new SettingsRow(element.innerText, SettingsRow.detectType(element), "", {});
+        return new SettingsRow(element.innerText, SettingsRow.detectType(element),  {});
     }
 
     setId(id) {
@@ -100,7 +101,9 @@ class SettingsRow {
 
         const booleanRegex = /Yes\s*\|\s*No/;
         const enumRegex = /(\w+)\s*\|\s*(\w+)/;
-        if (valueElement.innerText.trim().match(booleanRegex)) {
+        if (element.classList.contains("settings-row")) {
+            return SettingsRow.TYPES.STANDARD;
+        } else if (valueElement.innerText.trim().match(booleanRegex)) {
             return SettingsRow.TYPES.BOOLEAN;
         } else if (valueElement.innerText.trim().match(enumRegex)) {
             return SettingsRow.TYPES.ENUM;

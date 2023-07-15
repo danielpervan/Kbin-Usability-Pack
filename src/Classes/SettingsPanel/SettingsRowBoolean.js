@@ -66,7 +66,7 @@ class SettingsRowBoolean extends SettingsRow {
         });
         this.element = element;
         const name = Object.assign(document.createElement("span"), {
-            className: "name",
+            className: "label",
             innerText: this.name,
         });
 
@@ -74,7 +74,7 @@ class SettingsRowBoolean extends SettingsRow {
         if (this.description) {
             element.classList.add("has-description");
             const description = Object.assign(document.createElement("span"), {
-                className: "description",
+                className: "help",
                 innerText: this.description,
             });
             element.appendChild(description);
@@ -114,6 +114,7 @@ class SettingsRowBoolean extends SettingsRow {
         const valueElements = element.querySelectorAll(":scope > div a");
         valueElements.forEach((valueElement) => {
             if (valueElement.innerText.trim() === "Yes") {
+
                 settingsRow.bindTrueAction(() => {
                     return settingsRow.legacyAction(valueElement);
                 });

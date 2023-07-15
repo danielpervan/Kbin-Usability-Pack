@@ -21,7 +21,7 @@ class SettingsRowButton extends SettingsRow {
         });
         this.element = element;
         const name = Object.assign(document.createElement("span"), {
-            className: "name",
+            className: "label",
             innerText: this.name,
         });
 
@@ -29,7 +29,7 @@ class SettingsRowButton extends SettingsRow {
         if (this.description) {
             element.classList.add("has-description");
             const description = Object.assign(document.createElement("span"), {
-                className: "description",
+                className: "help",
                 innerText: this.description,
             });
             element.appendChild(description);

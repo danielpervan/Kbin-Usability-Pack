@@ -917,7 +917,7 @@
     }
     showMediaPreview() {
       let element = this.feedElement ?? this.articlePageElement;
-      if (!element || !this.hasMedia) {
+      if (!element || !this.hasMedia || this.mediaPreviewOpen) {
         return;
       }
       this.mediaPreviewOpen = true;
@@ -1559,7 +1559,8 @@
       STRING: "string",
       NUMBER: "number",
       ENUM: "enum",
-      CUSTOM: "custom"
+      CUSTOM: "custom",
+      STANDARD: "standard"
     };
     constructor(name, type, options = {}) {
       this.name = name;
@@ -1595,7 +1596,7 @@
       return element;
     }
     static fromElement(element) {
-      return new _SettingsRow(element.innerText, _SettingsRow.detectType(element), "", {});
+      return new _SettingsRow(element.innerText, _SettingsRow.detectType(element), {});
     }
     setId(id) {
       this.id = id;
@@ -1635,7 +1636,9 @@
       const valueElement = element.querySelector(":scope > div");
       const booleanRegex = /Yes\s*\|\s*No/;
       const enumRegex = /(\w+)\s*\|\s*(\w+)/;
-      if (valueElement.innerText.trim().match(booleanRegex)) {
+      if (element.classList.contains("settings-row")) {
+        return _SettingsRow.TYPES.STANDARD;
+      } else if (valueElement.innerText.trim().match(booleanRegex)) {
         return _SettingsRow.TYPES.BOOLEAN;
       } else if (valueElement.innerText.trim().match(enumRegex)) {
         return _SettingsRow.TYPES.ENUM;
@@ -1665,14 +1668,14 @@
       });
       this.element = element;
       const name = Object.assign(document.createElement("span"), {
-        className: "name",
+        className: "label",
         innerText: this.name
       });
       element.appendChild(name);
       if (this.description) {
         element.classList.add("has-description");
         const description = Object.assign(document.createElement("span"), {
-          className: "description",
+          className: "help",
           innerText: this.description
         });
         element.appendChild(description);
@@ -1768,7 +1771,7 @@
 
   // src/Classes/SettingsPanel/SettingsPanel.scss
   init_index();
-  inject_style('body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;grid-template-areas:"name value" "description value";grid-template-columns:auto;align-items:center;margin-bottom:1em;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .name{margin-right:1em;grid-area:name}.settings-panel .settings-section .settings-row .description{grid-area:description;font-size:.8em;font-weight:100;color:var(--kbin-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer;font-size:.8em}.settings-panel .settings-section .settings-row .value-container button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}.settings-panel .settings-section .settings-row .value-container .switch{position:relative;display:inline-block;width:3em;height:1.5em;border-radius:.75em;overflow:hidden;border:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container .switch input{width:0;height:0;visibility:hidden}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider{background-color:var(--kbin-button-secondary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover .slider:before{background-color:var(--kbin-button-primary-text-hover-color);border:.5em solid var(--kbin-button-primary-text-hover-color)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider{background-color:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .switch:hover input:checked+.slider:before{background:var(--kbin-button-primary-hover-bg)}.settings-panel .settings-section .settings-row .value-container .slider{position:absolute;cursor:pointer;inset:0;background-color:var(--kbin-button-secondary-text-color);transition:.25s}.settings-panel .settings-section .settings-row .value-container .slider:before{position:absolute;content:"";height:100%;width:fit-content;aspect-ratio:1;left:0;bottom:0;background-color:var(--kbin-button-primary-text-color);transition:.25s;border-radius:.75em;border:.5em solid var(--kbin-button-primary-text-color)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider{background-color:var(--kbin-button-primary-bg)}.settings-panel .settings-section .settings-row .value-container input:checked+.slider:before{transform:translate(1.5em);background:var(--kbin-button-primary-bg)}');
+  inject_style("body:not(.KUP-setting-settingsCompatibilityMode) #settings .settings-list{display:none!important;visibility:hidden}#settings .settings-panel-footer{font-size:.8em;font-weight:100}#settings .settings-panel-footer span{margin-left:.25em}.settings-panel .settings-section{margin-bottom:2em}.settings-panel .settings-section .settings-section-header{font-weight:700;margin-bottom:1em;cursor:pointer}.settings-panel .settings-section .settings-section-header:hover{color:var(--kbin-primary)}.settings-panel .settings-section .settings-section-header .icon{margin-right:.5em}.settings-panel .settings-section .settings-section-header .icon-chevron{transition:transform .25s ease-in-out;transform:rotate(-90deg);margin-left:.5em}.settings-panel .settings-section.expanded .icon-chevron{transform:rotate(0)}.settings-panel .settings-section.expanded .settings-row{display:grid}.settings-panel .settings-section .settings-row{display:none;animation:showSettingsRow .25s ease-in-out}@keyframes showSettingsRow{0%{opacity:0;transform:translateY(-1em)}to{opacity:1;transform:translateY(0)}}.settings-panel .settings-section .settings-row .value-container{flex-grow:1;text-align:right;grid-area:value;margin-left:1em}.settings-panel .settings-section .settings-row .value-container .link-muted.active{color:var(--kbin-primary);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container.enum{border:var(--kbin-button-primary-border);border-radius:.5em;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));align-items:center;text-align:center;background-color:var(--kbin-button-secondary-bg);overflow:hidden;font-size:.8em}.settings-panel .settings-section .settings-row .value-container.enum .value{padding:.5em .25em;font-weight:100;color:var(--kbin-button-secondary-text-color)}.settings-panel .settings-section .settings-row .value-container.enum .value:not(:last-child){border-right:var(--kbin-button-primary-border)}.settings-panel .settings-section .settings-row .value-container.enum .value.selected{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);font-weight:800!important}.settings-panel .settings-section .settings-row .value-container button{background:var(--kbin-button-primary-bg);color:var(--kbin-button-primary-text-color);border:var(--kbin-button-primary-border);cursor:pointer;font-size:.8em}.settings-panel .settings-section .settings-row .value-container button:hover{background:var(--kbin-button-primary-hover-bg);color:var(--kbin-button-primary-hover-text-color)}");
 
   // src/Classes/SettingsPanel/SettingsRowBoolean.js
   var SettingsRowBoolean = class _SettingsRowBoolean extends SettingsRow_default {
@@ -1825,14 +1828,14 @@
       });
       this.element = element;
       const name = Object.assign(document.createElement("span"), {
-        className: "name",
+        className: "label",
         innerText: this.name
       });
       element.appendChild(name);
       if (this.description) {
         element.classList.add("has-description");
         const description = Object.assign(document.createElement("span"), {
-          className: "description",
+          className: "help",
           innerText: this.description
         });
         element.appendChild(description);
@@ -1911,14 +1914,14 @@
       });
       this.element = element;
       const name = Object.assign(document.createElement("span"), {
-        className: "name",
+        className: "label",
         innerText: this.name
       });
       element.appendChild(name);
       if (this.description) {
         element.classList.add("has-description");
         const description = Object.assign(document.createElement("span"), {
-          className: "description",
+          className: "help",
           innerText: this.description
         });
         element.appendChild(description);
@@ -1997,14 +2000,14 @@
       });
       this.element = element;
       const name = Object.assign(document.createElement("span"), {
-        className: "name",
+        className: "label",
         innerText: this.name
       });
       element.appendChild(name);
       if (this.description) {
         element.classList.add("has-description");
         const description = Object.assign(document.createElement("span"), {
-          className: "description",
+          className: "help",
           innerText: this.description
         });
         element.appendChild(description);
@@ -2031,6 +2034,26 @@
   };
   var SettingsRowButton_default = SettingsRowButton;
 
+  // src/Classes/SettingsPanel/SettingsRowStandard.js
+  var SettingsRowStandard = class _SettingsRowStandard extends SettingsRow_default {
+    constructor(name, element, options) {
+      super(name, SettingsRow_default.TYPES.STANDARD, options);
+      this.element = element;
+      element.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("change", () => {
+          this.showSettingsSavedNotification(true);
+        });
+      });
+    }
+    getElement() {
+      return this.element;
+    }
+    static fromElement(element) {
+      return new _SettingsRowStandard(element.querySelector(".label").innerText, element, {});
+    }
+  };
+  var SettingsRowStandard_default = SettingsRowStandard;
+
   // src/Classes/SettingsPanel/SettingsPanel.js
   function settingsRowFromElement(element) {
     let settingsRow;
@@ -2040,6 +2063,9 @@
         break;
       case SettingsRow_default.TYPES.ENUM:
         settingsRow = SettingsRowEnum_default.fromElement(element);
+        break;
+      case SettingsRow_default.TYPES.STANDARD:
+        settingsRow = SettingsRowStandard_default.fromElement(element);
         break;
       default:
         settingsRow = SettingsRowCustom_default.fromElement(element);
@@ -2102,7 +2128,7 @@
     }
     #enrichSettingsPanel() {
       const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
-      const settingsList = settingsListElement.querySelectorAll(":scope > *");
+      const settingsList = settingsListElement.querySelectorAll(":scope > *:not(.reload-required-section)");
       const settingsPanel = document.createElement("div");
       this.#settingsPanelElement = settingsPanel;
       settingsPanel.classList.add("settings-panel");

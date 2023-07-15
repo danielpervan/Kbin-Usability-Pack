@@ -7,6 +7,7 @@ import SettingsRowEnum from "./SettingsRowEnum";
 import Settings from "../Settings";
 import LocalNotification from "../Notification/LocalNotification";
 import SettingsRowButton from "./SettingsRowButton";
+import SettingsRowStandard from "./SettingsRowStandard";
 
 function settingsRowFromElement(element) {
     let settingsRow;
@@ -16,6 +17,9 @@ function settingsRowFromElement(element) {
             break;
         case SettingsRow.TYPES.ENUM:
             settingsRow = SettingsRowEnum.fromElement(element);
+            break;
+        case SettingsRow.TYPES.STANDARD:
+            settingsRow = SettingsRowStandard.fromElement(element);
             break;
         default:
             settingsRow = SettingsRowCustom.fromElement(element)
@@ -89,7 +93,7 @@ class SettingsPanel {
 
     #enrichSettingsPanel() {
         const settingsListElement = this.#settingsPanelContainerElement.querySelector(".settings-list");
-        const settingsList = settingsListElement.querySelectorAll(":scope > *");
+        const settingsList = settingsListElement.querySelectorAll(":scope > *:not(.reload-required-section)");
         const settingsPanel = document.createElement("div");
         this.#settingsPanelElement = settingsPanel;
         settingsPanel.classList.add("settings-panel");

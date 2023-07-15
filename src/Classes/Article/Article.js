@@ -368,7 +368,7 @@ class Article {
 
     showMediaPreview() {
         let element = this.feedElement ?? this.articlePageElement;
-        if (!element || !this.hasMedia) {
+        if (!element || !this.hasMedia || this.mediaPreviewOpen) {
             return;
         }
         this.mediaPreviewOpen = true;

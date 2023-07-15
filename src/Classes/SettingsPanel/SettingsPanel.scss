@@ -51,10 +51,6 @@ body:not(.KUP-setting-settingsCompatibilityMode) {
 
     .settings-row {
       display: none;
-      grid-template-areas: "name value" "description value";
-      grid-template-columns: auto;
-      align-items: center;
-      margin-bottom: 1em;
       animation: showSettingsRow 0.25s ease-in-out;
 
       @keyframes showSettingsRow {
@@ -66,19 +62,6 @@ body:not(.KUP-setting-settingsCompatibilityMode) {
           opacity: 1;
           transform: translateY(0);
         }
-      }
-
-      .name {
-        margin-right: 1em;
-        grid-area: name;
-
-      }
-
-      .description {
-        grid-area: description;
-        font-size: 0.8em;
-        font-weight: 100;
-        color: var(--kbin-secondary-text-color);
       }
 
       .value-container {
@@ -131,75 +114,6 @@ body:not(.KUP-setting-settingsCompatibilityMode) {
             background: var(--kbin-button-primary-hover-bg);
             color: var(--kbin-button-primary-hover-text-color);
           }
-        }
-
-        .switch {
-          position: relative;
-          display: inline-block;
-          width: 3em;
-          height: 1.5em;
-          border-radius: .75em;
-          overflow: hidden;
-          border: var(--kbin-button-primary-border);
-
-          input {
-            width: 0;
-            height: 0;
-            visibility: hidden;
-          }
-
-          &:hover {
-            .slider {
-              background-color: var(--kbin-button-secondary-text-hover-color);
-
-              &:before {
-                background-color: var(--kbin-button-primary-text-hover-color);
-                border: .5em solid var(--kbin-button-primary-text-hover-color);
-              }
-            }
-
-            input:checked + .slider {
-              background-color: var(--kbin-button-primary-hover-bg);
-            }
-
-            input:checked + .slider:before {
-              background: var(--kbin-button-primary-hover-bg);
-            }
-          }
-        }
-
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: var(--kbin-button-secondary-text-color);
-          transition: .25s;
-
-          &:before {
-            position: absolute;
-            content: "";
-            height: 100%;
-            width: fit-content;
-            aspect-ratio: 1;
-            left: 0;
-            bottom: 0;
-            background-color: var(--kbin-button-primary-text-color);
-            transition: .25s;
-            border-radius: 0.75em;
-            border: .5em solid var(--kbin-button-primary-text-color);
-          }
-        }
-
-        input:checked + .slider {
-          background-color: var(--kbin-button-primary-bg);
-        }
-
-        input:checked + .slider:before {
-          transform: translateX(1.5em);
-          background: var(--kbin-button-primary-bg);
         }
       }
     }
