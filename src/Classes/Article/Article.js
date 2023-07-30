@@ -5,15 +5,11 @@ import LocalNotification from "../Notification/LocalNotification";
 import BookmarkHandler from "../Bookmark/BookmarkHandler";
 
 const settings = new Settings();
-if (isNewKbinVersion()) {
-    import("./Article.scss");
-    if (settings.get("alternativeMobileUI")) {
-        import("./Article_alt_ui.scss");
-    } else {
-        import("./Article_standard_ui.scss");
-    }
+import("./Article.scss");
+if (settings.get("alternativeMobileUI")) {
+    import("./Article_alt_ui.scss");
 } else {
-    import("./Article_old.scss");
+    import("./Article_standard_ui.scss");
 }
 
 

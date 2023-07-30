@@ -235,3 +235,12 @@ article.entry {
     }
   }
 }
+
+/** Boost link **/
+.boost-link-removed {
+  overflow: hidden;
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  position: absolute;
+}
