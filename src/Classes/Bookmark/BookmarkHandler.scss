@@ -4,6 +4,12 @@
   }
 }
 
+.mobile-bookmarks-button-li {
+    @media (min-width: 991px) {
+      display: none !important;
+    }
+}
+
 .mobile-bookmarks-button {
   display: none;
 }

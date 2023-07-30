@@ -53,16 +53,21 @@ class BookmarkHandler {
         menu.insertBefore(this.#menuButtonContainer, menu.firstChild);
 
         /** Add mobile menu button **/
-        const mobileMenu = document.querySelector('.options--top.mobile-close');
-        const mobileMenuButton = Object.assign(document.createElement('button'), {
+        const mobileMenu = document.querySelector('.top-options menu ul');
+        const mobileMenuButton = Object.assign(document.createElement('a'), {
             className: 'mobile-bookmarks-button btn btn__secondary',
+            href: '#',
             innerHTML: '<i class="fa fa-bookmark"></i>',
         });
         mobileMenuButton.addEventListener('click', (e) => {
             e.preventDefault();
             this.toggleMenu();
         });
-        mobileMenu.insertBefore(mobileMenuButton, mobileMenu.lastChild.previousSibling);
+        const mobileMenuLi = Object.assign(document.createElement('li'), {
+            className: 'mobile-bookmarks-button-li',
+        });
+        mobileMenuLi.appendChild(mobileMenuButton);
+        mobileMenu.insertBefore(mobileMenuLi, mobileMenu.lastChild.previousSibling);
 
         const bookmarksMenu = Object.assign(document.createElement('ul'), {
             className: 'bookmarks-menu dropdown__menu',
